@@ -9,3 +9,4 @@ Demo文件夹下有个Demo.exe和Demo.e的易语言文件，参考画Java Swing�
 # 运行环境
 使用Netbeans自带的团队开发git，或者使用Github Desktop clone项目，然后手动导入代码到Netbeans。
 数据库使用学校内网的台式机10.0.78.30
+123
