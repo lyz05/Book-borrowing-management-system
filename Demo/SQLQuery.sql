@@ -140,16 +140,25 @@ select * from View_Book;
 
 
 /* 借阅窗口操作 */
+-- 名字显示
+select readerName from Reader where readerNO='R2005001'
+-- 当前借阅信息显示
+select * from View_Borrow where 读者编号='R2005002' and 归还日期 is null
+-- 历史借阅信息显示
+select * from View_Borrow where 读者编号='R2005002' and 归还日期 is not null
+-- 图书信息显示
+select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02'
+
+select 图书名称,作者,出版社 from View_Borrow
 -- 借书
-insert Borrow values('R2007002','B200201003','20110917','20111017','')
+if exists(select * from View_Book where 图书编号='B200201003' and 在库数量>0)
+insert Borrow values('R2006002','B200201003','20110917','20111017',null)
 -- 还书
 update Borrow set returnDate=getdate() from borrow
 where readerNO = 'R2009001'
 -- 修改密码
 update Reader set password=encodeInp(pwd) from Reader
 where readerNo = 'R2009001'
--- 查询图书
-select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02'
 
 /* 读者信息窗口操作 */
 -- 重置密码
@@ -174,7 +183,10 @@ update Book set bookName='数据库系统原理与设计',authorName='万常选',publishingNa
 -- 查询图书
 --select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02'
 
-select * from book;
+/* 登录窗口 */
+select readerNO from Reader where readerNo='R2005001' and password=''
+
+select bookNO from book where shopNum=1;
 select * from Reader;
 select * from Borrow;
 select * from View_Book;
