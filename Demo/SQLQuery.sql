@@ -149,11 +149,12 @@ select * from View_Borrow where 读者编号='R2005002' and 归还日期 is not null
 -- 图书信息显示
 select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02'
 -- 借书
+select * from Borrow where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
 if exists(select * from View_Book where 图书编号='B200201003' and 在库数量>0)
 insert Borrow values('R2006002','B200201003',getdate(),dateadd(mm,1,getdate()),null)
 -- 还书
 update Borrow set returnDate=getdate() from borrow
-where readerNO = 'R2009001' and bookNO='B200201003'
+where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
 -- 修改密码
 select readerNO from Reader where readerNo='R2005001' and password=''
 update Reader set password=encodeInp(pwd) from Reader where readerNo = ''
