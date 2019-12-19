@@ -140,16 +140,24 @@ select * from View_Book;
 
 
 /* 借阅窗口操作 */
+-- 名字显示
+select readerName from Reader where readerNO='R2005001'
+-- 当前借阅信息显示
+select * from View_Borrow where 读者编号='R2005002' and 归还日期 is null
+-- 历史借阅信息显示
+select * from View_Borrow where 读者编号='R2005002' and 归还日期 is not null
+-- 图书信息显示
+select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02'
 -- 借书
-insert Borrow values('R2007002','B200201003','20110917','20111017','')
+select * from Borrow where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
+if exists(select * from View_Book where 图书编号='B200201003' and 在库数量>0)
+insert Borrow values('R2006002','B200201003',getdate(),dateadd(mm,1,getdate()),null)
 -- 还书
 update Borrow set returnDate=getdate() from borrow
-where readerNO = 'R2009001'
+where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
 -- 修改密码
-update Reader set password=encodeInp(pwd) from Reader
-where readerNo = 'R2009001'
--- 查询图书
-select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02'
+select readerNO from Reader where readerNo='R2005001' and password=''
+update Reader set password=encodeInp(pwd) from Reader where readerNo = ''
 
 /* 读者信息窗口操作 */
 -- 重置密码
@@ -162,7 +170,9 @@ delete from reader where readerNO = 'R2010001'
 -- 修改
 update Reader set readerName='韩梅梅',sex='女',identitycard='442000199501014321',workUnit='北京理工大学珠海学院' where readerNO='R2010001'
 -- 查询读者
-select * from View_Reader where 读者编号 like '%2006%' and 读者姓名 like '%刘%' and 性别='女' and 身份证号 like '%1990%' and 工作单位 like '%公司%'
+select * from View_Reader where 读者编号 like '%2006%' and 读者姓名 like '%刘%' and 性别 like '%%' and 身份证号 like '%1990%' and 工作单位 like '%公司%'
+-- 排序
+select * from View_Reader where 读者编号 like '%%' and 读者姓名 like '%%' and 性别 like '%%' and 身份证号 like '%%' and 工作单位 like '%%' order by 读者编号
 
 /* 图书管理窗口操作 */
 -- 添加
@@ -172,15 +182,20 @@ delete from Book where bookNO = 'B200301101'
 -- 修改
 update Book set bookName='数据库系统原理与设计',authorName='万常选',publishingName='清华大学出版社',price=59.90,publishingDate='20090902',shopNum=6 where bookNO='B200301101'
 -- 查询图书
---select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02'
+select * from Book where bookNO like '%2001%' and bookName like '%经济%' and authorName like '%宋%' and publishingName like '%中国%'
 
-select * from book;
+/* 登录窗口 */
+select readerNO from Reader where readerNo='R2005001' and password=''
+
+select bookNO from book where shopNum=1;
 select * from Reader;
 select * from Borrow;
+select * from book;
 select * from View_Book;
 
 /* MD5加密 */
 select substring(sys.fn_sqlvarbasetostr(HashBytes('MD5','123456')),3,32)
+
 
 /* 作业内容先注释掉
 /*查询操作*/
