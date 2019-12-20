@@ -127,7 +127,7 @@ group by Reader.readerNO,Borrow.readerNO,readerName,sex,identitycard,workUnit;
 go
 select * from View_Reader;
 
---图书视图
+--读者图书视图
 go
 create view View_Book
 as
@@ -137,7 +137,13 @@ left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
 group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum;
 go
 select * from View_Book;
-
+--管理员图书试图
+go
+create view View_Book_Admin
+as
+select bookNO 图书编号,bookName 图书名称,authorName 作者,publishingName 出版社,price 价格,publishingDate 出版日期,shopNum 入库数量 from Book;
+go
+select * from View_Book_Admin;
 
 /* 借阅窗口操作 */
 -- 名字显示
@@ -147,13 +153,16 @@ select * from View_Borrow where 读者编号='R2005002' and 归还日期 is null
 -- 历史借阅信息显示
 select * from View_Borrow where 读者编号='R2005002' and 归还日期 is not null
 -- 图书信息显示
-select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02'
+select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02' and 在库数量>0
 -- 借书
 select * from Borrow where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
 if exists(select * from View_Book where 图书编号='B200201003' and 在库数量>0)
 insert Borrow values('R2006002','B200201003',getdate(),dateadd(mm,1,getdate()),null)
 -- 还书
 update Borrow set returnDate=getdate() from borrow
+where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
+-- 续借
+update Borrow set shouldDate=dateadd(mm,1,getdate()) from Borrow
 where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
 -- 修改密码
 select readerNO from Reader where readerNo='R2005001' and password=''
@@ -182,7 +191,7 @@ delete from Book where bookNO = 'B200301101'
 -- 修改
 update Book set bookName='数据库系统原理与设计',authorName='万常选',publishingName='清华大学出版社',price=59.90,publishingDate='20090902',shopNum=6 where bookNO='B200301101'
 -- 查询图书
-select * from Book where bookNO like '%2001%' and bookName like '%经济%' and authorName like '%宋%' and publishingName like '%中国%'
+select * from View_Book_Admin where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%'
 
 /* 登录窗口 */
 select readerNO from Reader where readerNo='R2005001' and password=''
