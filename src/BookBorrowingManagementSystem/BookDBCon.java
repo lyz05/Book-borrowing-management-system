@@ -6,7 +6,7 @@
 
 package BookBorrowingManagementSystem;
 
-import static BookBorrowingManagementSystem.DBCon.JdbcCon;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -57,7 +57,7 @@ public class BookDBCon {
             //执行SQL语句
             rs=stmt.executeQuery(sql);
             //跳转到第一行
-            rs.next(); 
+            if(!rs.next()) return null;
             //获取第一列数据
             ret = rs.getString(1);
             //System.out.println(ret);
@@ -73,34 +73,6 @@ public class BookDBCon {
         }
     }
     
-    //返回一位Vector数据库字段信息
-     public static Vector queryVectorName(String sql){
-        System.out.println(sql);
-        Connection conn=JdbcCon();
-        Statement stmt; //会话对象
-        ResultSet rs; //结果集
-        ResultSetMetaData metaData;  //列集
-        try{
-           stmt=conn.createStatement();            //创建会话对象
-            rs=stmt.executeQuery(sql);                  //执行SQL语句
-            metaData = rs.getMetaData();            //获取列集
-            int columnCount = metaData.getColumnCount(); //获取列的数量
-            Vector data=new Vector();
-            //循环遍历
-            for (int i=1;i<=columnCount;i ++) {
-                data.add(metaData.getColumnName(i));
-            }
-            //关闭
-            rs.close();
-            stmt.close();
-            conn.close();
-            return data;
-        }catch(SQLException ex){
-            ex.printStackTrace();
-            System.out.println("查询数据失败");
-            return null;
-        }
-    }
     //返回二维Vector表格和一维字段信息
     public static void queryVector2(String sql,Vector data,Vector name){
         System.out.println(sql);
@@ -134,6 +106,32 @@ public class BookDBCon {
             System.out.println("查询数据失败");
             data = null;
             name = null;
+        }
+    }
+    
+    //执行数据添加、修改、删除数据方法
+    public static boolean updateData(String sql){
+        System.out.println(sql);
+        Connection conn=JdbcCon(); //连接数据库
+        Statement stmt; //会话对象
+        try{
+            //创建会话对象
+            stmt=conn.createStatement();
+            //执行SQL语句,数据表中受影响的行数
+            int r=stmt.executeUpdate(sql); //针对于insert,update和delete三种SQL语句
+            stmt.close();
+            conn.close();
+
+            if(r>0){ //执行成功
+                return true;
+            }else{ //执行失败
+                return false;
+            }
+           
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            System.out.println("更新数据失败");
+            return false;
         }
     }
 }

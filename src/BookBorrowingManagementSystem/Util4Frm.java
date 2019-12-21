@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Util4Frm {
     private Util4Frm() {}       //禁止实例化
+    public static String readerNO = "R2005001";//当前登陆用户的ReaderNO
     public static void setUI(Component comp) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

@@ -277,6 +277,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x501f;&#x4e66;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrowReturnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnRenew">
           <Properties>

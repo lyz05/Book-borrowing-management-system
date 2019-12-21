@@ -6,7 +6,9 @@
 
 package BookBorrowingManagementSystem;
 
+import ch09.DBCon;
 import java.util.*;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -18,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
  * @author 叶荣锋
  */
 public class FrmBorrowInformation extends javax.swing.JFrame {
-    private String readerNO = "R2005001";//当前登陆用户的ReaderNO
     private JTable nowJTable;
     /**
      * Creates new form FrmBorrowInformation
@@ -33,16 +34,67 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         } catch(Exception err) {
             System.out.println("捕获异常:"+err);
         }
-        Hello.setText("您好，"+BookDBCon.sqlQueryResult("select readerName from Reader where readerNO='"+readerNO + "'"));
+        Hello.setText("您好，"+BookDBCon.sqlQueryResult("select readerName from Reader where readerNO='"+Util4Frm.readerNO + "'"));
         setAllTable();
+    }
+    
+    //获取当前选中书籍的BookNo
+    private String getbookno()
+    {
+         if (nowJTable.getSelectedRow()==-1) {
+            JOptionPane.showMessageDialog(null,"请选择一本书","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            return null;
+        }
+        return (String) nowJTable.getValueAt(nowJTable.getSelectedRow(), 0);
+    }
+    
+    //借书还书操作
+    private void borrowandreturn()
+    {
+        if (getbookno()==null) return;
+        String BookNO = getbookno(),sql;
+        if (btnBorrowReturn.getText().equals("还书")) {
+            sql = "update Borrow set returnDate=getdate() from borrow where readerNO = '"+Util4Frm.readerNO+"' and bookNO='"+BookNO+"' and returnDate is null";
+        } else {
+            sql = "if exists(select * from View_Book where 图书编号='"+BookNO+"' and 在库数量>0) insert Borrow values('"+Util4Frm.readerNO+"','"+BookNO+"',getdate(),dateadd(mm,1,getdate()),null)";
+            if (Integer.parseInt(BookDBCon.sqlQueryResult("select 在库数量 from View_Book where 图书编号='"+BookNO+"'")) <= 0) {
+                JOptionPane.showMessageDialog(null,"这本书已经被借光了","系统提示",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (BookDBCon.sqlQueryResult("select readerNO from Borrow where readerNO = '"+Util4Frm.readerNO+"' and bookNO='"+BookNO+"' and returnDate is null") != null){
+                JOptionPane.showMessageDialog(null,"这本书你已经借过了，归还后可再次借阅","系统提示",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        if( BookDBCon.updateData(sql))
+            JOptionPane.showMessageDialog(null,btnBorrowReturn.getText()+"成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(null,btnBorrowReturn.getText()+"失败","系统提示",JOptionPane.ERROR_MESSAGE);
+        setAllTable();
+    }
+    
+    //续借操作
+    private void renew()
+    {
+        if (nowJTable.getSelectedRow()==-1) {
+            JOptionPane.showMessageDialog(null,"请选择一本书","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        String BookNo = (String) nowJTable.getValueAt(nowJTable.getSelectedRow(), 0);
+        if (BookDBCon.updateData("update Borrow set shouldDate=dateadd(mm,1,getdate()) from Borrow where readerNO = '"+Util4Frm.readerNO+"' and bookNO='"+BookNo+"' and returnDate is null")) {
+            JOptionPane.showMessageDialog(null,"续借成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,"续借失败","系统提示",JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
     
     //刷新三张表的数据
     private void setAllTable(){
         //刷新当前借阅表
-        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ readerNO + "' and 归还日期 is null", jTable1);
+        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is null", jTable1);
         //刷新历史借阅表
-        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ readerNO + "' and 归还日期 is not null", jTable2);
+        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is not null", jTable2);
         //刷新图书信息表
         String sql = "select * from View_Book where 图书编号 like '%"+ InputBookNo.getText() + "%' and 图书名称 like '%" + InputBookName.getText() + "%' and 作者 like '%" + InputAuthor.getText() + "%' and 出版社 like '%" + InputPublishName.getText() + "%'";
         String PublishDate1 = InputPublishDate_1.getText(),PublishDate2 = InputPublishDate_2.getText();
@@ -226,6 +278,11 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         });
 
         btnBorrowReturn.setText("借书");
+        btnBorrowReturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrowReturnActionPerformed(evt);
+            }
+        });
 
         btnRenew.setText("续借");
         btnRenew.addActionListener(new java.awt.event.ActionListener() {
@@ -417,6 +474,8 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
 
     private void btnRenewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRenewActionPerformed
         // TODO add your handling code here:
+        renew();
+        setAllTable();
     }//GEN-LAST:event_btnRenewActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -448,8 +507,15 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPaneStateChanged
 
     private void AlterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterPasswordActionPerformed
-           new FrmAlterPassword();     // TODO add your handling code here:
+          FrmAlterPassword frame=new FrmAlterPassword();
+          frame.setVisible(true);
+          frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
     }//GEN-LAST:event_AlterPasswordActionPerformed
+
+    private void btnBorrowReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrowReturnActionPerformed
+        // TODO add your handling code here:
+        borrowandreturn();
+    }//GEN-LAST:event_btnBorrowReturnActionPerformed
 
     /**
      * @param args the command line arguments
