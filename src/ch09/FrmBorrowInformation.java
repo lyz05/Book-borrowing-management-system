@@ -19,14 +19,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrmBorrowInformation extends javax.swing.JFrame {
     private String readerNO = "R2005001";//当前登陆用户的ReaderNO
-
+    private JTable nowJTable;
     /**
      * Creates new form FrmBorrowInformation
      */
     public FrmBorrowInformation() {
         initComponents();
         //默认界面丑拒，换成Windows默认界面
-        Util4Frm.setUI(this);
+        //Util4Frm.setUI(this);
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             SwingUtilities.updateComponentTreeUI(this);
@@ -81,10 +81,10 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         InputPublishDate_2 = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         Select = new javax.swing.JButton();
-        BorrowBook = new javax.swing.JButton();
-        ReturnBook = new javax.swing.JButton();
+        btnBorrowReturn = new javax.swing.JButton();
+        btnRenew = new javax.swing.JButton();
         AlterPassword = new javax.swing.JButton();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
+        jTabbedPane = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -225,16 +225,27 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             }
         });
 
-        BorrowBook.setText("借书");
+        btnBorrowReturn.setText("借书");
 
-        ReturnBook.setText("还书");
-        ReturnBook.addActionListener(new java.awt.event.ActionListener() {
+        btnRenew.setText("续借");
+        btnRenew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReturnBookActionPerformed(evt);
+                btnRenewActionPerformed(evt);
             }
         });
 
         AlterPassword.setText("修改密码");
+        AlterPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlterPasswordActionPerformed(evt);
+            }
+        });
+
+        jTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPaneStateChanged(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -255,7 +266,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jTabbedPane3.addTab("当前借阅", jScrollPane1);
+        jTabbedPane.addTab("当前借阅", jScrollPane1);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -276,7 +287,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        jTabbedPane3.addTab("历史借阅", jScrollPane2);
+        jTabbedPane.addTab("历史借阅", jScrollPane2);
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -298,7 +309,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTable3);
 
-        jTabbedPane3.addTab("图书信息", jScrollPane3);
+        jTabbedPane.addTab("图书信息", jScrollPane3);
 
         Right.setText(">");
         Right.addActionListener(new java.awt.event.ActionListener() {
@@ -308,6 +319,11 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         });
 
         Left.setText("<");
+        Left.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LeftActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -320,13 +336,13 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTabbedPane3)
+                    .addComponent(jTabbedPane)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(Select)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BorrowBook)
+                        .addComponent(btnBorrowReturn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ReturnBook)
+                        .addComponent(btnRenew)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AlterPassword)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -347,16 +363,18 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                     .addComponent(Left)
                     .addComponent(Right)
                     .addComponent(Select)
-                    .addComponent(BorrowBook)
-                    .addComponent(ReturnBook)
+                    .addComponent(btnBorrowReturn)
+                    .addComponent(btnRenew)
                     .addComponent(AlterPassword))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jLayeredPane1.getAccessibleContext().setAccessibleName("过滤器1");
-        jTabbedPane3.getAccessibleContext().setAccessibleDescription("");
+        btnRenew.getAccessibleContext().setAccessibleName("");
+        btnRenew.getAccessibleContext().setAccessibleDescription("");
+        jTabbedPane.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -390,20 +408,48 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     private void SelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectActionPerformed
         // TODO add your handling code here:
         setAllTable();
-
     }//GEN-LAST:event_SelectActionPerformed
 
     private void RightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RightActionPerformed
-        // TODO add your handling code here:
+        //按下右键按钮
+        Util4Frm.moveFormRow(nowJTable, 1);
     }//GEN-LAST:event_RightActionPerformed
 
-    private void ReturnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnBookActionPerformed
+    private void btnRenewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRenewActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ReturnBookActionPerformed
+    }//GEN-LAST:event_btnRenewActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void LeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeftActionPerformed
+        // 按下左键按钮
+        Util4Frm.moveFormRow(nowJTable, -1);
+    }//GEN-LAST:event_LeftActionPerformed
+
+    private void jTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneStateChanged
+        // TODO add your handling code here:
+        if (jTabbedPane.getSelectedIndex() == 0) {
+            btnBorrowReturn.setText("还书");
+            btnBorrowReturn.setEnabled(true);
+            btnRenew.setEnabled(true);
+            nowJTable = jTable1;
+        }else if (jTabbedPane.getSelectedIndex()==1){
+            btnBorrowReturn.setEnabled(false);
+            btnRenew.setEnabled(false);
+            nowJTable =jTable2;
+        } else if (jTabbedPane.getSelectedIndex()==2) {
+            btnBorrowReturn.setText("借书");
+            btnBorrowReturn.setEnabled(true);
+            btnRenew.setEnabled(false);
+            nowJTable = jTable3;
+        }
+    }//GEN-LAST:event_jTabbedPaneStateChanged
+
+    private void AlterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterPasswordActionPerformed
+           new FrmAlterPassword();     // TODO add your handling code here:
+    }//GEN-LAST:event_AlterPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -445,7 +491,6 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     private javax.swing.JLabel Author;
     private javax.swing.JLabel BookName;
     private javax.swing.JLabel BookNo;
-    private javax.swing.JButton BorrowBook;
     private javax.swing.JLabel Hello;
     private javax.swing.JTextField InputAuthor;
     private javax.swing.JTextField InputBookName;
@@ -456,10 +501,11 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     private javax.swing.JButton Left;
     private javax.swing.JLabel Press;
     private javax.swing.JLabel PublishDate;
-    private javax.swing.JButton ReturnBook;
     private javax.swing.JButton Right;
     private javax.swing.JButton Select;
     private javax.swing.JLabel To;
+    private javax.swing.JButton btnBorrowReturn;
+    private javax.swing.JButton btnRenew;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
@@ -467,7 +513,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;

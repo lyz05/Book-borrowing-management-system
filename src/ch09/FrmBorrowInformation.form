@@ -54,13 +54,13 @@
                           <Component id="Hello" min="-2" pref="123" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jTabbedPane3" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jTabbedPane" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="Select" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="BorrowBook" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBorrowReturn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="ReturnBook" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnRenew" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="AlterPassword" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -85,12 +85,12 @@
                       <Component id="Left" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Right" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Select" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="BorrowBook" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ReturnBook" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBorrowReturn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnRenew" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="AlterPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
-                  <Component id="jTabbedPane3" min="-2" pref="231" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jTabbedPane" min="-2" pref="231" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -273,28 +273,38 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SelectActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="BorrowBook">
+        <Component class="javax.swing.JButton" name="btnBorrowReturn">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x501f;&#x4e66;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="ReturnBook">
+        <Component class="javax.swing.JButton" name="btnRenew">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x8fd8;&#x4e66;"/>
+            <Property name="text" type="java.lang.String" value="&#x7eed;&#x501f;"/>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
+          </AccessibilityProperties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ReturnBookActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRenewActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="AlterPassword">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x4fee;&#x6539;&#x5bc6;&#x7801;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AlterPasswordActionPerformed"/>
+          </Events>
         </Component>
-        <Container class="javax.swing.JTabbedPane" name="jTabbedPane3">
+        <Container class="javax.swing.JTabbedPane" name="jTabbedPane">
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
           </AccessibilityProperties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPaneStateChanged"/>
+          </Events>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
@@ -549,6 +559,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LeftActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -8,6 +8,7 @@ package ch09;
 
 import java.awt.Component;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -33,5 +34,17 @@ public class Util4Frm {
         BookDBCon. queryVector2(sql,data,name);
         DefaultTableModel model = new DefaultTableModel(data, name);
         jtable.setModel(model);
+    }
+    
+    //移动超级列表框当前选中行
+    public static void moveFormRow(JTable jtable,int dis)
+    {
+        int tmp =  jtable.getSelectedRow() + dis;
+        if (tmp<0) {
+            JOptionPane.showMessageDialog(null,"已经是第一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        } else if (tmp>=jtable.getRowCount()) {
+            JOptionPane.showMessageDialog(null,"已经是最后一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        } else 
+        jtable.setRowSelectionInterval(tmp, tmp);
     }
 }
