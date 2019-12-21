@@ -110,6 +110,7 @@ public class FrmLogin extends javax.swing.JFrame {
         InputReaderNum.getAccessibleContext().setAccessibleParent(InputReaderNum);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void InputReaderNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputReaderNumActionPerformed
