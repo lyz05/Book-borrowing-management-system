@@ -206,7 +206,7 @@ public class FrmBookManager extends javax.swing.JFrame {
                     .addComponent(Right))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(119, 119, 119))
+                .addGap(25, 25, 25))
         );
 
         pack();
