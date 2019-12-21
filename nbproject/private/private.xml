@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/叶荣锋/Documents/GitHub/Book-borrowing-management-system/src/ch09/FrmLogin.java</file>
-            <file>file:/C:/Users/叶荣锋/Documents/GitHub/Book-borrowing-management-system/src/ch09/FrmBorrowInformation.java</file>
-            <file>file:/C:/Users/叶荣锋/Documents/GitHub/Book-borrowing-management-system/src/ch09/FrmBookManager.java</file>
-            <file>file:/C:/Users/叶荣锋/Documents/GitHub/Book-borrowing-management-system/src/ch09/FrmReaderInformation.java</file>
+            <file>file:/D:/git/Book-borrowing-management-system/src/ch09/FrmBorrowInformation.java</file>
+            <file>file:/D:/git/Book-borrowing-management-system/src/ch09/FrmAlterPassword.java</file>
+            <file>file:/D:/git/Book-borrowing-management-system/src/ch09/FrmStudent.java</file>
+            <file>file:/D:/git/Book-borrowing-management-system/src/ch09/FrmBookManager.java</file>
+            <file>file:/D:/git/Book-borrowing-management-system/src/ch09/FrmLogin.java</file>
+            <file>file:/D:/git/Book-borrowing-management-system/src/ch09/FrmReaderInformation.java</file>
         </group>
     </open-files>
 </project-private>
