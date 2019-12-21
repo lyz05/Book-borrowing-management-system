@@ -42,6 +42,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -65,32 +66,82 @@
                                   <Component id="Reset" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                               </Group>
+=======
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="ReaderNo" min="-2" max="-2" attributes="0"/>
+                              <Component id="Password" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jPasswordField1" max="32767" attributes="0"/>
+                              <Component id="InputReaderNum" min="-2" pref="215" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace pref="32" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="KeepPassword" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="Login" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="AutoLogin" min="-2" max="-2" attributes="0"/>
+                              <Component id="FindPassword" min="-2" max="-2" attributes="0"/>
+>>>>>>> 49c7c0747ca9d81e4835e9da2ec8aa02aea42b07
+                          </Group>
+                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="26" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+<<<<<<< HEAD
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+=======
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+>>>>>>> 49c7c0747ca9d81e4835e9da2ec8aa02aea42b07
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="InputReaderNum" max="32767" attributes="0"/>
-                      <Component id="ReaderNo" max="32767" attributes="0"/>
+                      <Component id="ReaderNo" min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="Password" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jPasswordField1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+<<<<<<< HEAD
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="Reset" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Login" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="50" max="32767" attributes="0"/>
+=======
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="KeepPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="AutoLogin" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="Login" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="FindPassword" min="-2" pref="35" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
+>>>>>>> 49c7c0747ca9d81e4835e9da2ec8aa02aea42b07
               </Group>
           </Group>
         </DimensionLayout>
