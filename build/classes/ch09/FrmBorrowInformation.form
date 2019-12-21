@@ -46,29 +46,30 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="Hello" min="-2" pref="55" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="Select" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="BorrowBook" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="ReturnBook" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="AlterPassword" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="Left" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="Right" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLayeredPane1" min="-2" pref="613" max="-2" attributes="0"/>
-                          <Component id="jTabbedPane3" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLayeredPane1" pref="877" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="Hello" min="-2" pref="123" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jTabbedPane3" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="Select" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="BorrowBook" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="ReturnBook" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="AlterPassword" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="Left" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="Right" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -143,25 +144,32 @@
                           </Group>
                           <Component id="Author" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="33" pref="33" max="-2" attributes="0"/>
+                      <EmptySpace pref="261" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jCheckBox1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="Press" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="InputPress" max="32767" attributes="0"/>
+                              <Component id="InputPublishName" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="PublishDate" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="InputPublishDate_2" min="-2" pref="95" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="PublishDate" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="InputPublishDate_1" min="-2" pref="101" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                               <Component id="To" min="-2" pref="21" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="InputPublishDate_1" min="-2" pref="101" max="-2" attributes="0"/>
+                              <Component id="InputPublishDate_2" min="-2" pref="95" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="21" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -173,16 +181,16 @@
                           <Component id="BookNo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="InputBookNo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="Press" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="InputPress" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="InputPublishName" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="BookName" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="InputBookName" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="PublishDate" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="InputPublishDate_2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="To" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="InputPublishDate_1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="InputPublishDate_2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -212,9 +220,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="InputBookNo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value=" "/>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputBookNoActionPerformed"/>
               </Events>
@@ -238,9 +243,9 @@
                 <Property name="text" type="java.lang.String" value="&#x51fa;&#x7248;&#x793e;&#xff1a;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="InputPress">
+            <Component class="javax.swing.JTextField" name="InputPublishName">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputPressActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputPublishNameActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="To">

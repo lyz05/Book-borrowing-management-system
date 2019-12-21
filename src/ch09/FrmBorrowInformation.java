@@ -6,33 +6,54 @@
 
 package ch09;
 
+import java.util.*;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author 叶荣锋
  */
 public class FrmBorrowInformation extends javax.swing.JFrame {
+    private String readerNO = "R2005001";//当前登陆用户的ReaderNO
 
     /**
      * Creates new form FrmBorrowInformation
      */
     public FrmBorrowInformation() {
         initComponents();
+        //默认界面丑拒，换成Windows默认界面
+        Util4Frm.setUI(this);
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             SwingUtilities.updateComponentTreeUI(this);
         } catch(Exception err) {
             System.out.println("捕获异常:"+err);
-	}
-//        Select.setRolloverEnabled(true);
-//        if(Select.getText()=="查阅"){
-//            Select.setText("节约"); 
-//    }
-        
+        }
+        Hello.setText("您好，"+BookDBCon.sqlQueryResult("select readerName from Reader where readerNO='"+readerNO + "'"));
+        setAllTable();
     }
-
+    
+    //刷新三张表的数据
+    private void setAllTable(){
+        //刷新当前借阅表
+        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ readerNO + "' and 归还日期 is null", jTable1);
+        //刷新历史借阅表
+        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ readerNO + "' and 归还日期 is not null", jTable2);
+        //刷新图书信息表
+        String sql = "select * from View_Book where 图书编号 like '%"+ InputBookNo.getText() + "%' and 图书名称 like '%" + InputBookName.getText() + "%' and 作者 like '%" + InputAuthor.getText() + "%' and 出版社 like '%" + InputPublishName.getText() + "%'";
+        String PublishDate1 = InputPublishDate_1.getText(),PublishDate2 = InputPublishDate_2.getText();
+        if (!PublishDate1.equals("")) 
+            sql += " and 出版日期>='" + PublishDate1+"'";
+        if (!PublishDate2.equals("")) 
+            sql += " and 出版日期<='" + PublishDate2+"'";
+        if (jCheckBox1.isSelected())
+            sql += " and 在库数量>0";
+        Util4Frm.setFormdata(sql,jTable3);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,7 +76,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         PublishDate = new javax.swing.JLabel();
         InputPublishDate_1 = new javax.swing.JTextField();
         Press = new javax.swing.JLabel();
-        InputPress = new javax.swing.JTextField();
+        InputPublishName = new javax.swing.JTextField();
         To = new javax.swing.JLabel();
         InputPublishDate_2 = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
@@ -90,7 +111,6 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
 
         Author.setText("作者：");
 
-        InputBookNo.setText(" ");
         InputBookNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InputBookNoActionPerformed(evt);
@@ -107,9 +127,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
 
         Press.setText("出版社：");
 
-        InputPress.addActionListener(new java.awt.event.ActionListener() {
+        InputPublishName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InputPressActionPerformed(evt);
+                InputPublishNameActionPerformed(evt);
             }
         });
 
@@ -139,22 +159,26 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(InputBookNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Author))
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jCheckBox1)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addComponent(Press)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(InputPress))
+                        .addComponent(InputPublishName))
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addComponent(PublishDate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(InputPublishDate_2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(jCheckBox1)
+                                .addGap(41, 41, 41))
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(PublishDate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(InputPublishDate_1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addComponent(To, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(InputPublishDate_1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(InputPublishDate_2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(57, 57, 57))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,15 +188,15 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                     .addComponent(BookNo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(InputBookNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Press)
-                    .addComponent(InputPress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(InputPublishName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BookName)
                     .addComponent(InputBookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PublishDate)
-                    .addComponent(InputPublishDate_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(To)
-                    .addComponent(InputPublishDate_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(InputPublishDate_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InputPublishDate_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(InputAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,7 +213,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         jLayeredPane1.setLayer(PublishDate, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(InputPublishDate_1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(Press, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(InputPress, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(InputPublishName, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(To, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(InputPublishDate_2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jCheckBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -292,23 +316,24 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(Select)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(BorrowBook)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ReturnBook)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(AlterPassword)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Left)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Right))
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTabbedPane3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane3)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Select)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BorrowBook)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ReturnBook)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AlterPassword)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Left)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Right)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,13 +383,13 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_InputPublishDate_1ActionPerformed
 
-    private void InputPressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputPressActionPerformed
+    private void InputPublishNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputPublishNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_InputPressActionPerformed
+    }//GEN-LAST:event_InputPublishNameActionPerformed
 
     private void SelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectActionPerformed
         // TODO add your handling code here:
-        
+        setAllTable();
 
     }//GEN-LAST:event_SelectActionPerformed
 
@@ -425,9 +450,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     private javax.swing.JTextField InputAuthor;
     private javax.swing.JTextField InputBookName;
     private javax.swing.JTextField InputBookNo;
-    private javax.swing.JTextField InputPress;
     private javax.swing.JTextField InputPublishDate_1;
     private javax.swing.JTextField InputPublishDate_2;
+    private javax.swing.JTextField InputPublishName;
     private javax.swing.JButton Left;
     private javax.swing.JLabel Press;
     private javax.swing.JLabel PublishDate;

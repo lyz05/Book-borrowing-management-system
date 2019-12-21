@@ -89,6 +89,7 @@ public class FrmStudent extends javax.swing.JFrame {
     void showTableData(){
         //在表格显式数据
         dtm.setDataVector(data2, title);
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
