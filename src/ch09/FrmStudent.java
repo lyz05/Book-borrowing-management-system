@@ -24,6 +24,7 @@ public class FrmStudent extends javax.swing.JFrame {
     //定义带滚动条的面板
     JScrollPane scp=new JScrollPane();
     int row=0;
+    char op;
     /**
      * Creates new form FrmStudent
      */
@@ -34,7 +35,7 @@ public class FrmStudent extends javax.swing.JFrame {
        
         //显式表格
         scp.setViewportView(tbl);
-        scp.setBounds(20,150,350,250);
+        scp.setBounds(20,190,370,250);
         //加入到窗口的内容面板里
         this.getContentPane().add(scp);
         //准备表头
@@ -56,9 +57,12 @@ public class FrmStudent extends javax.swing.JFrame {
         
          //调用文本框显式数据
         showTextData2(row);
-        
+        if(data2!=null && data2.size()>0){//有数据才显示
         //表格中的同行数据要被选中
-        tbl.setRowSelectionInterval(row, row);
+         tbl.setRowSelectionInterval(row, row);
+        }
+
+        radNull.setVisible(false);
     }
    /* //在文本框显式数据
     void showTextData(int index){
@@ -74,21 +78,64 @@ public class FrmStudent extends javax.swing.JFrame {
     }*/
     //在文本框显式数据(调用二维Vector)
     void showTextData2(int index){
-        Vector line=(Vector)data2.get(index);
-        txtStuID.setText(line.get(0).toString());
-        txtStuName.setText(line.get(1).toString());
-        txtBirthday.setText(line.get(3).toString().substring(0,10));
-        if(line.get(2).toString().equals("男")){
-            radMan.setSelected(true);
+        if(data2!=null && data2.size()>0){//有数据才显示
+            Vector line=(Vector)data2.get(index);
+            txtStuID.setText(line.get(0).toString());
+            txtStuName.setText(line.get(1).toString());
+            txtBirthday.setText(line.get(3).toString().substring(0,10));
+            if(line.get(2).toString().equals("男")){
+                radMan.setSelected(true);
+            }else{
+                radWoman.setSelected(true);
+            }
         }else{
-            radWoman.setSelected(true);
-        } 
+            clearAll();
+            JOptionPane.showMessageDialog(null,"现在还没有数据","系统警告",JOptionPane.WARNING_MESSAGE);
+        }
+        lock();
     }
+    
+    //锁定文本框
+    void lock(){
+        txtStuID.setEnabled(false);
+        txtStuName.setEnabled(false);
+        txtBirthday.setEnabled(false);
+        radMan.setEnabled(false);
+        radWoman.setEnabled(false);
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(true);
+        btnDelete.setEnabled(true);
+        btnSave.setEnabled(false);
+        btnCancel.setEnabled(false);
+    }
+    //解锁文本框
+    void unlock(){
+        txtStuID.setEnabled(true);
+        txtStuName.setEnabled(true);
+        txtBirthday.setEnabled(true);
+        radMan.setEnabled(true);
+        radWoman.setEnabled(true);
+        btnAdd.setEnabled(false);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        btnSave.setEnabled(true);
+        btnCancel.setEnabled(true);
+    }
+    //清空
+    void clearAll(){
+        txtStuID.setText("");
+        txtStuName.setText("");
+        txtBirthday.setText("");
+        radNull.setSelected(true);
+    }
+    
     
     //在表格显式数据
     void showTableData(){
-        //在表格显式数据
-        dtm.setDataVector(data2, title);
+       if(data2!=null && data2.size()>0){//有数据才显示
+            //在表格显式数据
+            dtm.setDataVector(data2, title);
+       }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,9 +160,22 @@ public class FrmStudent extends javax.swing.JFrame {
         btnPre = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         btnLast = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        radNull = new javax.swing.JRadioButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mnuSystem = new javax.swing.JMenu();
+        mnuNew = new javax.swing.JMenuItem();
+        mnuExit = new javax.swing.JMenuItem();
+        mnuStudent = new javax.swing.JMenu();
+        mnuStudentMag = new javax.swing.JMenuItem();
+        mnuStudentQuery = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("学生信息管理");
+        setTitle("学生信息维护");
 
         lblStuID.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
         lblStuID.setText("学号");
@@ -171,14 +231,102 @@ public class FrmStudent extends javax.swing.JFrame {
             }
         });
 
+        btnAdd.setText("添加");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        btnSave.setText("保存");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btngrpSex.add(radNull);
+
+        btnUpdate.setText("修改");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("删除");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnCancel.setText("取消");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        mnuSystem.setText("系统");
+
+        mnuNew.setText("新建");
+        mnuSystem.add(mnuNew);
+
+        mnuExit.setText("退出");
+        mnuExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuExitActionPerformed(evt);
+            }
+        });
+        mnuSystem.add(mnuExit);
+
+        jMenuBar1.add(mnuSystem);
+
+        mnuStudent.setText("学生信息管理");
+
+        mnuStudentMag.setText("学生信息维护");
+        mnuStudentMag.setToolTipText("");
+        mnuStudent.add(mnuStudentMag);
+
+        mnuStudentQuery.setText("学生信息查询");
+        mnuStudentQuery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuStudentQueryActionPerformed(evt);
+            }
+        });
+        mnuStudent.add(mnuStudentQuery);
+
+        jMenuBar1.add(mnuStudent);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addComponent(btnFirst)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNext)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLast))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancel))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblStuID)
@@ -187,9 +335,12 @@ public class FrmStudent extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblSex)
                                 .addGap(18, 18, 18)
-                                .addComponent(radMan)
-                                .addGap(18, 18, 18)
-                                .addComponent(radWoman)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(radNull)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(radMan)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(radWoman)))))
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -199,22 +350,13 @@ public class FrmStudent extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblStuName)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtStuName, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnFirst)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnNext)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLast)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                                .addComponent(txtStuName, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStuID)
                     .addComponent(txtStuID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,13 +369,22 @@ public class FrmStudent extends javax.swing.JFrame {
                     .addComponent(txtBirthday, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(radWoman)
                     .addComponent(lblSex))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radNull)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFirst)
                     .addComponent(btnPre)
                     .addComponent(btnNext)
                     .addComponent(btnLast))
-                .addContainerGap(339, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnSave)
+                    .addComponent(btnDelete)
+                    .addComponent(btnCancel))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
 
         pack();
@@ -281,6 +432,108 @@ public class FrmStudent extends javax.swing.JFrame {
         //表格中的同行数据要被选中
         tbl.setRowSelectionInterval(row, row);
     }//GEN-LAST:event_btnLastActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        //清空
+        clearAll();
+        //解锁
+        unlock();
+        op='a';
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        //--1 保存文本框中的数据到变量
+        String stuID=txtStuID.getText();
+        String stuName=txtStuName.getText();
+        String stuBirth=txtBirthday.getText();
+        String sex;
+        if(radMan.isSelected()){
+            sex="男";
+        }else{
+            sex="女";
+        }
+        String sql="";
+        switch(op){
+            case 'a': //添加
+                //--2 写出添加数据的SQL语句
+                sql="insert Student (stuId,stuName,sex,birth)" +
+                    " values('"+ stuID +"','"+stuName+"','"+sex+"','"+stuBirth+"')";
+                break;
+            case 'u': //修改
+                //--2 写出添加数据的SQL语句
+                sql="update Student set stuName='"+stuName+"',sex='"+sex+"', birth='"+stuBirth+
+                     "' where stuID='"+stuID+"'";
+                break;
+        }
+        
+        System.out.println(sql);
+        
+        //--3 调用DBCon里的方法来执行SQL语句
+        if(DBCon.updateData(sql)){//保存数据成功
+            //--4 刷新数据
+            //准备数据
+            data2=DBCon.queryVectorStudents("Select * from Student");
+            //再次文本框显示数据
+            row=0;
+            showTextData2(row);
+            //再次表中刷新数据
+            dtm.setDataVector(data2, title);          
+            //弹出对话框
+            JOptionPane.showMessageDialog(null,"保存数据成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        //--1 解锁
+        unlock();
+        txtStuID.setEnabled(false);
+        //--2 保存数据
+        op='u';
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // 确认的对话框
+        if(JOptionPane.showConfirmDialog(null,"你确认删除该条数据吗？","确认删除",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION){
+            //保存要删除的学生的学号
+            String stuID=txtStuID.getText();
+            String sql="delete from Student where stuID='"+stuID+"'";
+            if(DBCon.updateData(sql)){              
+                JOptionPane.showMessageDialog(null,"删除数据成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+                //刷新数据
+                //--4 刷新数据
+                //准备数据
+                data2=DBCon.queryVectorStudents("Select * from Student");
+                //再次文本框显示数据
+                row=0;
+                showTextData2(row);
+                //再次表中刷新数据
+                dtm.setDataVector(data2, title); 
+            }else{
+                JOptionPane.showMessageDialog(null,"删除数据失败","系统提示",JOptionPane.INFORMATION_MESSAGE);
+
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        lock();
+        showTextData2(row);
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void mnuStudentQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuStudentQueryActionPerformed
+        //打开学生信息查询的界面
+        FrmQuery frame=new FrmQuery();
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_mnuStudentQueryActionPerformed
+
+    private void mnuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExitActionPerformed
+        // 回到登录界面
+        FrmLogin frame = new FrmLogin();
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_mnuExitActionPerformed
     //表格点击事件处理方法
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {                                 
         //获得鼠标选中的行号（索引）
@@ -324,16 +577,29 @@ public class FrmStudent extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnFirst;
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPre;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup btngrpSex;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblBirthday;
     private javax.swing.JLabel lblSex;
     private javax.swing.JLabel lblStuID;
     private javax.swing.JLabel lblStuName;
+    private javax.swing.JMenuItem mnuExit;
+    private javax.swing.JMenuItem mnuNew;
+    private javax.swing.JMenu mnuStudent;
+    private javax.swing.JMenuItem mnuStudentMag;
+    private javax.swing.JMenuItem mnuStudentQuery;
+    private javax.swing.JMenu mnuSystem;
     private javax.swing.JRadioButton radMan;
+    private javax.swing.JRadioButton radNull;
     private javax.swing.JRadioButton radWoman;
     private javax.swing.JTextField txtBirthday;
     private javax.swing.JTextField txtStuID;
