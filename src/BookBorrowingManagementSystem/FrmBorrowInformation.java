@@ -37,6 +37,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         Hello.setText("您好，"+BookDBCon.queryResult("select readerName from Reader where readerNO='"+Util4Frm.readerNO + "'"));
         refreshBorrowTable("");
     }
+    /**
+     * 重置所有文本框
+     */
     private void resetTextfiled(){
         InputBookNo.setText("");
         InputBookName.setText("");
@@ -45,6 +48,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         InputPublishDate_1.setText("");
         InputPublishDate_2.setText("");
     }
+    /**
+     * 三个jTable表格的表头监听器，用于排序
+     */
     private void jTableHeaderListen(){
         final JTableHeader header1 = jTable1.getTableHeader();
         header1.addMouseListener (new MouseAdapter() {
@@ -78,7 +84,11 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         });
     }
     
-    //获取当前选中书籍的BookNo
+
+    /**
+     * 获取当前选中书籍的BookNo
+     * @return 返回BookNO
+     */
     private String getbookno()
     {
          if (nowJTable.getSelectedRow()==-1) {
@@ -88,7 +98,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         return (String) nowJTable.getValueAt(nowJTable.getSelectedRow(), 0);
     }
     
-    //借书还书操作
+    /**
+     * 借书还书操作
+     */
     private void borrowandreturn()
     {
         if (getbookno()==null) return;
@@ -117,7 +129,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
        
     }
     
-    //续借操作
+    /**
+     * 续借操作
+     */
     private void renew()
     {
         if (nowJTable.getSelectedRow()==-1) {
@@ -133,16 +147,25 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         
     }
     
+    /**
+     * 刷新当前借阅表
+     * @param appendsql 追加的sql
+     */
     private void refreshBorrowTable(String appendsql){
-         //刷新当前借阅表
         Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is null"+appendsql, jTable1);
     }
+    /**
+     * 刷新历史借阅表
+     * @param appendsql 追加的sql
+     */
     private void refreshBorrowHistoryTable(String appendsql){ 
-        //刷新历史借阅表
         Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is not null"+appendsql, jTable2);
     }
+    /**
+     * 刷新图书信息表
+     * @param appendsql 追加的sql
+     */
     private void refreshBookTable(String appendsql){ 
-        //刷新图书信息表
         String sql = "select * from View_Book where 图书编号 like '%"+ InputBookNo.getText() + "%' and 图书名称 like '%" + InputBookName.getText() + "%' and 作者 like '%" + InputAuthor.getText() + "%' and 出版社 like '%" + InputPublishName.getText() + "%'";
         String PublishDate1 = InputPublishDate_1.getText(),PublishDate2 = InputPublishDate_2.getText();
         if (!PublishDate1.equals("")) 
@@ -525,6 +548,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
 
     private void SelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectActionPerformed
         // TODO add your handling code here:
+        //查询按钮
         refreshBookTable("");
     }//GEN-LAST:event_SelectActionPerformed
 
@@ -535,6 +559,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
 
     private void btnRenewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRenewActionPerformed
         // TODO add your handling code here:
+        //续借按钮
         renew();
         refreshBorrowTable("");
     }//GEN-LAST:event_btnRenewActionPerformed
@@ -572,18 +597,21 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPaneStateChanged
 
     private void AlterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterPasswordActionPerformed
-          FrmAlterPassword frame=new FrmAlterPassword();
-          frame.setVisible(true);
-          frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
+        //修改密码按钮
+        FrmAlterPassword frame=new FrmAlterPassword();
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
     }//GEN-LAST:event_AlterPasswordActionPerformed
 
     private void btnBorrowReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrowReturnActionPerformed
         // TODO add your handling code here:
+        //借书按钮
         borrowandreturn();
     }//GEN-LAST:event_btnBorrowReturnActionPerformed
 
     private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
         // TODO add your handling code here:
+        //重置按钮
         resetTextfiled();
         refreshBookTable("");
     }//GEN-LAST:event_ResetActionPerformed

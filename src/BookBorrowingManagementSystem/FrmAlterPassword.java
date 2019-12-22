@@ -140,6 +140,9 @@ public class FrmAlterPassword extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_InputReaderNoActionPerformed
 
+    /**
+     * 修改密码按钮
+     */
     private void AlterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterPasswordActionPerformed
         // TODO add your handling code here:
         String username = InputReaderNo.getText();

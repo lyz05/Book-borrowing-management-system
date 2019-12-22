@@ -55,14 +55,16 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Add" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Delete" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Refresh" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Left" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Right" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Alter" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="Reset" alignment="1" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="Add" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Delete" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Refresh" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Left" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Right" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Alter" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="315" max="-2" attributes="0"/>

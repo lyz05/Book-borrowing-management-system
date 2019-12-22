@@ -32,7 +32,9 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         
     }
     
-    //注册表头监听器
+    /**
+     * 注册jTable表头监听器，用于排序
+     */
     private void jTableHeaderListen(){
         final JTableHeader header1 = jTable1.getTableHeader();
         header1.addMouseListener (new MouseAdapter() {
@@ -46,11 +48,19 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         });
 
     }
-    //编辑框是否为空
+    
+    /**
+     * 编辑框是否为空
+     * @return 是否为空
+     */
     private boolean textFiledIsNull(){
         return InputReaderNo.getText().equals("") || InputReaderName.getText().equals("") || InputIdNum.getText().equals("") || InputWorkUnit.getText().equals("");
     }
-    //刷新读者信息
+    
+    /**
+     * 刷新读者信息
+     * @param appendsql 追加的sql文本
+     */
     private void RefreshReaderInformation(String appendsql) {
         Util4Frm.setFormdata("select * from View_Reader where 读者编号 like '%"+InputReaderNo.getText()+"%' and 读者姓名 like '%"+InputReaderName.getText()+"%' and 性别 like '%"+ChooseSex.getSelectedItem()+"%' and 身份证号 like '%"+InputIdNum.getText()+"%' and 工作单位 like '%"+InputWorkUnit.getText()+"%'"+appendsql,jTable1);
     }
@@ -328,7 +338,9 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_InputReaderNameActionPerformed
 
-    //插入记录
+    /**
+     * 插入记录
+     */
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
          if (textFiledIsNull()){
@@ -360,7 +372,10 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         Util4Frm.moveFormRow(jTable1, 1);
     }//GEN-LAST:event_RightActionPerformed
     
-    //获取当前选中读者的ReaderNo
+    /**
+     * 获取当前选中读者的ReaderNo
+     * @return 返回ReaderNo
+     */
     private String getreaderno()
     {
          if (jTable1.getSelectedRow()==-1) {
@@ -369,6 +384,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         }
         return (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
     }
+    
     private void ResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetPasswordActionPerformed
         // TODO add your handling code here:
         if (getreaderno()==null) return;
@@ -380,7 +396,9 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ResetPasswordActionPerformed
 
-    //读记录到编辑框
+    /**
+     * 读记录到编辑框
+     */
     private void getdatatotextfiled(){
         InputReaderNo.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
         InputReaderName.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
@@ -390,7 +408,9 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         InputIdNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
         InputWorkUnit.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
     }
-    
+    /**
+     * 重置所有文本
+     */
     private void resetTextfiled(){
         InputReaderNo.setText("");
         InputReaderName.setText("");
@@ -400,7 +420,9 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         ChooseSex.setSelectedIndex(0);
     }
     
-    //修改保存按钮被点击
+    /**
+     * 修改保存按钮被点击
+     */
     private void AlterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterActionPerformed
         // TODO add your handling code here:
         if (Alter.getText().equals("修改")){
@@ -425,7 +447,9 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             Reset.setEnabled(true);
         }
     }//GEN-LAST:event_AlterActionPerformed
-    //删除记录
+    /**
+     * 删除记录
+     */
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
         if (getreaderno()==null || !Util4Frm.confirmdelete()) return;

@@ -127,9 +127,11 @@ public class FrmLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_InputReaderNumActionPerformed
 
+    /**
+     * 清空文本
+     */
     private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
         // TODO add your handling code here:
-        // 清空文本
         InputReaderNum.setText("");
         PasswordNum.setText("");
     }//GEN-LAST:event_ResetActionPerformed
@@ -137,6 +139,9 @@ public class FrmLogin extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
     }//GEN-LAST:event_formWindowOpened
 
+    /**
+     * 登陆方法 
+     */
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
         String username = InputReaderNum.getText();

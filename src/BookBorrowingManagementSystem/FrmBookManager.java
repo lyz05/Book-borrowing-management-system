@@ -28,7 +28,10 @@ public class FrmBookManager extends javax.swing.JFrame {
         Util4Frm.setUI(this);
         RefreshBookInformation("");
     }
-    //注册表头监听器
+    
+    /**
+     * 注册表头监听器
+     */
     private void jTableHeaderListen(){
         final JTableHeader header1 = jTable1.getTableHeader();
         header1.addMouseListener (new MouseAdapter() {
@@ -41,7 +44,11 @@ public class FrmBookManager extends javax.swing.JFrame {
             }
         });
     }
-    //获取当前选中书籍的BookNo
+
+    /**
+     * 获取当前选中书籍的BookNo
+     * @return 
+     */
     private String getbookno()
     {
          if (jTable1.getSelectedRow()==-1) {
@@ -50,11 +57,18 @@ public class FrmBookManager extends javax.swing.JFrame {
         }
         return (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
     }
-    //编辑框是否为空
+
+    /**
+     * 判断文本框是否为空
+     * @return 
+     */
     private boolean textFiledIsNull(){
         return InputBookNum.getText().equals("") || InputBookName.getText().equals("") || InputAuthor.getText().equals("") || InputPress.getText().equals("") || InputPrice.getText().equals("") || InputPublishdate.getText().equals("") || InputShopNum.getText().equals("");
     }
-    //重置编辑框
+
+    /**
+     * 重置编辑框
+     */
     private void resetTextfiled()
     {
         InputBookNum.setText("");
@@ -66,7 +80,9 @@ public class FrmBookManager extends javax.swing.JFrame {
         InputShopNum.setText(""); 
     }
     
-    //读记录到编辑框
+    /**
+     * 读记录到文本框
+     */
     private void getdatatotextfiled(){
         InputBookNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
         InputBookName.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
@@ -77,7 +93,10 @@ public class FrmBookManager extends javax.swing.JFrame {
         InputShopNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 6));
     }
     
-    //刷新图书信息
+    /**
+     * 刷新图书信息
+     * @param appendsql 追加的sql
+     */
     private void RefreshBookInformation(String appendsql){
         Util4Frm.setFormdata("select * from View_Book_Admin where 图书编号 like '%"+InputBookNum.getText()+"%' and 图书名称 like '%"+InputBookName.getText()+"%' and 作者 like '%"+InputAuthor.getText() +"%' and 出版社 like '%"+InputPress.getText()+"%'"+appendsql,jTable1);
     }
@@ -331,14 +350,15 @@ public class FrmBookManager extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Add)
-                    .addComponent(Delete)
-                    .addComponent(Refresh)
-                    .addComponent(Left)
-                    .addComponent(Right)
-                    .addComponent(Alter)
-                    .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Reset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Add)
+                        .addComponent(Delete)
+                        .addComponent(Refresh)
+                        .addComponent(Left)
+                        .addComponent(Right)
+                        .addComponent(Alter)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
@@ -402,6 +422,9 @@ public class FrmBookManager extends javax.swing.JFrame {
         Util4Frm.moveFormRow(jTable1, 1);
     }//GEN-LAST:event_RightActionPerformed
 
+    /**
+     * 修改保存按钮
+     */
     private void AlterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterActionPerformed
         if (Alter.getText().equals("修改")){
             if (getbookno()==null) return;
