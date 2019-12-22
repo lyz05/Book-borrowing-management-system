@@ -5,7 +5,6 @@
  */
 
 package ch09;
-<<<<<<< HEAD
 
 import java.sql.*;
 import java.util.*;
@@ -136,38 +135,17 @@ public class FrmLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-<<<<<<< HEAD
+
    
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
-        String readId=InputReaderNum.getText();
-        char[] pwds=PasswordNum.getPassword();
-        String pwdString=new String(pwds);
-        
-         if(readId!=null && readId.length()>0 && pwdString!=null && pwdString.length()>0){
-            //查询条件
-            String sql="select * from Reader where readerNO='"+readId+"' and password='"+pwdString+"'";
-           
-            System.out.println(sql);
-            
-            if(DBCon.checkLogin(sql)){
-                JOptionPane.showMessageDialog(null, "登录成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
-                //进入到主界面
-                FrmReaderInformation frame=new FrmReaderInformation();
-                frame.setVisible(true);
-                this.dispose(); //关闭当前登录窗口
-            }else{
-                 JOptionPane.showMessageDialog(null, "登录失败","系统提示",JOptionPane.ERROR_MESSAGE);
-            }
-        }
+
     }//GEN-LAST:event_LoginActionPerformed
-=======
+
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        // 清空
-        txtName.setText("");
-        pwd.setText("");
+
     }//GEN-LAST:event_btnResetActionPerformed
->>>>>>> b2b78bf0d16937cdd371d86f7e2220d7c2cd9014
+
 
     /**
      * @param args the command line arguments

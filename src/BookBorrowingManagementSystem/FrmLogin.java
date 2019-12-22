@@ -6,6 +6,8 @@
 
 package BookBorrowingManagementSystem;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 叶荣锋
@@ -124,13 +126,35 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
         // TODO add your handling code here:
+        // 清空
         InputReaderNum.setText("");
         PasswordNum.setText("");
     }//GEN-LAST:event_ResetActionPerformed
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
+        String readId=InputReaderNum.getText();
+        char[] pwds=PasswordNum.getPassword();
+        String pwdString=new String(pwds);
         
+         if(readId!=null && readId.length()>=0 && pwdString!=null && pwdString.length()>=0){
+            //查询条件
+            String sql="select * from Reader where readerNO='"+readId+"' and password='"+pwdString+"'";
+            System.out.println(sql);
+            if(BookDBCon.checkLogin(sql) ){
+                JOptionPane.showMessageDialog(null, "登录成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+                Util4Frm.readerNO=readId;
+                //进入到主界面
+                FrmBorrowInformation frame=new FrmBorrowInformation();
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
+                //this.dispose(); //关闭当前登录窗口
+            }else{
+                 JOptionPane.showMessageDialog(null, "登录失败","系统提示",JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+              JOptionPane.showMessageDialog(null, "获取到的字符串信息为空或长度非法","系统提示",JOptionPane.ERROR_MESSAGE);
+         }
     }//GEN-LAST:event_LoginActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
