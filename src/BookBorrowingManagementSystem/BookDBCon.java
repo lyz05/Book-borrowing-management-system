@@ -22,10 +22,12 @@ import javax.swing.JOptionPane;
  */
 public class BookDBCon {
 
-    private BookDBCon() {
-        //禁止实例化
-    }
-    //连接数据库
+    private BookDBCon() {} //禁止实例化
+    
+    /**
+     * 加载数据库驱动程序，以jdbc的方式连接数据库
+     * @return 返回连接信息
+     */
     public static Connection JdbcCon(){
         try{
             //--2 加载数据库驱动程序
@@ -46,8 +48,15 @@ public class BookDBCon {
         }
     }
     
-    //查询数据库第一行第一个数据
-    public static String sqlQueryResult(String sql){
+
+    /** 
+    * 查询数据库第一行第一个数据<br>
+    * 主要用于身份认证<br>
+    * @param sql 查询对应的sql语句 
+    * @return 返回找到的结果，null表示没有结果 
+    */ 
+    public static String queryResult(String sql){
+        
         System.out.println(sql);
         Connection conn=JdbcCon();
         Statement stmt; //会话对象
@@ -75,7 +84,14 @@ public class BookDBCon {
         }
     }
     
-    //返回二维Vector表格和一维字段信息
+
+    /** 
+    * 查询数据库表的完整信息<br>
+    * 主要用于jTable显示查询结果<br>
+    * @param sql 查询对应的sql语句 
+    * @param data 查询得到的每一条记录
+    * @param name 查询得到的字段名
+    */ 
     public static void queryVector2(String sql,Vector data,Vector name){
         System.out.println(sql);
         Connection conn=JdbcCon();
@@ -111,7 +127,12 @@ public class BookDBCon {
         }
     }
     
-    //执行数据添加、修改、删除数据方法
+    /**
+     * 执行数据添加、修改、删除数据方法
+     * 以对话框的形式显示执行失败时的异常信息
+     * @param sql 查询对应的sql语句 
+     * @return 是否成功执行sql语句
+     */
     public static boolean updateData(String sql){
         System.out.println(sql);
         Connection conn=JdbcCon(); //连接数据库
@@ -138,32 +159,4 @@ public class BookDBCon {
         }
     }
     
-        //验证登录的方法
-    public static boolean checkLogin(String sql){
-        Connection conn=JdbcCon();
-        Statement stmt; //会话对象
-        ResultSet rs; //结果集
-        boolean bln;
-        try{
-            //创建会话对象
-            stmt=conn.createStatement();
-            //执行SQL语句
-            rs=stmt.executeQuery(sql); // 只针对于select的SQL语句
-            Vector data=new Vector();
-            if(rs.next()){ //至少有一条数据
-                bln=true;
-            }else{
-                bln=false;
-            }
-            //关闭
-            rs.close();
-            stmt.close();
-            conn.close();
-            return bln;
-        }catch(SQLException ex){
-            ex.printStackTrace();
-            System.out.println("查询数据失败");
-            return false;
-        }
-    }
 }

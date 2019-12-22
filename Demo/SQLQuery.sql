@@ -43,6 +43,13 @@ CREATE TABLE Borrow
 	returnDate date
 )
 
+CREATE TABLE AdminUsers
+(
+	username char(8) primary key,
+	password char(256) not null
+)
+/*添加管理员账户*/
+insert AdminUsers values('admin','');
 
 /*图书表(Book)数据：*/
 INSERT INTO Book VALUES('B200101001','政治经济学','宋涛','中国人民大学出版社',31.80,'19910101',5);
@@ -198,6 +205,7 @@ select readerNO from Reader where readerNo='R2005001' and password=''
 
 delete from Borrow where bookNO='B200301002'
 select bookNO from book where shopNum=1;
+select * from AdminUsers
 select * from Reader;
 select * from Borrow;
 select * from book;

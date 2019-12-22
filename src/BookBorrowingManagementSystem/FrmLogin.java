@@ -129,50 +129,39 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
         // TODO add your handling code here:
-        // 清空
+        // 清空文本
         InputReaderNum.setText("");
         PasswordNum.setText("");
     }//GEN-LAST:event_ResetActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    }//GEN-LAST:event_formWindowOpened
+
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
-        String readId=InputReaderNum.getText();
-        char[] pwds=PasswordNum.getPassword();
-        String pwdString=new String(pwds);
+        String username = InputReaderNum.getText();
+        String pwd = new String(PasswordNum.getPassword());
         
-         if(readId!=null && readId.length()>=0 && pwdString!=null && pwdString.length()>=0){
-            //查询条件
-            String sql="select * from Reader where readerNO='"+readId+"' and password='"+pwdString+"'";
-            System.out.println(sql);
-            if(BookDBCon.checkLogin(sql) ){
-                Util4Frm.readerNO=readId;
+        if (BookDBCon.queryResult("select readerNO from Reader where readerNo='"+username+"' and password='"+pwd+"'") != null) {
+                Util4Frm.readerNO=username;
                 //进入到主界面
                 FrmBorrowInformation frame=new FrmBorrowInformation();
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
                 //this.dispose(); //关闭当前登录窗口
-            }else if (InputReaderNum.getText().equals("admin") && String.valueOf(PasswordNum.getPassword()).equals("admin") ){
+        }else if (BookDBCon.queryResult("select username from AdminUsers where username='"+username+"' and password='"+pwd+"'") != null){
                  //进入到管理员选择界面
                 if (JOptionPane.showConfirmDialog(null,"您好，管理员\n是 进入图书管理界面\n否 进入读者管理界面","系统提示",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION){
                     FrmBookManager frame=new FrmBookManager();
                     frame.setVisible(true);
                     frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
-                } else{
+                } else {
                     FrmReaderInformation frame=new FrmReaderInformation();
                     frame.setVisible(true);
                     frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口  
                 }
             } else JOptionPane.showMessageDialog(null, "用户名或密码错误","系统提示",JOptionPane.ERROR_MESSAGE);
-        } else {
-              JOptionPane.showMessageDialog(null, "获取到的字符串信息为空或长度非法","系统提示",JOptionPane.ERROR_MESSAGE);
-         }
     }//GEN-LAST:event_LoginActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
-        // 窗口创建完成事件
-        
-    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

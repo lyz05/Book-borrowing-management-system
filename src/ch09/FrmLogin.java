@@ -13,14 +13,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author 
-=======
-import java.util.*;
-import javax.swing.JOptionPane;
-/**
- *
- * @author abc
->>>>>>> b2b78bf0d16937cdd371d86f7e2220d7c2cd9014
+ * @author sheldon
  */
 public class FrmLogin extends javax.swing.JFrame {
 

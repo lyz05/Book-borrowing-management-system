@@ -34,7 +34,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
 
-        Hello.setText("您好，"+BookDBCon.sqlQueryResult("select readerName from Reader where readerNO='"+Util4Frm.readerNO + "'"));
+        Hello.setText("您好，"+BookDBCon.queryResult("select readerName from Reader where readerNO='"+Util4Frm.readerNO + "'"));
         refreshBorrowTable("");
     }
     private void resetTextfiled(){
@@ -97,11 +97,11 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             sql = "update Borrow set returnDate=getdate() from borrow where readerNO = '"+Util4Frm.readerNO+"' and bookNO='"+BookNO+"' and returnDate is null";
         } else {
             sql = "if exists(select * from View_Book where 图书编号='"+BookNO+"' and 在库数量>0) insert Borrow values('"+Util4Frm.readerNO+"','"+BookNO+"',getdate(),dateadd(mm,1,getdate()),null)";
-            if (Integer.parseInt(BookDBCon.sqlQueryResult("select 在库数量 from View_Book where 图书编号='"+BookNO+"'")) <= 0) {
+            if (Integer.parseInt(BookDBCon.queryResult("select 在库数量 from View_Book where 图书编号='"+BookNO+"'")) <= 0) {
                 JOptionPane.showMessageDialog(null,"这本书已经被借光了","系统提示",JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (BookDBCon.sqlQueryResult("select readerNO from Borrow where readerNO = '"+Util4Frm.readerNO+"' and bookNO='"+BookNO+"' and returnDate is null") != null){
+            if (BookDBCon.queryResult("select readerNO from Borrow where readerNO = '"+Util4Frm.readerNO+"' and bookNO='"+BookNO+"' and returnDate is null") != null){
                 JOptionPane.showMessageDialog(null,"这本书你已经借过了，归还后可再次借阅","系统提示",JOptionPane.ERROR_MESSAGE);
                 return;
             }

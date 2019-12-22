@@ -142,7 +142,9 @@ public class FrmAlterPassword extends javax.swing.JFrame {
 
     private void AlterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterPasswordActionPerformed
         // TODO add your handling code here:
-        if (!BookDBCon.sqlQueryResult("select readerNO from Reader where readerNo='"+InputReaderNo.getText()+"' and password='"+String.valueOf(jPasswordField1.getPassword())+"'").equals("")) {
+        String username = InputReaderNo.getText();
+        String pwd = new String(jPasswordField1.getPassword());
+        if (BookDBCon.queryResult("select readerNO from Reader where readerNo='"+username+"' and password='"+pwd+"'") != null) {
             if (BookDBCon.updateData("update Reader set password='"+new String(jPasswordField2.getPassword())+"' from Reader where readerNo = '"+InputReaderNo.getText()+"'")) {
                 JOptionPane.showMessageDialog(null,"修改密码成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
             } else{
