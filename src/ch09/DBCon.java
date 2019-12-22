@@ -87,6 +87,8 @@ public class DBCon {
         }
     }
     
+<<<<<<< HEAD
+=======
     //执行数据添加、修改、删除数据方法
     public static boolean updateData(String sql){
         Connection conn=JdbcCon(); //连接数据库
@@ -112,6 +114,7 @@ public class DBCon {
         }
     }
     
+>>>>>>> b2b78bf0d16937cdd371d86f7e2220d7c2cd9014
     //验证登录的方法
     public static boolean checkLogin(String sql){
         Connection conn=JdbcCon();
@@ -140,4 +143,8 @@ public class DBCon {
             return false;
         }
     }
+<<<<<<< HEAD
+    
+=======
+>>>>>>> b2b78bf0d16937cdd371d86f7e2220d7c2cd9014
 }
