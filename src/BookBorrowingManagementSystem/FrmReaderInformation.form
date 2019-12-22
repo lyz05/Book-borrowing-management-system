@@ -33,15 +33,17 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="Add" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="Delete" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="Renovate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="Alter" min="-2" pref="64" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Reset" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="ResetPassword" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="342" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="Left" min="-2" pref="51" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="Right" min="-2" pref="50" max="-2" attributes="0"/>
@@ -61,14 +63,15 @@
               <Component id="jPanel1" min="-2" pref="165" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="Add" alignment="3" max="32767" attributes="0"/>
+                      <Component id="Delete" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Renovate" alignment="3" max="32767" attributes="0"/>
                       <Component id="Alter" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Reset" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="ResetPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="Add" alignment="0" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Delete" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Left" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Right" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -126,7 +129,7 @@
                       <Component id="InputIdNum" pref="241" max="32767" attributes="0"/>
                       <Component id="InputWorkUnit" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="40" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -350,6 +353,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResetPasswordActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="Reset">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x91cd;&#x7f6e;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResetActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

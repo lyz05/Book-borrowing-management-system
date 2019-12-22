@@ -37,7 +37,14 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         Hello.setText("您好，"+BookDBCon.sqlQueryResult("select readerName from Reader where readerNO='"+Util4Frm.readerNO + "'"));
         refreshBorrowTable("");
     }
-    
+    private void resetTextfiled(){
+        InputBookNo.setText("");
+        InputBookName.setText("");
+        InputAuthor.setText("");
+        InputPublishName.setText("");
+        InputPublishDate_1.setText("");
+        InputPublishDate_2.setText("");
+    }
     private void jTableHeaderListen(){
         final JTableHeader header1 = jTable1.getTableHeader();
         header1.addMouseListener (new MouseAdapter() {
@@ -186,6 +193,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         jTable3 = new javax.swing.JTable();
         Right = new javax.swing.JButton();
         Left = new javax.swing.JButton();
+        Reset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("借阅信息");
@@ -423,6 +431,13 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             }
         });
 
+        Reset.setText("重置");
+        Reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -441,6 +456,8 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                         .addComponent(btnBorrowReturn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRenew)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Reset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AlterPassword)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -463,7 +480,8 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                     .addComponent(Select)
                     .addComponent(btnBorrowReturn)
                     .addComponent(btnRenew)
-                    .addComponent(AlterPassword))
+                    .addComponent(AlterPassword)
+                    .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -537,7 +555,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             btnBorrowReturn.setEnabled(true);
             btnRenew.setEnabled(true);
             nowJTable = jTable1;
-            refreshBookTable("");
+            refreshBorrowTable("");
         }else if (jTabbedPane.getSelectedIndex()==1){
             btnBorrowReturn.setEnabled(false);
             btnRenew.setEnabled(false);
@@ -563,6 +581,12 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
         borrowandreturn();
     }//GEN-LAST:event_btnBorrowReturnActionPerformed
+
+    private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
+        // TODO add your handling code here:
+        resetTextfiled();
+        refreshBookTable("");
+    }//GEN-LAST:event_ResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -614,6 +638,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     private javax.swing.JButton Left;
     private javax.swing.JLabel Press;
     private javax.swing.JLabel PublishDate;
+    private javax.swing.JButton Reset;
     private javax.swing.JButton Right;
     private javax.swing.JButton Select;
     private javax.swing.JLabel To;

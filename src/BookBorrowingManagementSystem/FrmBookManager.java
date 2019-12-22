@@ -113,6 +113,7 @@ public class FrmBookManager extends javax.swing.JFrame {
         Press = new javax.swing.JLabel();
         InputPress = new javax.swing.JTextField();
         Alter = new javax.swing.JButton();
+        Reset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("图书管理");
@@ -126,7 +127,6 @@ public class FrmBookManager extends javax.swing.JFrame {
 
         Refresh.setText("刷新");
         Refresh.setToolTipText("");
-        Refresh.setActionCommand("刷新");
         Refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RefreshActionPerformed(evt);
@@ -293,6 +293,13 @@ public class FrmBookManager extends javax.swing.JFrame {
             }
         });
 
+        Reset.setText("重置");
+        Reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -309,6 +316,8 @@ public class FrmBookManager extends javax.swing.JFrame {
                         .addComponent(Refresh)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Alter)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Reset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Left)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -328,7 +337,8 @@ public class FrmBookManager extends javax.swing.JFrame {
                     .addComponent(Refresh)
                     .addComponent(Left)
                     .addComponent(Right)
-                    .addComponent(Alter))
+                    .addComponent(Alter)
+                    .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
@@ -376,6 +386,7 @@ public class FrmBookManager extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"添加信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
          } else {
              JOptionPane.showMessageDialog(null,"添加信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
+             return;
          }
          resetTextfiled();
          RefreshBookInformation("");
@@ -399,6 +410,7 @@ public class FrmBookManager extends javax.swing.JFrame {
             Util4Frm.locktextfiled(InputBookNum);
             jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
             Alter.setText("保存");
+            Reset.setEnabled(false);
         } else {
             if (BookDBCon.updateData("update Book set bookName='"+InputBookName.getText()+"',authorName='"+InputAuthor.getText()+"',publishingName='"+InputPress.getText()+"',price="+InputPrice.getText()+",publishingDate='"+InputPublishdate.getText()+"',shopNum="+InputShopNum.getText()+" where bookNO='" + InputBookNum.getText()+"'")) {
                 JOptionPane.showMessageDialog(null,"修改信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
@@ -410,8 +422,15 @@ public class FrmBookManager extends javax.swing.JFrame {
             RefreshBookInformation("");
             jPanel1.setBorder(BorderFactory.createTitledBorder("筛选模式(左栏信息可筛选)"));
             Alter.setText("修改");
+            Reset.setEnabled(true);
         }
     }//GEN-LAST:event_AlterActionPerformed
+
+    private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
+        // TODO add your handling code here:
+        resetTextfiled();
+        RefreshBookInformation("");
+    }//GEN-LAST:event_ResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -467,6 +486,7 @@ public class FrmBookManager extends javax.swing.JFrame {
     private javax.swing.JLabel Price;
     private javax.swing.JLabel PublishDate;
     private javax.swing.JButton Refresh;
+    private javax.swing.JButton Reset;
     private javax.swing.JButton Right;
     private javax.swing.JLabel StockInNum;
     private javax.swing.JPanel jPanel1;

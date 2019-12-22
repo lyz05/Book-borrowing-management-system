@@ -83,6 +83,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         Renovate = new javax.swing.JButton();
         ResetPassword = new javax.swing.JButton();
+        Reset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("读者信息");
@@ -148,7 +149,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(InputIdNum, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                     .addComponent(InputWorkUnit))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,6 +254,13 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             }
         });
 
+        Reset.setText("重置");
+        Reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -265,15 +273,17 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Add)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Delete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Renovate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Alter, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Reset)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ResetPassword)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Left, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Right, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,13 +298,14 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Delete)
                         .addComponent(Renovate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Alter)
+                        .addComponent(Reset)
                         .addComponent(ResetPassword))
-                    .addComponent(Add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Delete)
                         .addComponent(Left)
                         .addComponent(Right)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -327,6 +338,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"添加信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null,"添加信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
+                return;
             }
          resetTextfiled();
          RefreshReaderInformation("");
@@ -385,6 +397,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         ChooseSex.setSelectedIndex(0);
         InputIdNum.setText("");
         InputWorkUnit.setText("");
+        ChooseSex.setSelectedIndex(0);
     }
     
     //修改保存按钮被点击
@@ -397,6 +410,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             Util4Frm.locktextfiled(InputReaderNo);
             jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
             Alter.setText("保存");
+            Reset.setEnabled(false);
         } else {
             if (BookDBCon.updateData("update Reader set readerName='"+InputReaderName.getText()+"',sex='"+ChooseSex.getSelectedItem()+"',identitycard='"+InputIdNum.getText()+"',workUnit='"+InputWorkUnit.getText()+"' where readerNO='"+InputReaderNo.getText()+"'")) {
                 JOptionPane.showMessageDialog(null,"修改信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
@@ -408,6 +422,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             RefreshReaderInformation("");
             jPanel1.setBorder(BorderFactory.createTitledBorder("筛选模式"));
             Alter.setText("修改");
+            Reset.setEnabled(true);
         }
     }//GEN-LAST:event_AlterActionPerformed
     //删除记录
@@ -422,6 +437,12 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         }
         RefreshReaderInformation("");
     }//GEN-LAST:event_DeleteActionPerformed
+
+    private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
+        // TODO add your handling code here:
+        resetTextfiled();
+        RefreshReaderInformation("");
+    }//GEN-LAST:event_ResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -472,6 +493,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     private javax.swing.JLabel ReaderName;
     private javax.swing.JLabel ReaderNo;
     private javax.swing.JButton Renovate;
+    private javax.swing.JButton Reset;
     private javax.swing.JButton ResetPassword;
     private javax.swing.JButton Right;
     private javax.swing.JLabel Sex;
