@@ -1,4 +1,4 @@
-1/*创建数据库（BookDB）*/
+/*创建数据库（BookDB）*/
 CREATE DATABASE [BookDB]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -36,8 +36,8 @@ CREATE TABLE Reader
 
 CREATE TABLE Borrow
 (
-	readerNO char(8) foreign key(readerNO) references Reader(readerNO),
-	bookNO char(10) foreign key(bookNO) references Book(bookNO),
+	readerNO char(8) foreign key(readerNO) references Reader(readerNO) on delete cascade,
+	bookNO char(10) foreign key(bookNO) references Book(bookNO) on delete cascade,
 	borrowDate date not null,
 	shouldDate date not null,
 	returnDate date
@@ -186,9 +186,9 @@ delete from reader where readerNO = 'R2010001'
 -- 修改
 update Reader set readerName='韩梅梅',sex='女',identitycard='442000199501014321',workUnit='北京理工大学珠海学院' where readerNO='R2010001'
 -- 查询读者
-select * from View_Reader where 读者编号 like '%2006%' and 读者姓名 like '%刘%' and 性别 like '%%' and 身份证号 like '%1990%' and 工作单位 like '%公司%'
+select * from View_Reader where 读者编号 like '%2006%' and 姓名 like '%刘%' and 性别 like '%%' and 身份证号 like '%1990%' and 工作单位 like '%公司%'
 -- 排序
-select * from View_Reader where 读者编号 like '%%' and 读者姓名 like '%%' and 性别 like '%%' and 身份证号 like '%%' and 工作单位 like '%%' order by 读者编号
+select * from View_Reader where 读者编号 like '%%' and 姓名 like '%%' and 性别 like '%%' and 身份证号 like '%%' and 工作单位 like '%%' order by 读者编号
 
 /* 图书管理窗口操作 */
 -- 添加
@@ -210,7 +210,7 @@ select * from Reader;
 select * from Borrow;
 select * from book;
 select * from View_Book;
-
+select * from View_Reader
 /* MD5加密 */
 select substring(sys.fn_sqlvarbasetostr(HashBytes('MD5','123456')),3,32)
 
