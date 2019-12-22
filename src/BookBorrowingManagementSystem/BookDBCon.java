@@ -14,6 +14,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -131,6 +132,7 @@ public class BookDBCon {
            
         }catch(SQLException ex){
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"数据库抛出异常:"+ex.toString(),"数据库提示",JOptionPane.ERROR_MESSAGE);
             System.out.println("更新数据失败");
             return false;
         }

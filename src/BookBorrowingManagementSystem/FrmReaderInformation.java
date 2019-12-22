@@ -27,6 +27,9 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         
     }
 
+    private boolean textFiledIsNull(){
+        return InputReaderNo.getText().equals("") || InputReaderName.getText().equals("") || InputIdNum.getText().equals("") || InputWorkUnit.getText().equals("");
+    }
     //刷新读者信息
     private void RefreshReaderInformation(String appendsql) {
         Util4Frm.setFormdata("select * from View_Reader where 读者编号 like '%"+InputReaderNo.getText()+"%' and 读者姓名 like '%"+InputReaderName.getText()+"%' and 性别 like '%"+ChooseSex.getSelectedItem()+"%' and 身份证号 like '%"+InputIdNum.getText()+"%' and 工作单位 like '%"+InputWorkUnit.getText()+"%'"+appendsql,jTable1);
@@ -168,6 +171,11 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         });
 
         Delete.setText("删除");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteActionPerformed(evt);
+            }
+        });
 
         Alter.setText("修改");
         Alter.addActionListener(new java.awt.event.ActionListener() {
@@ -289,10 +297,22 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_InputReaderNameActionPerformed
 
+    //插入记录
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
+         if (textFiledIsNull()){
+             JOptionPane.showMessageDialog(null,"请填写欲添加读者的所有信息","系统提示",JOptionPane.INFORMATION_MESSAGE);
+             return;
+         } else if (BookDBCon.updateData("insert Reader values('"+InputReaderNo.getText()+"','"+InputReaderName.getText()+"','"+ChooseSex.getSelectedItem()+"','"+InputIdNum.getText()+"','"+InputWorkUnit.getText()+"','')")) {
+                JOptionPane.showMessageDialog(null,"添加信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,"添加信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
+            }
+         resetTextfiled();
+         RefreshReaderInformation("");
     }//GEN-LAST:event_AddActionPerformed
 
+    
     private void RenovateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RenovateActionPerformed
         // TODO add your handling code here:
         RefreshReaderInformation("");
@@ -338,6 +358,16 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         InputIdNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
         InputWorkUnit.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
     }
+    
+    private void resetTextfiled(){
+        InputReaderNo.setText("");
+        InputReaderName.setText("");
+        ChooseSex.setSelectedIndex(0);
+        InputIdNum.setText("");
+        InputWorkUnit.setText("");
+    }
+    
+    //修改保存按钮被点击
     private void AlterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterActionPerformed
         // TODO add your handling code here:
         if (Alter.getText().equals("修改")){
@@ -348,9 +378,30 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
             Alter.setText("保存");
         } else {
-            //TodoNext
+            if (BookDBCon.updateData("update Reader set readerName='"+InputReaderName.getText()+"',sex='"+ChooseSex.getSelectedItem()+"',identitycard='"+InputIdNum.getText()+"',workUnit='"+InputWorkUnit.getText()+"' where readerNO='"+InputReaderNo.getText()+"'")) {
+                JOptionPane.showMessageDialog(null,"修改信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,"修改信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
+            }
+            resetTextfiled();
+            Util4Frm.unlocktextfiled(InputReaderNo);
+            RefreshReaderInformation("");
+            jPanel1.setBorder(BorderFactory.createTitledBorder("筛选模式"));
+            Alter.setText("修改");
         }
     }//GEN-LAST:event_AlterActionPerformed
+    //删除记录
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        // TODO add your handling code here:
+        if (getreaderno()==null) return;
+        String ReaderNO = getreaderno();
+        if (BookDBCon.updateData("delete from reader where readerNO = '"+ReaderNO+"'")) {
+                JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+                JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
+        }
+        RefreshReaderInformation("");
+    }//GEN-LAST:event_DeleteActionPerformed
 
     /**
      * @param args the command line arguments
