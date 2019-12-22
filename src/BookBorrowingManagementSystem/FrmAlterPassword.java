@@ -21,6 +21,7 @@ public class FrmAlterPassword extends javax.swing.JFrame {
         initComponents();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
+        this.setResizable(false);
         InputReaderNo.setText(Util4Frm.readerNO);
     }
 

@@ -28,6 +28,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         jTableHeaderListen();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
+        this.setResizable(false);
         RefreshReaderInformation("");
         
     }

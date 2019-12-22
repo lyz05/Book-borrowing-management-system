@@ -33,6 +33,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         jTableHeaderListen();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
+        this.setResizable(false);
 
         Hello.setText("您好，"+BookDBCon.queryResult("select readerName from Reader where readerNO='"+Util4Frm.readerNO + "'"));
         refreshBorrowTable("");

@@ -21,6 +21,10 @@ public class FrmLogin extends javax.swing.JFrame {
         initComponents();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
+        //固定窗口尺寸
+        this.setResizable(false);
+        //添加默认按钮
+        this.getRootPane().setDefaultButton(Login);
     }
 
     /**
@@ -155,17 +159,18 @@ public class FrmLogin extends javax.swing.JFrame {
                 frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
                 //this.dispose(); //关闭当前登录窗口
         }else if (BookDBCon.queryResult("select username from AdminUsers where username='"+username+"' and password='"+pwd+"'") != null){
-                 //进入到管理员选择界面
-                if (JOptionPane.showConfirmDialog(null,"您好，管理员\n是 进入图书管理界面\n否 进入读者管理界面","系统提示",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION){
-                    FrmBookManager frame=new FrmBookManager();
-                    frame.setVisible(true);
-                    frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
-                } else {
-                    FrmReaderInformation frame=new FrmReaderInformation();
-                    frame.setVisible(true);
-                    frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口  
-                }
-            } else JOptionPane.showMessageDialog(null, "用户名或密码错误","系统提示",JOptionPane.ERROR_MESSAGE);
+            //进入到管理员选择界面
+            int ret = JOptionPane.showConfirmDialog(null,"您好，管理员\n是 进入图书管理界面\n否 进入读者管理界面","系统提示",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if (ret==JOptionPane.YES_OPTION){
+                FrmBookManager frame=new FrmBookManager();
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
+            } else if (ret==JOptionPane.NO_OPTION){
+                FrmReaderInformation frame=new FrmReaderInformation();
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口  
+            }
+        } else JOptionPane.showMessageDialog(null, "用户名或密码错误","系统提示",JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_LoginActionPerformed
 
     /**
