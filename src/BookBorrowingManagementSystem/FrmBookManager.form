@@ -24,117 +24,42 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Press" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="InputPress" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="BookNo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="InputBookNum" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="BookName" min="-2" max="-2" attributes="0"/>
-                          <Component id="Author" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="InputBookName" min="-2" pref="143" max="-2" attributes="0"/>
-                          <Component id="InputAuthor" min="-2" pref="144" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-              </Group>
-              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="Price" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="PublishDate" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="StockInNum" alignment="1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jTextField6" pref="162" max="32767" attributes="0"/>
-                  <Component id="InputPublishdate" alignment="0" max="32767" attributes="0"/>
-                  <Component id="InputPrice" alignment="0" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane2" pref="564" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <Component id="Add" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="Delete" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="Save" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Refresh" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Alter" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="Left" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="Right" min="-2" pref="46" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="Right" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace pref="38" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="BookNo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="InputBookNum" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Price" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="InputPrice" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="BookName" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="InputBookName" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PublishDate" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="InputPublishdate" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="InputAuthor" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="StockInNum" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="Author" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="Press" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="InputPress" min="-2" pref="24" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Add" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Delete" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Save" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Refresh" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Left" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Right" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Alter" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="315" max="-2" attributes="0"/>
@@ -152,81 +77,31 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="Save">
+    <Component class="javax.swing.JButton" name="Refresh">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x4fdd;&#x5b58;"/>
+        <Property name="text" type="java.lang.String" value="&#x5237;&#x65b0;"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="actionCommand" type="java.lang.String" value="&#x5237;&#x65b0;"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SaveActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RefreshActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Left">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LeftActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Right">
       <Properties>
         <Property name="text" type="java.lang.String" value="&gt;"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="BookNo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x56fe;&#x4e66;&#x7f16;&#x53f7;&#xff1a;"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="BookName">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x56fe;&#x4e66;&#x540d;&#x79f0;&#xff1a;"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Author">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x4f5c;&#x8005;&#xff1a;"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="InputBookNum">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputBookNumActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RightActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="InputBookName">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputBookNameActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="InputAuthor">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputAuthorActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Price">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x4ef7;&#x683c;&#xff1a;"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="PublishDate">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x51fa;&#x7248;&#x65e5;&#x671f;&#xff1a;"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="StockInNum">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x5165;&#x5e93;&#x6570;&#x91cf;&#xff1a;"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="InputPrice">
-    </Component>
-    <Component class="javax.swing.JTextField" name="InputPublishdate">
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextField6">
-    </Component>
-    <Component class="javax.swing.JLabel" name="Press">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x51fa;&#x7248;&#x793e;&#xff1a;"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="InputPress">
     </Component>
     <Component class="javax.swing.JButton" name="Add">
       <Properties>
@@ -308,5 +183,176 @@
         </Component>
       </SubComponents>
     </Container>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="&#x7b5b;&#x9009;&#x6a21;&#x5f0f;&#xff08;&#x5de6;&#x680f;&#x4fe1;&#x606f;&#x53ef;&#x7b5b;&#x9009;&#xff09;"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="Press" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <Component id="InputPress" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="BookNo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="InputBookNum" min="-2" pref="141" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="BookName" min="-2" max="-2" attributes="0"/>
+                              <Component id="Author" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="InputBookName" min="-2" pref="143" max="-2" attributes="0"/>
+                              <Component id="InputAuthor" min="-2" pref="144" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="354" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="Price" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="PublishDate" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="StockInNum" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="InputShopNum" max="32767" attributes="0"/>
+                      <Component id="InputPublishdate" alignment="0" max="32767" attributes="0"/>
+                      <Component id="InputPrice" alignment="0" min="-2" pref="162" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="BookNo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="InputBookNum" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="BookName" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="InputBookName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="Author" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="InputAuthor" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="Price" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="InputPrice" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="PublishDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="InputPublishdate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="StockInNum" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="InputShopNum" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="13" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="Press" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="InputPress" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="BookNo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x56fe;&#x4e66;&#x7f16;&#x53f7;&#xff1a;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="BookName">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x56fe;&#x4e66;&#x540d;&#x79f0;&#xff1a;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Author">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x4f5c;&#x8005;&#xff1a;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="InputBookNum">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputBookNumActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="InputBookName">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputBookNameActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="InputAuthor">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputAuthorActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Price">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x4ef7;&#x683c;&#xff1a;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="PublishDate">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x51fa;&#x7248;&#x65e5;&#x671f;&#xff1a;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="StockInNum">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x5165;&#x5e93;&#x6570;&#x91cf;&#xff1a;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="InputPrice">
+        </Component>
+        <Component class="javax.swing.JTextField" name="InputPublishdate">
+        </Component>
+        <Component class="javax.swing.JTextField" name="InputShopNum">
+        </Component>
+        <Component class="javax.swing.JLabel" name="Press">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x51fa;&#x7248;&#x793e;&#xff1a;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="InputPress">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="Alter">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x4fee;&#x6539;"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AlterActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

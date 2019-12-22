@@ -6,6 +6,12 @@
 
 package BookBorrowingManagementSystem;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author 叶荣锋
@@ -17,8 +23,64 @@ public class FrmBookManager extends javax.swing.JFrame {
      */
     public FrmBookManager() {
         initComponents();
+        jTableHeaderListen();
+        //默认界面丑拒，换成Windows默认界面
+        Util4Frm.setUI(this);
+        RefreshBookInformation("");
     }
-
+    //注册表头监听器
+    private void jTableHeaderListen(){
+        final JTableHeader header1 = jTable1.getTableHeader();
+        header1.addMouseListener (new MouseAdapter() {
+            public void mouseReleased(MouseEvent e){
+                if (e.getClickCount() == 1) {
+                    int pick = header1.columnAtPoint(e.getPoint());
+                    RefreshBookInformation(Util4Frm.getappendsqlbyorder(jTable1, pick)); 
+                    //System.out.println("表头被点击"+pick);
+                }
+            }
+        });
+    }
+    //获取当前选中书籍的BookNo
+    private String getbookno()
+    {
+         if (jTable1.getSelectedRow()==-1) {
+            JOptionPane.showMessageDialog(null,"请选择一本书","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            return null;
+        }
+        return (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+    }
+    //编辑框是否为空
+    private boolean textFiledIsNull(){
+        return InputBookNum.getText().equals("") || InputBookName.getText().equals("") || InputAuthor.getText().equals("") || InputPress.getText().equals("") || InputPrice.getText().equals("") || InputPublishdate.getText().equals("") || InputShopNum.getText().equals("");
+    }
+    //重置编辑框
+    private void resetTextfiled()
+    {
+        InputBookNum.setText("");
+        InputBookName.setText("");
+        InputAuthor.setText("");
+        InputPress.setText("");
+        InputPrice.setText("");
+        InputPublishdate.setText("");
+        InputShopNum.setText(""); 
+    }
+    
+    //读记录到编辑框
+    private void getdatatotextfiled(){
+        InputBookNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        InputBookName.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
+        InputAuthor.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2));
+        InputPress.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
+        InputPrice.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
+        InputPublishdate.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 5));
+        InputShopNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 6));
+    }
+    
+    //刷新图书信息
+    private void RefreshBookInformation(String appendsql){
+        Util4Frm.setFormdata("select * from View_Book_Admin where 图书编号 like '%"+InputBookNum.getText()+"%' and 图书名称 like '%"+InputBookName.getText()+"%' and 作者 like '%"+InputAuthor.getText() +"%' and 出版社 like '%"+InputPress.getText()+"%'"+appendsql,jTable1);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,9 +91,13 @@ public class FrmBookManager extends javax.swing.JFrame {
     private void initComponents() {
 
         Delete = new javax.swing.JButton();
-        Save = new javax.swing.JButton();
+        Refresh = new javax.swing.JButton();
         Left = new javax.swing.JButton();
         Right = new javax.swing.JButton();
+        Add = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         BookNo = new javax.swing.JLabel();
         BookName = new javax.swing.JLabel();
         Author = new javax.swing.JLabel();
@@ -43,12 +109,10 @@ public class FrmBookManager extends javax.swing.JFrame {
         StockInNum = new javax.swing.JLabel();
         InputPrice = new javax.swing.JTextField();
         InputPublishdate = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        InputShopNum = new javax.swing.JTextField();
         Press = new javax.swing.JLabel();
         InputPress = new javax.swing.JTextField();
-        Add = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Alter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("图书管理");
@@ -60,48 +124,28 @@ public class FrmBookManager extends javax.swing.JFrame {
             }
         });
 
-        Save.setText("保存");
-        Save.addActionListener(new java.awt.event.ActionListener() {
+        Refresh.setText("刷新");
+        Refresh.setToolTipText("");
+        Refresh.setActionCommand("刷新");
+        Refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveActionPerformed(evt);
+                RefreshActionPerformed(evt);
             }
         });
 
         Left.setText("<");
+        Left.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LeftActionPerformed(evt);
+            }
+        });
 
         Right.setText(">");
-
-        BookNo.setText("图书编号：");
-
-        BookName.setText("图书名称：");
-
-        Author.setText("作者：");
-
-        InputBookNum.addActionListener(new java.awt.event.ActionListener() {
+        Right.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InputBookNumActionPerformed(evt);
+                RightActionPerformed(evt);
             }
         });
-
-        InputBookName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InputBookNameActionPerformed(evt);
-            }
-        });
-
-        InputAuthor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InputAuthorActionPerformed(evt);
-            }
-        });
-
-        Price.setText("价格：");
-
-        PublishDate.setText("出版日期：");
-
-        StockInNum.setText("入库数量：");
-
-        Press.setText("出版社：");
 
         Add.setText("添加");
         Add.addActionListener(new java.awt.event.ActionListener() {
@@ -136,98 +180,155 @@ public class FrmBookManager extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable1);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("筛选模式（左栏信息可筛选）"));
+
+        BookNo.setText("图书编号：");
+
+        BookName.setText("图书名称：");
+
+        Author.setText("作者：");
+
+        InputBookNum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputBookNumActionPerformed(evt);
+            }
+        });
+
+        InputBookName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputBookNameActionPerformed(evt);
+            }
+        });
+
+        InputAuthor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputAuthorActionPerformed(evt);
+            }
+        });
+
+        Price.setText("价格：");
+
+        PublishDate.setText("出版日期：");
+
+        StockInNum.setText("入库数量：");
+
+        Press.setText("出版社：");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Press)
+                        .addGap(21, 21, 21)
+                        .addComponent(InputPress))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(BookNo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(InputBookNum, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BookName)
+                            .addComponent(Author))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(InputBookName, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(InputAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 354, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Price)
+                    .addComponent(PublishDate)
+                    .addComponent(StockInNum))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(InputShopNum)
+                    .addComponent(InputPublishdate)
+                    .addComponent(InputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BookNo)
+                            .addComponent(InputBookNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BookName)
+                            .addComponent(InputBookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Author)
+                            .addComponent(InputAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Price)
+                            .addComponent(InputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PublishDate)
+                            .addComponent(InputPublishdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(StockInNum)
+                            .addComponent(InputShopNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Press)
+                    .addComponent(InputPress, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        Alter.setText("修改");
+        Alter.setToolTipText("");
+        Alter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Press)
-                        .addGap(18, 18, 18)
-                        .addComponent(InputPress))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(BookNo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(InputBookNum))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BookName)
-                            .addComponent(Author))
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(InputBookName, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(InputAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Price)
-                    .addComponent(PublishDate)
-                    .addComponent(StockInNum))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                    .addComponent(InputPublishdate)
-                    .addComponent(InputPrice))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(Add)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Delete)
-                        .addGap(18, 18, 18)
-                        .addComponent(Save)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Refresh)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Alter)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Left)
-                        .addGap(18, 18, 18)
-                        .addComponent(Right, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Right))
+                    .addComponent(jScrollPane2))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BookNo)
-                    .addComponent(InputBookNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Price)
-                    .addComponent(InputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BookName)
-                    .addComponent(InputBookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PublishDate)
-                    .addComponent(InputPublishdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(InputAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(StockInNum)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(Author)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Press))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(InputPress, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Add)
                     .addComponent(Delete)
-                    .addComponent(Save)
+                    .addComponent(Refresh)
                     .addComponent(Left)
-                    .addComponent(Right))
+                    .addComponent(Right)
+                    .addComponent(Alter))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
@@ -239,11 +340,20 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
+        if (getbookno()==null || !Util4Frm.confirmdelete()) return;
+        String BookNo = getbookno();
+        if (BookDBCon.updateData("delete from Book where bookNO = '"+BookNo+"'")) {
+                JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+                JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
+        }
+        RefreshBookInformation("");
     }//GEN-LAST:event_DeleteActionPerformed
 
-    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
+    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SaveActionPerformed
+        RefreshBookInformation("");
+    }//GEN-LAST:event_RefreshActionPerformed
 
     private void InputBookNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputBookNumActionPerformed
         // TODO add your handling code here:
@@ -259,7 +369,49 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
+         if (textFiledIsNull()){
+             JOptionPane.showMessageDialog(null,"请填写欲添加书籍的所有信息","系统提示",JOptionPane.INFORMATION_MESSAGE);
+             return;
+         } else if (BookDBCon.updateData("INSERT INTO Book VALUES('"+InputBookNum.getText()+"','"+InputBookName.getText()+"','"+InputAuthor.getText()+"','"+InputPress.getText()+"',"+InputPrice.getText()+",'"+InputPublishdate.getText()+"',"+InputShopNum.getText()+")")) {
+            JOptionPane.showMessageDialog(null,"添加信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+         } else {
+             JOptionPane.showMessageDialog(null,"添加信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
+         }
+         resetTextfiled();
+         RefreshBookInformation("");
     }//GEN-LAST:event_AddActionPerformed
+
+    private void LeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeftActionPerformed
+        // TODO add your handling code here:
+        Util4Frm.moveFormRow(jTable1, -1);
+    }//GEN-LAST:event_LeftActionPerformed
+
+    private void RightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RightActionPerformed
+        // TODO add your handling code here:
+        Util4Frm.moveFormRow(jTable1, 1);
+    }//GEN-LAST:event_RightActionPerformed
+
+    private void AlterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterActionPerformed
+        if (Alter.getText().equals("修改")){
+            if (getbookno()==null) return;
+            String ReaderNO = getbookno();
+            getdatatotextfiled();
+            Util4Frm.locktextfiled(InputBookNum);
+            jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
+            Alter.setText("保存");
+        } else {
+            if (BookDBCon.updateData("update Book set bookName='"+InputBookName.getText()+"',authorName='"+InputAuthor.getText()+"',publishingName='"+InputPress.getText()+"',price="+InputPrice.getText()+",publishingDate='"+InputPublishdate.getText()+"',shopNum="+InputShopNum.getText()+" where bookNO='" + InputBookNum.getText()+"'")) {
+                JOptionPane.showMessageDialog(null,"修改信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,"修改信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
+            }
+            resetTextfiled();
+            Util4Frm.unlocktextfiled(InputBookNum);
+            RefreshBookInformation("");
+            jPanel1.setBorder(BorderFactory.createTitledBorder("筛选模式(左栏信息可筛选)"));
+            Alter.setText("修改");
+        }
+    }//GEN-LAST:event_AlterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,6 +450,7 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add;
+    private javax.swing.JButton Alter;
     private javax.swing.JLabel Author;
     private javax.swing.JLabel BookName;
     private javax.swing.JLabel BookNo;
@@ -308,15 +461,16 @@ public class FrmBookManager extends javax.swing.JFrame {
     private javax.swing.JTextField InputPress;
     private javax.swing.JTextField InputPrice;
     private javax.swing.JTextField InputPublishdate;
+    private javax.swing.JTextField InputShopNum;
     private javax.swing.JButton Left;
     private javax.swing.JLabel Press;
     private javax.swing.JLabel Price;
     private javax.swing.JLabel PublishDate;
+    private javax.swing.JButton Refresh;
     private javax.swing.JButton Right;
-    private javax.swing.JButton Save;
     private javax.swing.JLabel StockInNum;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,8 +7,11 @@
 package BookBorrowingManagementSystem;
 
 import ch09.Student;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -21,12 +24,29 @@ public class FrmReaderInformation extends javax.swing.JFrame {
      */
     public FrmReaderInformation() {
         initComponents();
+        //注册表头监听器
+        jTableHeaderListen();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
         RefreshReaderInformation("");
         
     }
+    
+    //注册表头监听器
+    private void jTableHeaderListen(){
+        final JTableHeader header1 = jTable1.getTableHeader();
+        header1.addMouseListener (new MouseAdapter() {
+            public void mouseReleased(MouseEvent e){
+                if (e.getClickCount() == 1) {
+                    int pick = header1.columnAtPoint(e.getPoint());
+                    RefreshReaderInformation(Util4Frm.getappendsqlbyorder(jTable1, pick)); 
+                    //System.out.println("表头被点击"+pick);
+                }
+            }
+        });
 
+    }
+    //编辑框是否为空
     private boolean textFiledIsNull(){
         return InputReaderNo.getText().equals("") || InputReaderName.getText().equals("") || InputIdNum.getText().equals("") || InputWorkUnit.getText().equals("");
     }
@@ -393,7 +413,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     //删除记录
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
-        if (getreaderno()==null) return;
+        if (getreaderno()==null || !Util4Frm.confirmdelete()) return;
         String ReaderNO = getreaderno();
         if (BookDBCon.updateData("delete from reader where readerNO = '"+ReaderNO+"'")) {
                 JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);

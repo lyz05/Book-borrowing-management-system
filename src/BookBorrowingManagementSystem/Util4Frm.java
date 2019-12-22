@@ -77,4 +77,10 @@ public class Util4Frm {
     public static void unlocktextfiled(JTextField jtextfield){
         jtextfield.setEnabled(true);
     }
+    
+    //确认删除对话框
+    public static boolean confirmdelete()
+    {
+         return JOptionPane.showConfirmDialog(null,"你确认删除该条数据吗？","确认删除",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION;
+    }
 }
