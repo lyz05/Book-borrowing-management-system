@@ -19,6 +19,8 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     public FrmLogin() {
         initComponents();
+        //默认界面丑拒，换成Windows默认界面
+        Util4Frm.setUI(this);
     }
 
     /**
@@ -75,25 +77,26 @@ public class FrmLogin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Password)
-                            .addComponent(ReaderNo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(InputReaderNum, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                            .addComponent(PasswordNum)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(Login)
-                        .addGap(5, 5, 5)
-                        .addComponent(Reset)))
-                .addContainerGap(113, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Password)
+                                    .addComponent(ReaderNo))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(InputReaderNum)
+                                    .addComponent(PasswordNum, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(76, 76, 76)
+                                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,11 +110,11 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Password)
                     .addComponent(PasswordNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Login)
-                    .addComponent(Reset))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         InputReaderNum.getAccessibleContext().setAccessibleParent(InputReaderNum);
@@ -142,16 +145,24 @@ public class FrmLogin extends javax.swing.JFrame {
             String sql="select * from Reader where readerNO='"+readId+"' and password='"+pwdString+"'";
             System.out.println(sql);
             if(BookDBCon.checkLogin(sql) ){
-                JOptionPane.showMessageDialog(null, "登录成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
                 Util4Frm.readerNO=readId;
                 //进入到主界面
                 FrmBorrowInformation frame=new FrmBorrowInformation();
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
                 //this.dispose(); //关闭当前登录窗口
-            }else{
-                 JOptionPane.showMessageDialog(null, "登录失败","系统提示",JOptionPane.ERROR_MESSAGE);
-            }
+            }else if (InputReaderNum.getText().equals("admin") && String.valueOf(PasswordNum.getPassword()).equals("admin") ){
+                 //进入到管理员选择界面
+                if (JOptionPane.showConfirmDialog(null,"您好，管理员\n是 进入图书管理界面\n否 进入读者管理界面","系统提示",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION){
+                    FrmBookManager frame=new FrmBookManager();
+                    frame.setVisible(true);
+                    frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
+                } else{
+                    FrmReaderInformation frame=new FrmReaderInformation();
+                    frame.setVisible(true);
+                    frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口  
+                }
+            } else JOptionPane.showMessageDialog(null, "用户名或密码错误","系统提示",JOptionPane.ERROR_MESSAGE);
         } else {
               JOptionPane.showMessageDialog(null, "获取到的字符串信息为空或长度非法","系统提示",JOptionPane.ERROR_MESSAGE);
          }

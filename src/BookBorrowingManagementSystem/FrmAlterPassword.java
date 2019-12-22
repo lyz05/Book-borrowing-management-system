@@ -6,6 +6,8 @@
 
 package BookBorrowingManagementSystem;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 叶荣锋
@@ -17,6 +19,9 @@ public class FrmAlterPassword extends javax.swing.JFrame {
      */
     public FrmAlterPassword() {
         initComponents();
+        //默认界面丑拒，换成Windows默认界面
+        Util4Frm.setUI(this);
+        InputReaderNo.setText(Util4Frm.readerNO);
     }
 
     /**
@@ -42,6 +47,7 @@ public class FrmAlterPassword extends javax.swing.JFrame {
 
         ReaderNo.setText("读者编号：");
 
+        InputReaderNo.setEnabled(false);
         InputReaderNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InputReaderNoActionPerformed(evt);
@@ -136,6 +142,15 @@ public class FrmAlterPassword extends javax.swing.JFrame {
 
     private void AlterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterPasswordActionPerformed
         // TODO add your handling code here:
+        if (!BookDBCon.sqlQueryResult("select readerNO from Reader where readerNo='"+InputReaderNo.getText()+"' and password='"+String.valueOf(jPasswordField1.getPassword())+"'").equals("")) {
+            if (BookDBCon.updateData("update Reader set password='"+new String(jPasswordField2.getPassword())+"' from Reader where readerNo = '"+InputReaderNo.getText()+"'")) {
+                JOptionPane.showMessageDialog(null,"修改密码成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            } else{
+                JOptionPane.showMessageDialog(null, "修改密码失败","系统提示",JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "用户名或原密码错误","系统提示",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_AlterPasswordActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed

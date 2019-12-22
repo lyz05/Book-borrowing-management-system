@@ -196,6 +196,7 @@ select * from View_Book_Admin where Í¼Êé±àºÅ like '%2001%' and Í¼ÊéÃû³Æ like '%¾
 /* µÇÂ¼´°¿Ú */
 select readerNO from Reader where readerNo='R2005001' and password=''
 
+delete from Borrow where bookNO='B200301002'
 select bookNO from book where shopNum=1;
 select * from Reader;
 select * from Borrow;
