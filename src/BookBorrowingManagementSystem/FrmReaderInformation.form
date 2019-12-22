@@ -24,10 +24,6 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -40,16 +36,20 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="Delete" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="Renovate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="Alter" min="-2" pref="64" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Renovate" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Component id="ResetPassword" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="342" max="32767" attributes="0"/>
                       <Component id="Left" min="-2" pref="51" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="Right" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jPanel1" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -61,14 +61,16 @@
               <Component id="jPanel1" min="-2" pref="165" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="Renovate" alignment="1" max="32767" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="Renovate" alignment="3" max="32767" attributes="0"/>
+                      <Component id="Alter" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ResetPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Component id="Add" alignment="0" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="Delete" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Alter" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Left" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Right" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ResetPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -92,68 +94,101 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="ReaderNo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="InputReaderNo" min="-2" pref="161" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
+                          <Component id="IdNum" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="ReaderName" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="Sex" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="InputReaderName" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="ChooseSex" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="IdNum" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="WorkUnit" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="InputWorkUnit" pref="170" max="32767" attributes="0"/>
-                                      <Component id="InputIdNum" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="InputReaderName" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="WorkUnit" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="ChooseSex" min="-2" pref="58" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="InputIdNum" pref="241" max="32767" attributes="0"/>
+                      <Component id="InputWorkUnit" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="ReaderNo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="InputReaderNo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="IdNum" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="InputIdNum" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="ReaderName" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="InputReaderName" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="WorkUnit" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="InputWorkUnit" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Sex" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ChooseSex" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="Sex" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="ReaderNo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="InputReaderNo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="InputIdNum" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="IdNum" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="ReaderName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="InputReaderName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="ChooseSex" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
+        <Component class="javax.swing.JLabel" name="IdNum">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x8eab;&#x4efd;&#x8bc1;&#x53f7;&#xff1a;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="InputIdNum">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputIdNumActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="WorkUnit">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x5de5;&#x4f5c;&#x5355;&#x4f4d;&#xff1a;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="InputWorkUnit">
+        </Component>
         <Component class="javax.swing.JLabel" name="ReaderNo">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x8bfb;&#x8005;&#x7f16;&#x53f7;&#xff1a;"/>
@@ -172,40 +207,23 @@
         <Component class="javax.swing.JTextField" name="InputReaderNo">
         </Component>
         <Component class="javax.swing.JTextField" name="InputReaderName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=" "/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputReaderNameActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="IdNum">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x8eab;&#x4efd;&#x8bc1;&#x53f7;&#xff1a;"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="InputIdNum">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputIdNumActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="WorkUnit">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x5de5;&#x4f5c;&#x5355;&#x4f4d;&#xff1a;"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="InputWorkUnit">
         </Component>
         <Component class="javax.swing.JComboBox" name="ChooseSex">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
-                <StringItem index="0" value="  "/>
+                <StringItem index="0" value="%"/>
                 <StringItem index="1" value="&#x7537;"/>
                 <StringItem index="2" value="&#x5973;"/>
               </StringArray>
             </Property>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChooseSexActionPerformed"/>
           </Events>
@@ -229,16 +247,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x4fee;&#x6539;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AlterActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Left">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LeftActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Right">
       <Properties>
         <Property name="text" type="java.lang.String" value="&gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RightActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane3">
       <AuxValues>
@@ -247,7 +274,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable2">
+        <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="7" rowCount="12">
@@ -310,11 +337,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x5237;&#x65b0;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RenovateActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ResetPassword">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x91cd;&#x7f6e;&#x8bfb;&#x8005;&#x5bc6;&#x7801;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResetPasswordActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

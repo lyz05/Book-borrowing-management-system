@@ -8,11 +8,13 @@ package BookBorrowingManagementSystem;
 
 import java.awt.Component;
 import java.util.Vector;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.*;
 
 /**
  *
@@ -23,7 +25,7 @@ public class Util4Frm {
     public static String readerNO = "R2005001";//当前登陆用户的ReaderNO
     public static void setUI(Component comp) {
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(comp);
         } catch(Exception err) {
             System.out.println("捕获异常:"+err);
@@ -47,5 +49,32 @@ public class Util4Frm {
             JOptionPane.showMessageDialog(null,"已经是最后一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else 
         jtable.setRowSelectionInterval(tmp, tmp);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    //获取排序追加sql文本
+    static boolean sort = false;
+    public static String getappendsqlbyorder(JTable jtable,int col){
+        String colName = jtable.getColumnName(col);
+        String appendsql = " order by "+colName;
+        if (sort) {
+            appendsql += " desc";
+        }
+        sort = !sort;
+        return appendsql;
+    }
+    
+    //锁定控件
+    public static void locktextfiled(JTextField jtextfield){
+        jtextfield.setEnabled(false);
+    }
+    
+    //解锁控件
+    public static void unlocktextfiled(JTextField jtextfield){
+        jtextfield.setEnabled(true);
     }
 }

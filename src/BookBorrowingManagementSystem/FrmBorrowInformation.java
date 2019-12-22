@@ -7,6 +7,8 @@
 package BookBorrowingManagementSystem;
 
 import ch09.DBCon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -14,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -24,18 +27,48 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     /**
      * Creates new form FrmBorrowInformation
      */
+    //构造方法
     public FrmBorrowInformation() {
-        initComponents();
+        initComponents();  
+        jTableHeaderListen();
         //默认界面丑拒，换成Windows默认界面
-        //Util4Frm.setUI(this);
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch(Exception err) {
-            System.out.println("捕获异常:"+err);
-        }
+        Util4Frm.setUI(this);
+
         Hello.setText("您好，"+BookDBCon.sqlQueryResult("select readerName from Reader where readerNO='"+Util4Frm.readerNO + "'"));
-        setAllTable();
+        refreshBorrowTable("");
+    }
+    
+    private void jTableHeaderListen(){
+        final JTableHeader header1 = jTable1.getTableHeader();
+        header1.addMouseListener (new MouseAdapter() {
+            public void mouseReleased(MouseEvent e){
+                if (e.getClickCount() == 1) {
+                    int pick = header1.columnAtPoint(e.getPoint());
+                    refreshBorrowTable(Util4Frm.getappendsqlbyorder(jTable1, pick)); 
+                    //System.out.println("表头被点击"+pick);
+                }
+            }
+        });
+        final JTableHeader header2 = jTable2.getTableHeader();
+        header2.addMouseListener (new MouseAdapter() {
+            public void mouseReleased(MouseEvent e){
+                if (e.getClickCount() == 1) {
+                    int pick = header2.columnAtPoint(e.getPoint());
+                    refreshBorrowHistoryTable(Util4Frm.getappendsqlbyorder(jTable2, pick)); 
+                    //System.out.println("表头被点击"+pick);
+                }
+            }
+        });
+        final JTableHeader header3 = jTable3.getTableHeader();
+        header3.addMouseListener (new MouseAdapter() {
+            public void mouseReleased(MouseEvent e){
+                if (e.getClickCount() == 1) {
+                    int pick = header3.columnAtPoint(e.getPoint());
+                    refreshBookTable(Util4Frm.getappendsqlbyorder(jTable3, pick)); 
+                    //System.out.println("表头被点击"+pick);
+                }
+            }
+        });
     }
     
     //获取当前选中书籍的BookNo
@@ -70,7 +103,11 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,btnBorrowReturn.getText()+"成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         else
             JOptionPane.showMessageDialog(null,btnBorrowReturn.getText()+"失败","系统提示",JOptionPane.ERROR_MESSAGE);
-        setAllTable();
+        if (btnBorrowReturn.getText().equals("还书")) 
+             refreshBorrowTable("");
+        else 
+            refreshBookTable("");
+       
     }
     
     //续借操作
@@ -89,12 +126,15 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         
     }
     
-    //刷新三张表的数据
-    private void setAllTable(){
-        //刷新当前借阅表
-        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is null", jTable1);
+    private void refreshBorrowTable(String appendsql){
+         //刷新当前借阅表
+        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is null"+appendsql, jTable1);
+    }
+    private void refreshBorrowHistoryTable(String appendsql){ 
         //刷新历史借阅表
-        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is not null", jTable2);
+        Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is not null"+appendsql, jTable2);
+    }
+    private void refreshBookTable(String appendsql){ 
         //刷新图书信息表
         String sql = "select * from View_Book where 图书编号 like '%"+ InputBookNo.getText() + "%' and 图书名称 like '%" + InputBookName.getText() + "%' and 作者 like '%" + InputAuthor.getText() + "%' and 出版社 like '%" + InputPublishName.getText() + "%'";
         String PublishDate1 = InputPublishDate_1.getText(),PublishDate2 = InputPublishDate_2.getText();
@@ -104,8 +144,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             sql += " and 出版日期<='" + PublishDate2+"'";
         if (jCheckBox1.isSelected())
             sql += " and 在库数量>0";
-        Util4Frm.setFormdata(sql,jTable3);
+        Util4Frm.setFormdata(sql+appendsql,jTable3);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -423,9 +464,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                     .addComponent(btnBorrowReturn)
                     .addComponent(btnRenew)
                     .addComponent(AlterPassword))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLayeredPane1.getAccessibleContext().setAccessibleName("过滤器1");
@@ -443,7 +484,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
@@ -464,7 +507,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
 
     private void SelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectActionPerformed
         // TODO add your handling code here:
-        setAllTable();
+        refreshBookTable("");
     }//GEN-LAST:event_SelectActionPerformed
 
     private void RightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RightActionPerformed
@@ -475,7 +518,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     private void btnRenewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRenewActionPerformed
         // TODO add your handling code here:
         renew();
-        setAllTable();
+        refreshBorrowTable("");
     }//GEN-LAST:event_btnRenewActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -494,16 +537,20 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             btnBorrowReturn.setEnabled(true);
             btnRenew.setEnabled(true);
             nowJTable = jTable1;
+            refreshBookTable("");
         }else if (jTabbedPane.getSelectedIndex()==1){
             btnBorrowReturn.setEnabled(false);
             btnRenew.setEnabled(false);
             nowJTable =jTable2;
+            refreshBorrowHistoryTable("");
         } else if (jTabbedPane.getSelectedIndex()==2) {
             btnBorrowReturn.setText("借书");
             btnBorrowReturn.setEnabled(true);
             btnRenew.setEnabled(false);
             nowJTable = jTable3;
+            refreshBookTable("");
         }
+        
     }//GEN-LAST:event_jTabbedPaneStateChanged
 
     private void AlterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterPasswordActionPerformed

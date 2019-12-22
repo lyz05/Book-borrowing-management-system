@@ -6,6 +6,10 @@
 
 package BookBorrowingManagementSystem;
 
+import ch09.Student;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 叶荣锋
@@ -17,8 +21,16 @@ public class FrmReaderInformation extends javax.swing.JFrame {
      */
     public FrmReaderInformation() {
         initComponents();
+        //默认界面丑拒，换成Windows默认界面
+        Util4Frm.setUI(this);
+        RefreshReaderInformation("");
+        
     }
 
+    //刷新读者信息
+    private void RefreshReaderInformation(String appendsql) {
+        Util4Frm.setFormdata("select * from View_Reader where 读者编号 like '%"+InputReaderNo.getText()+"%' and 读者姓名 like '%"+InputReaderName.getText()+"%' and 性别 like '%"+ChooseSex.getSelectedItem()+"%' and 身份证号 like '%"+InputIdNum.getText()+"%' and 工作单位 like '%"+InputWorkUnit.getText()+"%'"+appendsql,jTable1);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,15 +41,15 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        IdNum = new javax.swing.JLabel();
+        InputIdNum = new javax.swing.JTextField();
+        WorkUnit = new javax.swing.JLabel();
+        InputWorkUnit = new javax.swing.JTextField();
         ReaderNo = new javax.swing.JLabel();
         ReaderName = new javax.swing.JLabel();
         Sex = new javax.swing.JLabel();
         InputReaderNo = new javax.swing.JTextField();
         InputReaderName = new javax.swing.JTextField();
-        IdNum = new javax.swing.JLabel();
-        InputIdNum = new javax.swing.JTextField();
-        WorkUnit = new javax.swing.JLabel();
-        InputWorkUnit = new javax.swing.JTextField();
         ChooseSex = new javax.swing.JComboBox();
         Add = new javax.swing.JButton();
         Delete = new javax.swing.JButton();
@@ -45,7 +57,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         Left = new javax.swing.JButton();
         Right = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         Renovate = new javax.swing.JButton();
         ResetPassword = new javax.swing.JButton();
 
@@ -53,19 +65,6 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         setTitle("读者信息");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("筛选模式"));
-
-        ReaderNo.setText("读者编号：");
-
-        ReaderName.setText("读者姓名：");
-
-        Sex.setText("性别：");
-
-        InputReaderName.setText(" ");
-        InputReaderName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InputReaderNameActionPerformed(evt);
-            }
-        });
 
         IdNum.setText("身份证号：");
 
@@ -77,7 +76,19 @@ public class FrmReaderInformation extends javax.swing.JFrame {
 
         WorkUnit.setText("工作单位：");
 
-        ChooseSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "  ", "男", "女" }));
+        ReaderNo.setText("读者编号：");
+
+        ReaderName.setText("读者姓名：");
+
+        Sex.setText("性别：");
+
+        InputReaderName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputReaderNameActionPerformed(evt);
+            }
+        });
+
+        ChooseSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "%", "男", "女" }));
         ChooseSex.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ChooseSexActionPerformed(evt);
@@ -90,51 +101,64 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(ReaderNo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(InputReaderNo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(InputReaderNo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(259, 259, 259)
+                        .addComponent(IdNum))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ReaderName)
                             .addComponent(Sex))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(InputReaderName)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(ChooseSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(IdNum)
-                                    .addComponent(WorkUnit))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(InputWorkUnit, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                                    .addComponent(InputIdNum))))))
-                .addContainerGap())
+                                .addComponent(InputReaderName, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(WorkUnit))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(ChooseSex, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(InputIdNum, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                    .addComponent(InputWorkUnit))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(71, 71, 71)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ReaderNo)
-                    .addComponent(InputReaderNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(IdNum)
-                    .addComponent(InputIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ReaderName)
-                    .addComponent(InputReaderName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(WorkUnit)
                     .addComponent(InputWorkUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Sex)
+                .addGap(66, 66, 66))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ReaderNo)
+                            .addComponent(InputReaderNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(InputIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(IdNum))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Sex)
-                    .addComponent(ChooseSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(63, 63, 63))
+                    .addComponent(ReaderName)
+                    .addComponent(InputReaderName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(ChooseSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
         );
+
+        ChooseSex.getAccessibleContext().setAccessibleName("");
 
         Add.setText("添加");
         Add.addActionListener(new java.awt.event.ActionListener() {
@@ -146,12 +170,27 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         Delete.setText("删除");
 
         Alter.setText("修改");
+        Alter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlterActionPerformed(evt);
+            }
+        });
 
         Left.setText("<");
+        Left.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LeftActionPerformed(evt);
+            }
+        });
 
         Right.setText(">");
+        Right.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RightActionPerformed(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -170,19 +209,26 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                 "读者编号", "读者姓名", "性别", "身份证号", "工作单位", "总借书数量", "未归还数量"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(jTable1);
 
         Renovate.setText("刷新");
+        Renovate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RenovateActionPerformed(evt);
+            }
+        });
 
         ResetPassword.setText("重置读者密码");
+        ResetPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetPasswordActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,16 +240,19 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Delete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Renovate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Alter, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Renovate)
-                        .addGap(11, 11, 11)
                         .addComponent(ResetPassword)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
                         .addComponent(Left, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Right, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))))
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,14 +260,15 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Renovate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Renovate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Alter)
+                        .addComponent(ResetPassword))
                     .addComponent(Add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Delete)
-                        .addComponent(Alter)
                         .addComponent(Left)
-                        .addComponent(Right)
-                        .addComponent(ResetPassword)))
+                        .addComponent(Right)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -242,6 +292,65 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AddActionPerformed
+
+    private void RenovateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RenovateActionPerformed
+        // TODO add your handling code here:
+        RefreshReaderInformation("");
+    }//GEN-LAST:event_RenovateActionPerformed
+
+    private void LeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeftActionPerformed
+        // 按下左键按钮
+        Util4Frm.moveFormRow(jTable1, -1);
+    }//GEN-LAST:event_LeftActionPerformed
+
+    private void RightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RightActionPerformed
+        //按下右键按钮
+        Util4Frm.moveFormRow(jTable1, 1);
+    }//GEN-LAST:event_RightActionPerformed
+    
+    //获取当前选中读者的ReaderNo
+    private String getreaderno()
+    {
+         if (jTable1.getSelectedRow()==-1) {
+            JOptionPane.showMessageDialog(null,"请选择一位读者","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            return null;
+        }
+        return (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+    }
+    private void ResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetPasswordActionPerformed
+        // TODO add your handling code here:
+        if (getreaderno()==null) return;
+        String ReaderNO = getreaderno();
+        if (BookDBCon.updateData("update Reader set password='' from Reader where readerNo = '"+ReaderNO+"'")) {
+            JOptionPane.showMessageDialog(null,"重置密码成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,"重置密码失败","系统提示",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_ResetPasswordActionPerformed
+
+    //读记录到编辑框
+    private void getdatatotextfiled(){
+        InputReaderNo.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        InputReaderName.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
+        if ((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2)=="男") {
+            ChooseSex.setSelectedIndex(1);
+        } else ChooseSex.setSelectedIndex(2);
+        InputIdNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
+        InputWorkUnit.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
+    }
+    private void AlterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterActionPerformed
+        // TODO add your handling code here:
+        if (Alter.getText().equals("修改")){
+            if (getreaderno()==null) return;
+            String ReaderNO = getreaderno();
+            getdatatotextfiled();
+            Util4Frm.locktextfiled(InputReaderNo);
+            jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
+            Alter.setText("保存");
+        } else {
+            //TodoNext
+        }
+    }//GEN-LAST:event_AlterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,6 +407,6 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     private javax.swing.JLabel WorkUnit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
