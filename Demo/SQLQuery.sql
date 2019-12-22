@@ -1,4 +1,4 @@
-/*创建数据库（BookDB）*/
+1/*创建数据库（BookDB）*/
 CREATE DATABASE [BookDB]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -58,7 +58,7 @@ INSERT INTO Book VALUES('B200301004','算法设计与分析','陈慧南','科学出版社',58.2
 
 
 /*读者表（Reader）数据：*/
-insert Reader values('R2005001','张小娟','女','412723199001014321','统一股份有限公司','')
+insert Reader values('R2005001','张小娟','女','412723199001014321','统一股份有限公司','1234')
 insert Reader values('R2006001','刘凤','女','412723199003014321','联合股份有限公司','')
 insert Reader values('R2007001','高代鹏','男','412723199005014321','洪都股份有限公司','')
 insert Reader values('R2008001','陈辉','男','412723199111014321','南昌市电脑研制公司','')
@@ -137,7 +137,7 @@ left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
 group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum;
 go
 select * from View_Book;
---管理员图书试图
+--管理员图书视图
 go
 create view View_Book_Admin
 as

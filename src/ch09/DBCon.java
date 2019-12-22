@@ -86,4 +86,34 @@ public class DBCon {
             return null;
         }
     }
+    
+    //验证登录的方法
+    public static boolean checkLogin(String sql){
+        Connection conn=JdbcCon();
+        Statement stmt; //会话对象
+        ResultSet rs; //结果集
+        boolean bln;
+        try{
+            //创建会话对象
+            stmt=conn.createStatement();
+            //执行SQL语句
+            rs=stmt.executeQuery(sql); // 只针对于select的SQL语句
+            Vector data=new Vector();
+            if(rs.next()){ //至少有一条数据
+                bln=true;
+            }else{
+                bln=false;
+            }
+            //关闭
+            rs.close();
+            stmt.close();
+            conn.close();
+            return bln;
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            System.out.println("查询数据失败");
+            return false;
+        }
+    }
+    
 }

@@ -6,9 +6,14 @@
 
 package ch09;
 
+import java.sql.*;
+import java.util.*;
+import javax.swing.JOptionPane;
+
+
 /**
  *
- * @author 叶荣锋
+ * @author 
  */
 public class FrmLogin extends javax.swing.JFrame {
 
@@ -122,9 +127,29 @@ public class FrmLogin extends javax.swing.JFrame {
         PasswordNum.setText("");
     }//GEN-LAST:event_ResetActionPerformed
 
+   
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
+        String readId=InputReaderNum.getText();
+        char[] pwds=PasswordNum.getPassword();
+        String pwdString=new String(pwds);
         
+         if(readId!=null && readId.length()>0 && pwdString!=null && pwdString.length()>0){
+            //查询条件
+            String sql="select * from Reader where readerNO='"+readId+"' and password='"+pwdString+"'";
+           
+            System.out.println(sql);
+            
+            if(DBCon.checkLogin(sql)){
+                JOptionPane.showMessageDialog(null, "登录成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+                //进入到主界面
+                FrmReaderInformation frame=new FrmReaderInformation();
+                frame.setVisible(true);
+                this.dispose(); //关闭当前登录窗口
+            }else{
+                 JOptionPane.showMessageDialog(null, "登录失败","系统提示",JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_LoginActionPerformed
 
     /**
