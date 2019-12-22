@@ -43,7 +43,7 @@
                       <Component id="Reset" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ResetPassword" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="295" max="32767" attributes="0"/>
                       <Component id="Left" min="-2" pref="51" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="Right" min="-2" pref="50" max="-2" attributes="0"/>
@@ -112,9 +112,9 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="InputReaderName" min="-2" pref="161" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="354" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="WorkUnit" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="18" max="32767" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="InputWorkUnit" min="-2" pref="162" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -125,7 +125,7 @@
                           <Component id="InputReaderNo" min="-2" pref="161" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="IdNum" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="InputIdNum" min="-2" pref="162" max="-2" attributes="0"/>
                       </Group>
                   </Group>
