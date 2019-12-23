@@ -56,7 +56,7 @@ public class DBCon {
         }
     }
 
-    //查询数据(返回二维Vector集合)
+    //查询数据(返回二维Vector集合),用于表格中显示数据
     public static Vector queryVectorStudents(String sql){
         Connection conn=JdbcCon();
         Statement stmt; //会话对象
@@ -65,7 +65,7 @@ public class DBCon {
             //创建会话对象
             stmt=conn.createStatement();
             //执行SQL语句
-            rs=stmt.executeQuery(sql);
+            rs=stmt.executeQuery(sql); // 只针对于select的SQL语句
             Vector data=new Vector();
             while(rs.next()){
                 Vector line=new Vector();
@@ -84,6 +84,61 @@ public class DBCon {
             ex.printStackTrace();
             System.out.println("查询数据失败");
             return null;
+        }
+    }
+    
+
+    //执行数据添加、修改、删除数据方法
+    public static boolean updateData(String sql){
+        Connection conn=JdbcCon(); //连接数据库
+        Statement stmt; //会话对象
+        try{
+            //创建会话对象
+            stmt=conn.createStatement();
+            //执行SQL语句,数据表中受影响的行数
+            int r=stmt.executeUpdate(sql); //针对于insert,update和delete三种SQL语句
+            stmt.close();
+            conn.close();
+
+            if(r>0){ //执行成功
+                return true;
+            }else{ //执行失败
+                return false;
+            }
+           
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            System.out.println("更新数据失败");
+            return false;
+        }
+    }
+    
+      //验证登录的方法
+    public static boolean checkLogin(String sql){
+        Connection conn=JdbcCon();
+        Statement stmt; //会话对象
+        ResultSet rs; //结果集
+        boolean bln;
+        try{
+            //创建会话对象
+            stmt=conn.createStatement();
+            //执行SQL语句
+            rs=stmt.executeQuery(sql); // 只针对于select的SQL语句
+            Vector data=new Vector();
+            if(rs.next()){ //至少有一条数据
+                bln=true;
+            }else{
+                bln=false;
+            }
+            //关闭
+            rs.close();
+            stmt.close();
+            conn.close();
+            return bln;
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            System.out.println("查询数据失败");
+            return false;
         }
     }
 }

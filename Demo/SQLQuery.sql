@@ -36,13 +36,20 @@ CREATE TABLE Reader
 
 CREATE TABLE Borrow
 (
-	readerNO char(8) foreign key(readerNO) references Reader(readerNO),
-	bookNO char(10) foreign key(bookNO) references Book(bookNO),
+	readerNO char(8) foreign key(readerNO) references Reader(readerNO) on delete cascade,
+	bookNO char(10) foreign key(bookNO) references Book(bookNO) on delete cascade,
 	borrowDate date not null,
 	shouldDate date not null,
 	returnDate date
 )
 
+CREATE TABLE AdminUsers
+(
+	username char(8) primary key,
+	password char(256) not null
+)
+/*Ìí¼Ó¹ÜÀíÔ±ÕË»§*/
+insert AdminUsers values('admin','');
 
 /*Í¼Êé±í(Book)Êı¾İ£º*/
 INSERT INTO Book VALUES('B200101001','ÕşÖÎ¾­¼ÃÑ§','ËÎÌÎ','ÖĞ¹úÈËÃñ´óÑ§³ö°æÉç',31.80,'19910101',5);
@@ -137,7 +144,7 @@ left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
 group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum;
 go
 select * from View_Book;
---¹ÜÀíÔ±Í¼ÊéÊÔÍ¼
+--¹ÜÀíÔ±Í¼ÊéÊÓÍ¼
 go
 create view View_Book_Admin
 as
@@ -179,9 +186,9 @@ delete from reader where readerNO = 'R2010001'
 -- ĞŞ¸Ä
 update Reader set readerName='º«Ã·Ã·',sex='Å®',identitycard='442000199501014321',workUnit='±±¾©Àí¹¤´óÑ§Öéº£Ñ§Ôº' where readerNO='R2010001'
 -- ²éÑ¯¶ÁÕß
-select * from View_Reader where ¶ÁÕß±àºÅ like '%2006%' and ¶ÁÕßĞÕÃû like '%Áõ%' and ĞÔ±ğ like '%%' and Éí·İÖ¤ºÅ like '%1990%' and ¹¤×÷µ¥Î» like '%¹«Ë¾%'
+select * from View_Reader where ¶ÁÕß±àºÅ like '%2006%' and ĞÕÃû like '%Áõ%' and ĞÔ±ğ like '%%' and Éí·İÖ¤ºÅ like '%1990%' and ¹¤×÷µ¥Î» like '%¹«Ë¾%'
 -- ÅÅĞò
-select * from View_Reader where ¶ÁÕß±àºÅ like '%%' and ¶ÁÕßĞÕÃû like '%%' and ĞÔ±ğ like '%%' and Éí·İÖ¤ºÅ like '%%' and ¹¤×÷µ¥Î» like '%%' order by ¶ÁÕß±àºÅ
+select * from View_Reader where ¶ÁÕß±àºÅ like '%%' and ĞÕÃû like '%%' and ĞÔ±ğ like '%%' and Éí·İÖ¤ºÅ like '%%' and ¹¤×÷µ¥Î» like '%%' order by ¶ÁÕß±àºÅ
 
 /* Í¼Êé¹ÜÀí´°¿Ú²Ù×÷ */
 -- Ìí¼Ó
@@ -196,12 +203,14 @@ select * from View_Book_Admin where Í¼Êé±àºÅ like '%2001%' and Í¼ÊéÃû³Æ like '%¾
 /* µÇÂ¼´°¿Ú */
 select readerNO from Reader where readerNo='R2005001' and password=''
 
+delete from Borrow where bookNO='B200301002'
 select bookNO from book where shopNum=1;
+select * from AdminUsers
 select * from Reader;
 select * from Borrow;
 select * from book;
 select * from View_Book;
-
+select * from View_Reader
 /* MD5¼ÓÃÜ */
 select substring(sys.fn_sqlvarbasetostr(HashBytes('MD5','123456')),3,32)
 

@@ -6,9 +6,14 @@
 
 package ch09;
 
+import java.sql.*;
+import java.util.*;
+import javax.swing.JOptionPane;
+
+
 /**
  *
- * @author 叶荣锋
+ * @author sheldon
  */
 public class FrmLogin extends javax.swing.JFrame {
 
@@ -28,43 +33,31 @@ public class FrmLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        ReaderNo = new javax.swing.JLabel();
-        InputReaderNum = new javax.swing.JTextField();
-        Password = new javax.swing.JLabel();
-        Login = new javax.swing.JButton();
-        Reset = new javax.swing.JButton();
-        PasswordNum = new javax.swing.JPasswordField();
+        lblName = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        lblPwd = new javax.swing.JLabel();
+        pwd = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("登录");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
+        setTitle("系统登录");
+
+        lblName.setText("用户名");
+
+        lblPwd.setText("密  码");
+
+        btnLogin.setText("登录");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
             }
         });
 
-        ReaderNo.setText("读者号：");
-
-        InputReaderNum.addActionListener(new java.awt.event.ActionListener() {
+        btnReset.setText("重置");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InputReaderNumActionPerformed(evt);
-            }
-        });
-
-        Password.setText("密码：");
-
-        Login.setText("登录");
-        Login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginActionPerformed(evt);
-            }
-        });
-
-        Reset.setText("重置");
-        Reset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ResetActionPerformed(evt);
+                btnResetActionPerformed(evt);
             }
         });
 
@@ -73,71 +66,79 @@ public class FrmLogin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(93, 93, 93)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Password)
-                            .addComponent(ReaderNo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(lblPwd)
+                            .addComponent(lblName))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(InputReaderNum, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                            .addComponent(PasswordNum)))
+                            .addComponent(txtName)
+                            .addComponent(pwd, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(Login)
-                        .addGap(5, 5, 5)
-                        .addComponent(Reset)))
-                .addContainerGap(113, Short.MAX_VALUE))
+                        .addGap(16, 16, 16)
+                        .addComponent(btnLogin)
+                        .addGap(55, 55, 55)
+                        .addComponent(btnReset)))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ReaderNo)
-                    .addComponent(InputReaderNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(lblName)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Password)
-                    .addComponent(PasswordNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Login)
-                    .addComponent(Reset))
-                .addContainerGap(65, Short.MAX_VALUE))
+                    .addComponent(lblPwd)
+                    .addComponent(pwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogin)
+                    .addComponent(btnReset))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
-
-        InputReaderNum.getAccessibleContext().setAccessibleParent(InputReaderNum);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void InputReaderNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputReaderNumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_InputReaderNumActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        //--1保存输入的用户名和密码
+        String userId=txtName.getText();
+        char[] pwds=pwd.getPassword();
+        String pwdString=new String(pwds);
+        //判断输入不为空
+        if(userId!=null && userId.length()>0 && pwdString!=null && pwdString.length()>0){
+            //查询条件
+            String sql="select * from Users where userId='"+userId+"' and password='"+pwdString+"'";
+            System.out.println(sql);
+            
+            if(DBCon.checkLogin(sql)){
+                JOptionPane.showMessageDialog(null, "登录成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+                //进入到主界面
+                FrmStudent frame=new FrmStudent();
+                frame.setVisible(true);
+                this.dispose(); //关闭当前登录窗口
+            }else{
+                 JOptionPane.showMessageDialog(null, "登录失败","系统提示",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
-        // TODO add your handling code here:
-        InputReaderNum.setText("");
-        PasswordNum.setText("");
-    }//GEN-LAST:event_ResetActionPerformed
 
+   
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_LoginActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
-        // 窗口创建完成事件
-        
-    }//GEN-LAST:event_formWindowOpened
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+
+    }//GEN-LAST:event_btnResetActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -175,12 +176,11 @@ public class FrmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField InputReaderNum;
-    private javax.swing.JButton Login;
-    private javax.swing.JLabel Password;
-    private javax.swing.JPasswordField PasswordNum;
-    private javax.swing.JLabel ReaderNo;
-    private javax.swing.JButton Reset;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblPwd;
+    private javax.swing.JPasswordField pwd;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }
