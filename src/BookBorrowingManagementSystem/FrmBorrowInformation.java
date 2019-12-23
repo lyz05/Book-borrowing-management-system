@@ -94,6 +94,8 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     
     /**
      * 注册jTable选择行监听器
+     * @param jTable1 要注册的jTabel
+     * @param lblBack 底部标签
      */
     public void jTableSelectionListener(JTable jTable1,JLabel lblBack){
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
