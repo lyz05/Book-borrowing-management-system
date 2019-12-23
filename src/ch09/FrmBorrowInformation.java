@@ -349,7 +349,6 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
 
     private void SelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectActionPerformed
         // TODO add your handling code here:
-        
 
     }//GEN-LAST:event_SelectActionPerformed
 
