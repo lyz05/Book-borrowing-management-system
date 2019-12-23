@@ -12,6 +12,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -27,6 +29,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         initComponents();
         //注册表头监听器
         jTableHeaderListen();
+        jTableSelectionListener();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
         this.setMinimumSize(new Dimension(890,560));
@@ -52,6 +55,19 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     }
     
     /**
+     * 注册jTable选择行监听器
+     */
+    private void jTableSelectionListener(){
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                // do some actions here, for example
+                // print first column value from selected row
+                Util4Frm.resetBackText(jTable1, lblBack);
+            }
+        });
+    }
+    
+    /**
      * 编辑框是否为空
      * @return 是否为空
      */
@@ -65,6 +81,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
      */
     private void RefreshReaderInformation(String appendsql) {
         Util4Frm.setFormdata("select * from View_Reader where 读者编号 like '%"+InputReaderNo.getText()+"%' and 姓名 like '%"+InputReaderName.getText()+"%' and 性别 like '%"+ChooseSex.getSelectedItem()+"%' and 身份证号 like '%"+InputIdNum.getText()+"%' and 工作单位 like '%"+InputWorkUnit.getText()+"%'"+appendsql,jTable1);
+        Util4Frm.resetBackText(jTable1, lblBack);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,6 +115,8 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         Reset = new javax.swing.JButton();
         Front = new javax.swing.JButton();
         Back = new javax.swing.JButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        lblBack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("读者信息");
@@ -284,6 +303,11 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             }
         });
 
+        jToolBar1.setRollover(true);
+
+        lblBack.setText("准备就绪");
+        jToolBar1.add(lblBack);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -315,6 +339,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                         .addGap(4, 4, 4))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,8 +360,9 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                         .addComponent(Front)
                         .addComponent(Back)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -554,5 +580,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblBack;
     // End of variables declaration//GEN-END:variables
 }

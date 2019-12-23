@@ -11,11 +11,14 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -34,6 +37,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         jTableHeaderListen();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
+        jTableSelectionListener(jTable1,lblBack);
+        jTableSelectionListener(jTable2,lblBack);
+        jTableSelectionListener(jTable3,lblBack);
         this.setMinimumSize(new Dimension(890,560));
 
         Hello.setText("您好，"+BookDBCon.queryResult("select readerName from Reader where readerNO='"+Util4Frm.readerNO + "'"));
@@ -86,7 +92,18 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         });
     }
     
-
+    /**
+     * 注册jTable选择行监听器
+     */
+    public void jTableSelectionListener(JTable jTable1,JLabel lblBack){
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                // do some actions here, for example
+                // print first column value from selected row
+                Util4Frm.resetBackText(jTable1, lblBack);
+            }
+        });
+    }
     /**
      * 获取当前选中书籍的BookNo
      * @return 返回BookNO
@@ -220,6 +237,8 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         Reset = new javax.swing.JButton();
         Front = new javax.swing.JButton();
         Back = new javax.swing.JButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        lblBack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("借阅信息");
@@ -478,6 +497,11 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             }
         });
 
+        jToolBar1.setRollover(true);
+
+        lblBack.setText("准备就绪");
+        jToolBar1.add(lblBack);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -509,6 +533,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Back)))
                 .addContainerGap())
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -529,8 +554,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                     .addComponent(Front)
                     .addComponent(Back))
                 .addGap(18, 18, 18)
-                .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                .addGap(23, 23, 23))
+                .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLayeredPane1.getAccessibleContext().setAccessibleName("过滤器1");
@@ -603,7 +629,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             nowJTable = jTable3;
             refreshBookTable("");
         }
-        
+        Util4Frm.resetBackText(nowJTable, lblBack);
     }//GEN-LAST:event_jTabbedPaneStateChanged
 
     private void AlterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterPasswordActionPerformed
@@ -704,5 +730,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblBack;
     // End of variables declaration//GEN-END:variables
 }

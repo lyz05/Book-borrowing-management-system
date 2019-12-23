@@ -15,6 +15,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -88,6 +90,14 @@ public class Util4Frm {
         jtable.setRowSelectionInterval(tmp, tmp);
     }
 
+    public static void resetBackText(JTable jtable,JLabel jlabel) {
+        int row = jtable.getSelectedRow(),tot = jtable.getRowCount();
+        if (row >=0  && row < tot)
+        {
+            jlabel.setText("这是第"+(row+1)+"条记录，共查询到"+tot+"条记录");
+        } else
+            jlabel.setText("共查询到"+tot+"条记录");
+    }
 
     /**
      * 获取对jTable列排序时需要追加的sql文本
@@ -169,4 +179,5 @@ public class Util4Frm {
 		}while (input.charAt(i) != '\0');
 		return output;
 	}
+
 }
