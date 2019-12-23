@@ -218,6 +218,8 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         Right = new javax.swing.JButton();
         Left = new javax.swing.JButton();
         Reset = new javax.swing.JButton();
+        Front = new javax.swing.JButton();
+        Back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("借阅信息");
@@ -462,6 +464,20 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             }
         });
 
+        Front.setText("<<");
+        Front.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FrontActionPerformed(evt);
+            }
+        });
+
+        Back.setText(">>");
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -484,10 +500,14 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                         .addComponent(Reset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AlterPassword)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Front)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Left)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Right)))
+                        .addComponent(Right)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Back)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -505,7 +525,9 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                     .addComponent(btnBorrowReturn)
                     .addComponent(btnRenew)
                     .addComponent(AlterPassword)
-                    .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Front)
+                    .addComponent(Back))
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                 .addGap(23, 23, 23))
@@ -604,6 +626,16 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         refreshBookTable("");
     }//GEN-LAST:event_ResetActionPerformed
 
+    private void FrontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FrontActionPerformed
+        // TODO add your handling code here:
+        Util4Frm.moveFormRowToTop(nowJTable, 0);
+    }//GEN-LAST:event_FrontActionPerformed
+
+    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+        // TODO add your handling code here:
+        Util4Frm.moveFormRowToTop(nowJTable, 1);
+    }//GEN-LAST:event_BackActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -642,8 +674,10 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AlterPassword;
     private javax.swing.JLabel Author;
+    private javax.swing.JButton Back;
     private javax.swing.JLabel BookName;
     private javax.swing.JLabel BookNo;
+    private javax.swing.JButton Front;
     private javax.swing.JLabel Hello;
     private javax.swing.JTextField InputAuthor;
     private javax.swing.JTextField InputBookName;

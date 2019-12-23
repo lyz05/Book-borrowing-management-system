@@ -25,7 +25,7 @@ public class Util4Frm {
     /**
      * 当前登陆用户的ReaderNO，对所有的窗口均适用
      */
-    public static String readerNO;
+    public static String readerNO = "R2006001";
     /**
      * 排序的方向，用于对jTable中的列排序
      */
@@ -74,7 +74,19 @@ public class Util4Frm {
         jtable.setRowSelectionInterval(tmp, tmp);
     }
 
-   
+    /**
+     * 移动jTable当前选中行光标到顶部或底部
+     * @param jtable
+     * @param status 
+     */
+    public static void moveFormRowToTop(JTable jtable,int status)
+    {
+        int tmp = 0;
+        if (status==1) {
+            tmp = jtable.getRowCount()-1;
+        }
+        jtable.setRowSelectionInterval(tmp, tmp);
+    }
 
 
     /**

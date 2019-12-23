@@ -135,6 +135,8 @@ public class FrmBookManager extends javax.swing.JFrame {
         InputPress = new javax.swing.JTextField();
         Alter = new javax.swing.JButton();
         Reset = new javax.swing.JButton();
+        Front = new javax.swing.JButton();
+        Back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("图书管理");
@@ -321,6 +323,20 @@ public class FrmBookManager extends javax.swing.JFrame {
             }
         });
 
+        Front.setText("<<");
+        Front.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FrontActionPerformed(evt);
+            }
+        });
+
+        Back.setText(">>");
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -340,9 +356,13 @@ public class FrmBookManager extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Reset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Front)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Left)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Right))
+                        .addComponent(Right)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Back))
                     .addComponent(jScrollPane2))
                 .addGap(10, 10, 10))
         );
@@ -353,13 +373,17 @@ public class FrmBookManager extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Reset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Left)
+                            .addComponent(Right)
+                            .addComponent(Front)
+                            .addComponent(Back)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Add)
                         .addComponent(Delete)
                         .addComponent(Refresh)
-                        .addComponent(Left)
-                        .addComponent(Right)
                         .addComponent(Alter)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
@@ -457,6 +481,16 @@ public class FrmBookManager extends javax.swing.JFrame {
         RefreshBookInformation("");
     }//GEN-LAST:event_ResetActionPerformed
 
+    private void FrontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FrontActionPerformed
+        // TODO add your handling code here:
+        Util4Frm.moveFormRowToTop(jTable1, 0);
+    }//GEN-LAST:event_FrontActionPerformed
+
+    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+        // TODO add your handling code here:
+        Util4Frm.moveFormRowToTop(jTable1, 1);
+    }//GEN-LAST:event_BackActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -496,9 +530,11 @@ public class FrmBookManager extends javax.swing.JFrame {
     private javax.swing.JButton Add;
     private javax.swing.JButton Alter;
     private javax.swing.JLabel Author;
+    private javax.swing.JButton Back;
     private javax.swing.JLabel BookName;
     private javax.swing.JLabel BookNo;
     private javax.swing.JButton Delete;
+    private javax.swing.JButton Front;
     private javax.swing.JTextField InputAuthor;
     private javax.swing.JTextField InputBookName;
     private javax.swing.JTextField InputBookNum;

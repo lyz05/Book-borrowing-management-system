@@ -39,9 +39,13 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="Reset" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="Front" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="Left" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="Right" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Back" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -56,13 +60,19 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="Reset" alignment="1" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="Reset" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                          <Component id="Left" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Right" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Front" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Back" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="Add" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Delete" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Refresh" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Left" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Right" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Alter" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -364,6 +374,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResetActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="Front">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FrontActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="Back">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
