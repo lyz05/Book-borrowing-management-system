@@ -55,6 +55,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         InputPublishName.setText("");
         InputPublishDate_1.setText("");
         InputPublishDate_2.setText("");
+        jCheckBox1.setSelected(false);
     }
     /**
      * 三个jTable表格的表头监听器，用于排序
@@ -95,12 +96,12 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     /**
      * 注册jTable选择行监听器
      */
-    public void jTableSelectionListener(JTable jTable1,JLabel lblBack){
-        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+    public void jTableSelectionListener(JTable jtable, JLabel lblBack){
+        jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
                 // do some actions here, for example
                 // print first column value from selected row
-                Util4Frm.resetBackText(jTable1, lblBack);
+                Util4Frm.resetBackText(jtable, lblBack);
             }
         });
     }
@@ -172,6 +173,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
      */
     private void refreshBorrowTable(String appendsql){
         Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is null"+appendsql, jTable1);
+        Util4Frm.resetBackText(nowJTable, lblBack);
     }
     /**
      * 刷新历史借阅表
@@ -179,6 +181,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
      */
     private void refreshBorrowHistoryTable(String appendsql){ 
         Util4Frm.setFormdata("select 图书编号,图书名称,作者,出版社,借书时间,应归还日期,归还日期 from View_Borrow where 读者编号='"+ Util4Frm.readerNO + "' and 归还日期 is not null"+appendsql, jTable2);
+        Util4Frm.resetBackText(nowJTable, lblBack);
     }
     /**
      * 刷新图书信息表
@@ -194,6 +197,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         if (jCheckBox1.isSelected())
             sql += " and 在库数量>0";
         Util4Frm.setFormdata(sql+appendsql,jTable3);
+        Util4Frm.resetBackText(nowJTable, lblBack);
     }
 
     /**
@@ -586,6 +590,8 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
         //查询按钮
         refreshBookTable("");
+        Util4Frm.resetBackText(nowJTable, lblBack);
+        
     }//GEN-LAST:event_SelectActionPerformed
 
     private void RightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RightActionPerformed
@@ -629,7 +635,6 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             nowJTable = jTable3;
             refreshBookTable("");
         }
-        Util4Frm.resetBackText(nowJTable, lblBack);
     }//GEN-LAST:event_jTabbedPaneStateChanged
 
     private void AlterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterPasswordActionPerformed

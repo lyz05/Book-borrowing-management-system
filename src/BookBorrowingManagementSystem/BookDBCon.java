@@ -38,7 +38,7 @@ public class BookDBCon {
             Class.forName(DBdriver);
             //--3 创建连接
             Connection conn=DriverManager.getConnection(DBURL,DBUSER,DBPASS);
-            System.out.println("数据库连接成功");
+            //System.out.println("数据库连接成功");
             return conn ;//返回创建的数据库连接对象
         }catch(ClassNotFoundException ex){//捕获驱动程序找不到异常
             ex.printStackTrace();
