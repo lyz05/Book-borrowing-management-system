@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class BookDBCon {
     private static final String DBdriver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String DBURL="jdbc:sqlserver://localhost:1433;DatabaseName=BookDB"; 
+    private static final String DBURL="jdbc:sqlserver://10.0.78.30:1433;DatabaseName=BookDB"; 
     private static final String DBUSER="sa"; 
     private static final String DBPASS="qazQAZ123!"; 
     private BookDBCon() {} //禁止实例化
