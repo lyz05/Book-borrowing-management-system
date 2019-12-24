@@ -6,9 +6,11 @@
 
 package BookBorrowingManagementSystem;
 
+import static BookBorrowingManagementSystem.BookDBCon.JdbcCon;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,7 +35,6 @@ public class FrmBookManager extends javax.swing.JFrame {
         Util4Frm.setUI(this);
         this.setMinimumSize(new Dimension(890,560));
         RefreshBookInformation("");
-
     }
     
     /**
@@ -116,9 +117,18 @@ public class FrmBookManager extends javax.swing.JFrame {
      * 刷新图书信息
      * @param appendsql 追加的sql
      */
+
     private void RefreshBookInformation(String appendsql){
         Util4Frm.setFormdata("select * from View_Book_Admin where 图书编号 like '%"+InputBookNum.getText()+"%' and 图书名称 like '%"+InputBookName.getText()+"%' and 作者 like '%"+InputAuthor.getText() +"%' and 出版社 like '%"+InputPress.getText()+"%'"+appendsql,jTable1);
-        Util4Frm.resetBackText(jTable1, lblBack);
+        //用resetBackText()封装    
+//      int row = jTable1.getSelectedRow();
+//      int total = jTable1.getRowCount();
+//      if(row>=0 && row<total){
+//         System.out.println("当前为第"+row+"行"+","+"共有"+total+"行");
+//      }else{
+//         System.out.println("共有"+total+"行");
+//      }
+        Util4Frm.resetBackText(jTable1, lblBack);//显示左下角的信息
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -265,6 +275,12 @@ public class FrmBookManager extends javax.swing.JFrame {
         PublishDate.setText("出版日期：");
 
         StockInNum.setText("入库数量：");
+
+        InputPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputPriceActionPerformed(evt);
+            }
+        });
 
         Press.setText("出版社：");
 
@@ -433,7 +449,8 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
-        if (getbookno()==null || !Util4Frm.confirmdelete()) return;
+        if (getbookno()==null || !Util4Frm.confirmdelete()) 
+            return;
         String BookNo = getbookno();
         if (BookDBCon.updateData("delete from Book where bookNO = '"+BookNo+"'")) {
                 JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
@@ -462,7 +479,26 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
-         if (textFiledIsNull()){
+        //当文本框不为空时，用函数textFileIsNull()封装该代码
+        //InputBookNum.getText().equals("") || InputBookName.getText().equals("") || InputAuthor.getText().equals("") || InputPress.getText().equals("") || InputPrice.getText().equals("") || InputPublishdate.getText().equals("") || InputShopNum.getText().equals("");
+       
+        //封装updateData()
+//        Connection conn=JdbcCon();
+//        try{    
+//            Statement stmt = conn.createStatement();
+//            int rs = stmt.excuteUpdate(sql);
+//            stmt.close();
+//            conn.close();
+//            if(rs>0)
+//                return true;
+//            else{
+//                return false;
+//             }
+//         }catch(SQLException e){
+//             e.printstack();
+//             System.out.println("添加数据库失败");
+//         }
+        if (textFiledIsNull()){
              JOptionPane.showMessageDialog(null,"请填写欲添加书籍的所有信息","系统提示",JOptionPane.INFORMATION_MESSAGE);
              return;
          } else if (BookDBCon.updateData("INSERT INTO Book VALUES('"+InputBookNum.getText()+"','"+InputBookName.getText()+"','"+InputAuthor.getText()+"','"+InputPress.getText()+"',"+InputPrice.getText()+",'"+InputPublishdate.getText()+"',"+InputShopNum.getText()+")")) {
@@ -476,24 +512,44 @@ public class FrmBookManager extends javax.swing.JFrame {
     }//GEN-LAST:event_AddActionPerformed
 
     private void LeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeftActionPerformed
-        // TODO add your handling code here:
-        Util4Frm.moveFormRow(jTable1, -1);
+        // 用函数封装好了      
+        int tem = jTable1.getSelectedRow()-1; //-1表示向上移动
+        if(tem<0)
+            JOptionPane.showMessageDialog(null,"已经是第一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        jTable1.setRowSelectionInterval(tem, tem);
+      //  Util4Frm.moveFormRow(jTable1, -1);
     }//GEN-LAST:event_LeftActionPerformed
 
     private void RightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RightActionPerformed
-        // TODO add your handling code here:
-        Util4Frm.moveFormRow(jTable1, 1);
+        // 继续用函数封装
+        int tem = jTable1.getSelectedRow()+1;  //1表示向下移动
+        if(tem>=jTable1.getRowCount())
+            JOptionPane.showMessageDialog(null,"已经是最后一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        jTable1.setRowSelectionInterval(tem, tem);
+         //Util4Frm.moveFormRow(jTable1, 1); 
     }//GEN-LAST:event_RightActionPerformed
 
     /**
      * 修改保存按钮
      */
     private void AlterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterActionPerformed
+        //在修改书本信息的时候需要选择具体一本书，但有可能会存在没有选择书本的情况
+        //判断没有选中书本的情况  用getbookno()封装
+//        if(jTable1.getSelecetRow()==null){
+//            JOptionPane.showMessageDialog(null,"请选择一本书","系统提示",JOptionPane.INFORMATION_MESSAGE);
+//            return null;
+//        }else{
+//          String r = (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+//        }
+//        
+        
+        
         if (Alter.getText().equals("修改")){
-            if (getbookno()==null) return;
+            if (getbookno()==null)
+                return;
             String ReaderNO = getbookno();
-            getdatatotextfiled();
-            Util4Frm.locktextfiled(InputBookNum);
+            getdatatotextfiled();//修改后的数据显示在表格中
+            Util4Frm.locktextfiled(InputBookNum);//锁定书籍编号这一栏
             jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
             Alter.setText("保存");
             Reset.setEnabled(false);
@@ -503,9 +559,10 @@ public class FrmBookManager extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null,"修改信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
             }
-            resetTextfiled();
+            resetTextfiled();//刷新
             Util4Frm.unlocktextfiled(InputBookNum);
             RefreshBookInformation("");
+           //加入筛选模式
             jPanel1.setBorder(BorderFactory.createTitledBorder("筛选模式(左栏信息可筛选)"));
             Alter.setText("修改");
             Reset.setEnabled(true);
@@ -519,12 +576,17 @@ public class FrmBookManager extends javax.swing.JFrame {
     }//GEN-LAST:event_ResetActionPerformed
 
     private void FrontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FrontActionPerformed
-        // TODO add your handling code here:
+
+//        int tem = jTable1.getSelectedRow();
+//        tem = 0;
+//        jtable.setRowSelectionInterval(tmp, tmp);
         Util4Frm.moveFormRowToTop(jTable1, 0);
     }//GEN-LAST:event_FrontActionPerformed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        // TODO add your handling code here:
+        //最终都调用封装的函数
+//        int tem = jTable1.getSelectedRowCount();
+//        jtable.setRowSelectionInterval(tmp, tmp);
         Util4Frm.moveFormRowToTop(jTable1, 1);
     }//GEN-LAST:event_BackActionPerformed
 
@@ -536,6 +598,10 @@ public class FrmBookManager extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void InputPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InputPriceActionPerformed
 
     /**
      * @param args the command line arguments

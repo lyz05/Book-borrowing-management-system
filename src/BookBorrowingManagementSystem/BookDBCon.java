@@ -56,7 +56,6 @@ public class BookDBCon {
     * @return 返回找到的结果，null表示没有结果 
     */ 
     public static String queryResult(String sql){
-        
         System.out.println(sql);
         Connection conn=JdbcCon();
         Statement stmt; //会话对象

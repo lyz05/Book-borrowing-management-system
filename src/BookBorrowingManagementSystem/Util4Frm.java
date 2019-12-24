@@ -53,7 +53,8 @@ public class Util4Frm {
      */
     public static void setFormdata(String sql,JTable jtable) {
         //data是表格中的数据，name是表头字段信息
-        Vector data=new Vector(),name = new Vector();
+        Vector data=new Vector();
+        Vector name = new Vector();
         BookDBCon. queryVector2(sql,data,name);
         //用DefaultTableModel包装数据，以便JTable显示
         DefaultTableModel model = new DefaultTableModel(data, name);
@@ -91,7 +92,8 @@ public class Util4Frm {
     }
 
     public static void resetBackText(JTable jtable,JLabel jlabel) {
-        int row = jtable.getSelectedRow(),tot = jtable.getRowCount();
+        int row = jtable.getSelectedRow();
+        int tot = jtable.getRowCount();
         if (row >=0  && row < tot)
         {
             jlabel.setText("这是第"+(row+1)+"条记录，共查询到"+tot+"条记录");
