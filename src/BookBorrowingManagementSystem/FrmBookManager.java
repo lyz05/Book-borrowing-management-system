@@ -434,8 +434,18 @@ public class FrmBookManager extends javax.swing.JFrame {
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
         if (getbookno()==null || !Util4Frm.confirmdelete()) return;
-        String BookNo = getbookno();
-        if (BookDBCon.updateData("delete from Book where bookNO = '"+BookNo+"'")) {
+        String BookNo = getbookno(),sql;
+        sql = "select * from View_Book where 图书编号='"+BookNo+"' and 在库数量=入库数量";
+        if (BookDBCon.queryResult(sql) == null)
+        {
+            JOptionPane.showMessageDialog(null,"还有读者未归还此本图书，因此无法删除此书","系统提示",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //先删除借阅表中此书的历史记录再删除这本书
+        sql = "delete from Borrow where bookno='"+BookNo+"' and returnDate is not null";
+        BookDBCon.updateData(sql);
+        sql = "delete from Book where bookNO = '"+BookNo+"'";
+        if (BookDBCon.updateData(sql)) {
                 JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
                 JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);

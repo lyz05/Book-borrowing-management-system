@@ -496,8 +496,18 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
         if (getreaderno()==null || !Util4Frm.confirmdelete()) return;
-        String ReaderNO = getreaderno();
-        if (BookDBCon.updateData("delete from reader where readerNO = '"+ReaderNO+"'")) {
+        String ReaderNO = getreaderno(),sql;
+        sql = "select * from View_reader where 读者编号='"+ReaderNO+"' and 未归还数量=0";
+        if (BookDBCon.queryResult(sql) == null)
+        {
+            JOptionPane.showMessageDialog(null,"该读者还有未归还的图书，因此无法删除该读者","系统提示",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //先删除借阅表中该读者的历史记录再删除该读者
+        sql = "delete from Borrow where readerNO='"+ReaderNO+"' and returnDate is not null";
+        BookDBCon.updateData(sql);
+        sql = "delete from reader where readerNO='"+ReaderNO+"'";
+        if (BookDBCon.updateData(sql)) {
                 JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
                 JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);

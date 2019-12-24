@@ -53,16 +53,16 @@ CREATE TABLE Borrow
 insert AdminUsers values('admin','');
 
 /*读者表（Reader）数据：*/
-INSERT INTO Reader VALUES('R2005001','张小娟','女','412723199001014321','统一股份有限公司')
-INSERT INTO Reader VALUES('R2006001','刘凤','女','412723199003014321','联合股份有限公司')
-INSERT INTO Reader VALUES('R2007001','高代鹏','男','412723199005014321','洪都股份有限公司')
-INSERT INTO Reader VALUES('R2008001','陈辉','男','412723199111014321','南昌市电脑研制公司')
-INSERT INTO Reader VALUES('R2009001','李虹冰','女','412723199208014321','富士康科技集团')
-INSERT INTO Reader VALUES('R2005002','张露','女','412723199002014321','兴隆股份有限公司')
-INSERT INTO Reader VALUES('R2006002','喻自强','男','412723199004014321','万事达股份有限公司')
-INSERT INTO Reader VALUES('R2007002','张晓梅','女','412723199112014321','世界技术开发公司')
-INSERT INTO Reader VALUES('R2008002','张良','男','412723199110014321','上海生物研究室')
-INSERT INTO Reader VALUES('R2009002','韩福平','男','412723199209014321','合生元有限公司')
+INSERT INTO Reader VALUES('R2005001','张小娟','女','412723199001014321','统一股份有限公司','')
+INSERT INTO Reader VALUES('R2006001','刘凤','女','412723199003014321','联合股份有限公司','')
+INSERT INTO Reader VALUES('R2007001','高代鹏','男','412723199005014321','洪都股份有限公司','')
+INSERT INTO Reader VALUES('R2008001','陈辉','男','412723199111014321','南昌市电脑研制公司','')
+INSERT INTO Reader VALUES('R2009001','李虹冰','女','412723199208014321','富士康科技集团','')
+INSERT INTO Reader VALUES('R2005002','张露','女','412723199002014321','兴隆股份有限公司','')
+INSERT INTO Reader VALUES('R2006002','喻自强','男','412723199004014321','万事达股份有限公司','')
+INSERT INTO Reader VALUES('R2007002','张晓梅','女','412723199112014321','世界技术开发公司','')
+INSERT INTO Reader VALUES('R2008002','张良','男','412723199110014321','上海生物研究室','')
+INSERT INTO Reader VALUES('R2009002','韩福平','男','412723199209014321','合生元有限公司','')
 
 /*图书表(Book)数据：*/
 INSERT INTO Book VALUES('B200101001','政治经济学','宋涛','中国人民大学出版社',31.80,'19910101',5)
@@ -175,7 +175,9 @@ where readerNo = 'R2009001'
 -- 添加
 insert Reader values('R2010001','李雷','男','442000199001014321','北京理工大学珠海学院','')
 -- 删除
-delete from reader where readerNO = 'R2010001'
+select * from View_reader where 读者编号='R2009002' and 未归还数量=0
+delete from Borrow where readerNO='R2009002' and returnDate is not null
+delete from reader where readerNO = 'R2009002'
 -- 修改
 update Reader set readerName='韩梅梅',sex='女',identitycard='442000199501014321',workUnit='北京理工大学珠海学院' where readerNO='R2010001'
 -- 查询读者
@@ -187,7 +189,9 @@ select * from View_Reader where 读者编号 like '%%' and 姓名 like '%%' and 性别 l
 -- 添加
 INSERT INTO Book VALUES('B200301101','Java程序设计','赵卓君','北京交通大学出版社',41.00,'20110520',3);
 -- 删除
-delete from Book where bookNO = 'B200301101'
+select * from View_Book where 图书编号='B200201003' and 在库数量=入库数量
+delete from Borrow where bookno='B200201003' and returnDate is not null
+delete from Book where bookNO = 'B200201003'
 -- 修改
 update Book set bookName='数据库系统原理与设计',authorName='万常选',publishingName='清华大学出版社',price=59.90,publishingDate='20090902',shopNum=6 where bookNO='B200301101'
 -- 查询图书
