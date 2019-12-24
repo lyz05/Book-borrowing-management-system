@@ -368,7 +368,8 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         jLayeredPane1.setLayer(InputPublishDate_2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jCheckBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        Select.setText("查询");
+        Select.setActionCommand("");
+        Select.setLabel("刷新");
         Select.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SelectActionPerformed(evt);
