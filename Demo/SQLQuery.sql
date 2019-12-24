@@ -156,7 +156,7 @@ select * from View_Borrow where 读者编号='R2005002' and 归还日期 is null
 -- 历史借阅信息显示
 select * from View_Borrow where 读者编号='R2005002' and 归还日期 is not null
 -- 图书信息显示
-select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02' and 在库数量>0
+select * from View_Book where 图书编号 like '%2001%' and 图书名称 like '%经济%' and 作者 like '%宋%' and 出版社 like '%中国%' and 出版日期 between '1990-01-01' and '2010-02-02' and 在库数量>0 and 图书编号 not in (select 图书编号 from View_Borrow where 读者编号='R2005002' and 归还日期 is null)
 -- 借书
 select * from Borrow where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
 if exists(select * from View_Book where 图书编号='B200201003' and 在库数量>0)
@@ -175,9 +175,9 @@ where readerNo = 'R2009001'
 -- 添加
 insert Reader values('R2010001','李雷','男','442000199001014321','北京理工大学珠海学院','')
 -- 删除
-select * from View_reader where 读者编号='R2009002' and 未归还数量=0
-delete from Borrow where readerNO='R2009002' and returnDate is not null
-delete from reader where readerNO = 'R2009002'
+select * from View_reader where 读者编号='R2005002' and 未归还数量=0
+delete from Borrow where readerNO='R2005002' and returnDate is not null
+delete from reader where readerNO='R2005002'
 -- 修改
 update Reader set readerName='韩梅梅',sex='女',identitycard='442000199501014321',workUnit='北京理工大学珠海学院' where readerNO='R2010001'
 -- 查询读者

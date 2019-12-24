@@ -195,7 +195,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         if (!PublishDate2.equals("")) 
             sql += " and 出版日期<='" + PublishDate2+"'";
         if (jCheckBox1.isSelected())
-            sql += " and 在库数量>0";
+            sql += " and 在库数量>0 and 图书编号 not in (select 图书编号 from View_Borrow where 读者编号='"+Util4Frm.readerNO+"' and 归还日期 is null)";
         Util4Frm.setFormdata(sql+appendsql,jTable3);
         Util4Frm.resetBackText(nowJTable, lblBack);
     }
