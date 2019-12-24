@@ -21,7 +21,9 @@ public class FrmAlterPassword extends javax.swing.JFrame {
         initComponents();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
+        //设置窗口尺寸不可修改
         this.setResizable(false);
+        //将全局读者号显示到对应的文本框中
         InputReaderNo.setText(Util4Frm.readerNO);
     }
 
@@ -148,8 +150,12 @@ public class FrmAlterPassword extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = InputReaderNo.getText();
         String pwd = new String(jPasswordField1.getPassword());
+        String newpwd = new String(jPasswordField2.getPassword());
+        pwd = Util4Frm.encodeInp(pwd);
+        newpwd = Util4Frm.encodeInp(newpwd);
+        
         if (BookDBCon.queryResult("select readerNO from Reader where readerNo='"+username+"' and password='"+pwd+"'") != null) {
-            if (BookDBCon.updateData("update Reader set password='"+new String(jPasswordField2.getPassword())+"' from Reader where readerNo = '"+InputReaderNo.getText()+"'")) {
+            if (BookDBCon.updateData("update Reader set password='"+newpwd+"' from Reader where readerNo = '"+username+"'")) {
                 JOptionPane.showMessageDialog(null,"修改密码成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
             } else{
                 JOptionPane.showMessageDialog(null, "修改密码失败","系统提示",JOptionPane.ERROR_MESSAGE);

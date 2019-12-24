@@ -429,10 +429,14 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         return (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
     }
     
+    /**
+     * 重置密码按钮被按下
+     */
     private void ResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetPasswordActionPerformed
         // TODO add your handling code here:
-        if (getreaderno()==null) return;
+        if (getreaderno()==null || !Util4Frm.confirmresetpwd()) return;
         String ReaderNO = getreaderno();
+        
         if (BookDBCon.updateData("update Reader set password='' from Reader where readerNo = '"+ReaderNO+"'")) {
             JOptionPane.showMessageDialog(null,"重置密码成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {

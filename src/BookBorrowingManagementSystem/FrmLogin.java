@@ -150,6 +150,7 @@ public class FrmLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = InputReaderNum.getText();
         String pwd = new String(PasswordNum.getPassword());
+        pwd = Util4Frm.encodeInp(pwd);
         
         if (BookDBCon.queryResult("select readerNO from Reader where readerNo='"+username+"' and password='"+pwd+"'") != null) {
                 Util4Frm.readerNO=username;

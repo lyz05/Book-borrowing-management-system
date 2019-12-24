@@ -31,9 +31,9 @@ public class FrmBookManager extends javax.swing.JFrame {
         jTableSelectionListener();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
+        //设置显示窗口的最小尺寸
         this.setMinimumSize(new Dimension(890,560));
         RefreshBookInformation("");
-
     }
     
     /**
@@ -49,7 +49,7 @@ public class FrmBookManager extends javax.swing.JFrame {
         });
     }
     /**
-     * 注册表头监听器
+     * 注册jTable表头监听器
      */
     private void jTableHeaderListen(){
         final JTableHeader header1 = jTable1.getTableHeader();
@@ -434,6 +434,7 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
+        //判断是否选中图书与二次确认是否删除图书
         if (getbookno()==null || !Util4Frm.confirmdelete()) return;
         String BookNo = getbookno(),sql;
         sql = "select * from View_Book where 图书编号='"+BookNo+"' and 在库数量=入库数量";
