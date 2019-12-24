@@ -154,8 +154,8 @@ public class FrmAlterPassword extends javax.swing.JFrame {
         pwd = Util4Frm.encodeInp(pwd);
         newpwd = Util4Frm.encodeInp(newpwd);
         
-        if (BookDBCon.queryResult("select readerNO from Reader where readerNo='"+username+"' and password='"+pwd+"'") != null) {
-            if (BookDBCon.updateData("update Reader set password='"+newpwd+"' from Reader where readerNo = '"+username+"'")) {
+        if (BookDBCon.preparedqueryResult("select readerNO from Reader where readerNo=? and password=?", username,pwd) != null) {
+            if (BookDBCon.preparedupdateData("update Reader set password=? from Reader where readerNo=?",newpwd,username)) {
                 JOptionPane.showMessageDialog(null,"修改密码成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
             } else{
                 JOptionPane.showMessageDialog(null, "修改密码失败","系统提示",JOptionPane.ERROR_MESSAGE);

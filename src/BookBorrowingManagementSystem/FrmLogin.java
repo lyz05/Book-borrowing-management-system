@@ -152,14 +152,14 @@ public class FrmLogin extends javax.swing.JFrame {
         String pwd = new String(PasswordNum.getPassword());
         pwd = Util4Frm.encodeInp(pwd);
         
-        if (BookDBCon.queryResult("select readerNO from Reader where readerNo='"+username+"' and password='"+pwd+"'") != null) {
+        if (BookDBCon.preparedqueryResult("select readerNO from Reader where readerNo=? and password=?", username,pwd) != null) {
                 Util4Frm.readerNO=username;
                 //进入到主界面
                 FrmBorrowInformation frame=new FrmBorrowInformation();
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口
                 //this.dispose(); //关闭当前登录窗口
-        }else if (BookDBCon.queryResult("select username from AdminUsers where username='"+username+"' and password='"+pwd+"'") != null){
+        }else if (BookDBCon.preparedqueryResult("select username from AdminUsers where username=? and password=?", username,pwd) != null){
             //进入到管理员选择界面
             int ret = JOptionPane.showConfirmDialog(null,"您好，管理员\n是 进入图书管理界面\n否 进入读者管理界面","系统提示",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
             if (ret==JOptionPane.YES_OPTION){

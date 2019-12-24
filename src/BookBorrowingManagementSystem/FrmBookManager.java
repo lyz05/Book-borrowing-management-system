@@ -159,7 +159,7 @@ public class FrmBookManager extends javax.swing.JFrame {
         lblBack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("图书管理");
+        setTitle("图书信息管理");
 
         Delete.setText("删除");
         Delete.addActionListener(new java.awt.event.ActionListener() {

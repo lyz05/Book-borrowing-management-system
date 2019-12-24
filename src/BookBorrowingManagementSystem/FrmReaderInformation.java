@@ -119,7 +119,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         lblBack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("读者信息");
+        setTitle("读者信息管理");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("筛选模式"));
 
