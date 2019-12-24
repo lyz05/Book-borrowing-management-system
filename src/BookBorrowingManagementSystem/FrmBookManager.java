@@ -227,6 +227,7 @@ public class FrmBookManager extends javax.swing.JFrame {
                 "读者编号", "图书名称", "作者", "出版社", "价格", "出版日期", "入库数量", "在库数量"
             }
         ));
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);

@@ -56,7 +56,13 @@ public class Util4Frm {
         Vector data=new Vector(),name = new Vector();
         BookDBCon. queryVector2(sql,data,name);
         //用DefaultTableModel包装数据，以便JTable显示
-        DefaultTableModel model = new DefaultTableModel(data, name);
+        DefaultTableModel model = new DefaultTableModel(data, name) {
+            //重写方法禁止编辑
+            @Override
+            public boolean isCellEditable(int row,int column) {
+                return false;
+            }
+        };
         jtable.setModel(model);
     }
     

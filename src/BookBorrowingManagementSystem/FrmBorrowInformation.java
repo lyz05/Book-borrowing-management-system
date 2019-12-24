@@ -352,7 +352,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                     .addComponent(InputAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Author)
                     .addComponent(jCheckBox1))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jLayeredPane1.setLayer(BookNo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(BookName, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -419,6 +419,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                 "图书编号", "图书名称", "作者", "出版社", "价格", "出版日期", "入库数量", "在库数量"
             }
         ));
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jTable1);
 
         jTabbedPane.addTab("当前借阅", jScrollPane1);
@@ -440,6 +441,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                 "图书编号", "图书名称", "作者", "出版社", "价格", "出版日期", "入库数量", "在库数量"
             }
         ));
+        jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jTable2);
 
         jTabbedPane.addTab("历史借阅", jScrollPane2);
@@ -462,6 +464,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                 "图书编号", "图书名称", "作者", "出版社", "价格", "出版日期", "入库数量", "在库数量"
             }
         ));
+        jTable3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(jTable3);
 
         jTabbedPane.addTab("图书信息", jScrollPane3);
@@ -513,7 +516,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE)
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(Hello, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))

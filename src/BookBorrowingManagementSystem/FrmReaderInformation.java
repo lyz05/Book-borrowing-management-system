@@ -266,6 +266,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                 "读者编号", "读者姓名", "性别", "身份证号", "工作单位", "总借书数量", "未归还数量"
             }
         ));
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(jTable1);
 
         Renovate.setText("刷新");
