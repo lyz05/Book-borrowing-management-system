@@ -528,7 +528,7 @@ public class FrmBookManager extends javax.swing.JFrame {
         int tem = jTable1.getSelectedRow()-1; //-1表示向上移动
         if(tem<0)
             JOptionPane.showMessageDialog(null,"已经是第一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
-        jTable1.setRowSelectionInterval(tem, tem);
+        else jTable1.setRowSelectionInterval(tem, tem);
       //  Util4Frm.moveFormRow(jTable1, -1);
     }//GEN-LAST:event_LeftActionPerformed
 
@@ -537,8 +537,8 @@ public class FrmBookManager extends javax.swing.JFrame {
         int tem = jTable1.getSelectedRow()+1;  //1表示向下移动
         if(tem>=jTable1.getRowCount())
             JOptionPane.showMessageDialog(null,"已经是最后一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
-        jTable1.setRowSelectionInterval(tem, tem);
-         //Util4Frm.moveFormRow(jTable1, 1); 
+        else jTable1.setRowSelectionInterval(tem, tem);
+        //Util4Frm.moveFormRow(jTable1, 1); 
     }//GEN-LAST:event_RightActionPerformed
 
     /**
