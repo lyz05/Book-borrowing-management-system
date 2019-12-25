@@ -9,6 +9,7 @@ package BookBorrowingManagementSystem;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -21,7 +22,10 @@ import javax.swing.JOptionPane;
  * @author congcong
  */
 public class BookDBCon {
-
+    private static final String DBdriver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String DBURL="jdbc:sqlserver://10.0.78.30:1433;DatabaseName=BookDB"; 
+    private static final String DBUSER="sa"; 
+    private static final String DBPASS="qazQAZ123!"; 
     private BookDBCon() {} //禁止实例化
     
     /**
@@ -29,12 +33,12 @@ public class BookDBCon {
      * @return 返回连接信息
      */
     public static Connection JdbcCon(){
+        
         try{
             //--2 加载数据库驱动程序
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(DBdriver);
             //--3 创建连接
-            String url="jdbc:sqlserver://10.0.78.30:1433;databaseName=BookDB";
-            Connection conn=DriverManager.getConnection(url,"sa","qazQAZ123!");
+            Connection conn=DriverManager.getConnection(DBURL,DBUSER,DBPASS);
             //System.out.println("数据库连接成功");
             return conn ;//返回创建的数据库连接对象
         }catch(ClassNotFoundException ex){//捕获驱动程序找不到异常
@@ -158,4 +162,79 @@ public class BookDBCon {
         }
     }
     
+    /**
+     * 预编译查询数据的方法，查询数据库第一行第一个数据
+     * @param presql 预编译sql语句
+     * @param content 设置预编译sql语句参数，该参数为可变参数
+     * @return 返回找到的结果，null表示没有结果 
+     */
+    public static String preparedqueryResult(String presql,String... content){
+        System.out.println(presql);
+        Connection conn=JdbcCon(); //连接数据库
+        PreparedStatement pstmt; //预编译会话对象
+        ResultSet rs;//结果集
+        String ret;//返回结果
+        try{
+            //创建预编译会话对象
+            pstmt=conn.prepareStatement(presql);
+            //设置参数
+            for (int i=0;i<content.length;i ++)
+            {
+                pstmt.setString(i+1, content[i]);
+            }
+           //执行SQL语句
+            rs=pstmt.executeQuery();
+            //跳转到第一行
+            if(!rs.next()) return null;
+            //获取第一列数据
+            ret = rs.getString(1);
+            //System.out.println(ret);
+            //关闭
+            rs.close();
+            pstmt.close();
+            conn.close();
+            return ret;
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            System.out.println("添加数据失败");
+            return null;
+        }
+    }
+    
+    /**
+     * 预编译执行数据添加、修改、删除数据方法
+     * @param presql 预编译sql语句
+     * @param content 设置预编译sql语句参数，该参数为可变参数
+     * @return 是否成功执行sql语句
+     */
+    public static boolean preparedupdateData(String presql,String... content){
+        System.out.println(presql);
+        Connection conn=JdbcCon(); //连接数据库
+        PreparedStatement pstmt; //会话对象
+        try{
+            //创建预编译会话对象
+            pstmt=conn.prepareStatement(presql);
+            //设置参数
+            for (int i=0;i<content.length;i ++)
+            {
+                pstmt.setString(i+1, content[i]);
+            }
+            //执行SQL语句,数据表中受影响的行数
+            int r=pstmt.executeUpdate(); //针对于insert,update和delete三种SQL语句
+            pstmt.close();
+            conn.close();
+
+            if(r>0){ //执行成功
+                return true;
+            }else{ //执行失败
+                return false;
+            }
+           
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"数据库抛出异常:"+ex.toString(),"数据库提示",JOptionPane.ERROR_MESSAGE);
+            System.out.println("更新数据失败");
+            return false;
+        }
+    }
 }

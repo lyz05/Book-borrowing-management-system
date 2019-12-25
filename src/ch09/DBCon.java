@@ -87,7 +87,6 @@ public class DBCon {
         }
     }
     
-
     //执行数据添加、修改、删除数据方法
     public static boolean updateData(String sql){
         Connection conn=JdbcCon(); //连接数据库
@@ -113,7 +112,7 @@ public class DBCon {
         }
     }
     
-      //验证登录的方法
+    //验证登录的方法
     public static boolean checkLogin(String sql){
         Connection conn=JdbcCon();
         Statement stmt; //会话对象
@@ -138,6 +137,62 @@ public class DBCon {
         }catch(SQLException ex){
             ex.printStackTrace();
             System.out.println("查询数据失败");
+            return false;
+        }
+    }
+    
+    //预编译添加数据的方法
+    public static boolean preparedInsertData(Student stu){
+        Connection conn=JdbcCon(); //连接数据库
+        PreparedStatement pstmt; //预编译会话对象
+        try{
+            //创建预编译会话对象
+            pstmt=conn.prepareStatement("insert into Student values(?,?,?,?)");
+            //设置参数
+            pstmt.setString(1, stu.stuId);
+            pstmt.setString(2, stu.stuName);
+            pstmt.setString(3, stu.sex);
+            pstmt.setString(4, stu.birth);
+            //执行更新数据,受影响的行数
+            int r=pstmt.executeUpdate();
+            pstmt.close();
+            conn.close();
+            if(r>0){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            System.out.println("添加数据失败");
+            return false;
+        }
+    }
+    
+    //调用存储过程添加数据的方法
+    public static boolean CallableInsertData(Student stu){
+        Connection conn=JdbcCon(); //连接数据库
+        CallableStatement cstmt; //预编译会话对象
+        try{
+            //创建预编译会话对象
+            cstmt=conn.prepareCall("{call InsertData(?,?,?,?)}");
+            //设置参数
+            cstmt.setString(1, stu.stuId);
+            cstmt.setString(2, stu.stuName);
+            cstmt.setString(3, stu.sex);
+            cstmt.setString(4, stu.birth);
+            //执行更新数据,受影响的行数
+            int r=cstmt.executeUpdate();
+            cstmt.close();
+            conn.close();
+            if(r>0){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            System.out.println("添加数据失败");
             return false;
         }
     }

@@ -42,7 +42,7 @@ public class Util4Frm {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(comp);
         } catch(Exception err) {
-            System.out.println("捕获异常:"+err);
+            System.out.println("设置窗口效果异常:"+err);
         }
     }
     
@@ -57,7 +57,13 @@ public class Util4Frm {
         Vector name = new Vector();
         BookDBCon. queryVector2(sql,data,name);
         //用DefaultTableModel包装数据，以便JTable显示
-        DefaultTableModel model = new DefaultTableModel(data, name);
+        DefaultTableModel model = new DefaultTableModel(data, name) {
+            //重写方法禁止编辑表格
+            @Override
+            public boolean isCellEditable(int row,int column) {
+                return false;
+            }
+        };
         jtable.setModel(model);
     }
     
@@ -91,6 +97,11 @@ public class Util4Frm {
         jtable.setRowSelectionInterval(tmp, tmp);
     }
 
+    /**
+     * 刷新底部状态栏的标签显示
+     * @param jtable 待处理的表格
+     * @param jlabel 底部状态栏标签
+     */
     public static void resetBackText(JTable jtable,JLabel jlabel) {
         int row = jtable.getSelectedRow();
         int tot = jtable.getRowCount();
@@ -108,11 +119,14 @@ public class Util4Frm {
      * @return 返回排序需要追加的sql文本
      */
     public static String getappendsqlbyorder(JTable jtable,int col){
+        //获取列名
         String colName = jtable.getColumnName(col);
         String appendsql = " order by "+colName;
+        //根据排序方向选择升序或降序
         if (sort) {
             appendsql += " desc";
         }
+        //再次运行方法，更换排序方向
         sort = !sort;
         return appendsql;
     }
@@ -137,9 +151,15 @@ public class Util4Frm {
      * 确认删除对话框
      * @return 是否按下确认按钮
      */
-    public static boolean confirmdelete()
-    {
-         return JOptionPane.showConfirmDialog(null,"你确认删除该条数据吗？","确认删除",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION;
+    public static boolean confirmdelete() {
+         return JOptionPane.showConfirmDialog(null,"你确认删除该条数据吗？","系统提示",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION;
+    }
+    /**
+     * 确认重置密码对话框
+     * @return 是否按下确认按钮
+     */
+    public static boolean confirmresetpwd() {
+         return JOptionPane.showConfirmDialog(null,"你确认重置该用户密码吗？","系统提示",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION;
     }
     
     /**
@@ -148,38 +168,40 @@ public class Util4Frm {
      * @return 加密后的密码
      */
     public static String encodeInp(String input)
-	{
-		input += "\0\0\0";
-		char keyStr[] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=").toCharArray();
-		String output = new String();
-		int chr1,chr2,chr3;
-		int enc1,enc2,enc3,enc4;
-		int i=0;
-		do{
-			chr1 = input.charAt(i ++);
-			chr2 = input.charAt(i ++);
-			chr3 = input.charAt(i ++);
-			enc1 = chr1 >> 2;
-			enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-			enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-			enc4 = chr3 & 63;
-			if(chr2==0)
-			{
-				enc3 = enc4 = 64;
-			} else if (chr3==0)
-			{
-				enc4 = 64;
-			}
-			output += keyStr[enc1];
-			output += keyStr[enc2];
-			output += keyStr[enc3];
-			output += keyStr[enc4];
-			
-			chr1 = chr2 = chr3 = 0;
-			enc1 = enc2 = enc3 = enc4 = 0;
-			
-		}while (input.charAt(i) != '\0');
-		return output;
-	}
+    {
+         if (input.equals("")) return "";
+
+         input += "\0\0\0\0";
+         char keyStr[] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=").toCharArray();
+         String output = new String();
+         int chr1,chr2,chr3;
+         int enc1,enc2,enc3,enc4;
+         int i=0;
+         do{
+                chr1 = input.charAt(i ++);
+                chr2 = input.charAt(i ++);
+                chr3 = input.charAt(i ++);
+                enc1 = chr1 >> 2;
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = chr3 & 63;
+                if(chr2==0)
+                {
+                        enc3 = enc4 = 64;
+                } else if (chr3==0)
+                {
+                        enc4 = 64;
+                }
+                output += keyStr[enc1];
+                output += keyStr[enc2];
+                output += keyStr[enc3];
+                output += keyStr[enc4];
+
+                chr1 = chr2 = chr3 = 0;
+                enc1 = enc2 = enc3 = enc4 = 0;
+
+         }while (input.charAt(i) != '\0');
+         return output;
+    }
 
 }

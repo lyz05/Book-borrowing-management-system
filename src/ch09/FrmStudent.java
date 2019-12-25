@@ -166,6 +166,8 @@ public class FrmStudent extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        btnPrep = new javax.swing.JButton();
+        btnProce = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuSystem = new javax.swing.JMenu();
         mnuNew = new javax.swing.JMenuItem();
@@ -268,6 +270,20 @@ public class FrmStudent extends javax.swing.JFrame {
             }
         });
 
+        btnPrep.setText("预编译");
+        btnPrep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrepActionPerformed(evt);
+            }
+        });
+
+        btnProce.setText("调用存储过程");
+        btnProce.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProceActionPerformed(evt);
+            }
+        });
+
         mnuSystem.setText("系统");
 
         mnuNew.setText("新建");
@@ -306,7 +322,34 @@ public class FrmStudent extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblStuID)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtStuID, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblSex)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radNull)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(radMan)
+                                .addGap(18, 18, 18)
+                                .addComponent(radWoman)))))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblBirthday)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBirthday))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblStuName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtStuName, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnFirst)
@@ -315,7 +358,11 @@ public class FrmStudent extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNext)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLast))
+                        .addComponent(btnLast)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPrep)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnProce))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -325,33 +372,8 @@ public class FrmStudent extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblStuID)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtStuID, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblSex)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(radNull)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(radMan)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(radWoman)))))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblBirthday)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtBirthday))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblStuName)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtStuName, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(26, 26, 26))
+                        .addComponent(btnCancel)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,7 +398,9 @@ public class FrmStudent extends javax.swing.JFrame {
                     .addComponent(btnFirst)
                     .addComponent(btnPre)
                     .addComponent(btnNext)
-                    .addComponent(btnLast))
+                    .addComponent(btnLast)
+                    .addComponent(btnPrep)
+                    .addComponent(btnProce))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
@@ -534,6 +558,64 @@ public class FrmStudent extends javax.swing.JFrame {
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_mnuExitActionPerformed
+
+    private void btnPrepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrepActionPerformed
+        //--1 保存文本框中的数据到变量
+        String stuID=txtStuID.getText();
+        String stuName=txtStuName.getText();
+        String stuBirth=txtBirthday.getText();
+        String sex;
+        if(radMan.isSelected()){
+            sex="男";
+        }else{
+            sex="女";
+        }
+        Student stu=new Student(stuID,stuName,sex,stuBirth);
+        //调用DBCon里的预编译添加数据的方法
+        if(DBCon.preparedInsertData(stu)){
+            //准备数据
+            data2=DBCon.queryVectorStudents("Select * from Student");
+            //再次文本框显示数据
+            row=0;
+            showTextData2(row);
+            //再次表中刷新数据
+            dtm.setDataVector(data2, title);          
+            //弹出对话框
+            JOptionPane.showMessageDialog(null,"预编译添加数据成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            //弹出对话框
+            JOptionPane.showMessageDialog(null,"预编译添加数据失败","系统提示",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnPrepActionPerformed
+
+    private void btnProceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProceActionPerformed
+        //--1 保存文本框中的数据到变量
+        String stuID=txtStuID.getText();
+        String stuName=txtStuName.getText();
+        String stuBirth=txtBirthday.getText();
+        String sex;
+        if(radMan.isSelected()){
+            sex="男";
+        }else{
+            sex="女";
+        }
+        Student stu=new Student(stuID,stuName,sex,stuBirth);
+        //调用DBCon里的调用存储过程添加数据的方法
+        if(DBCon.CallableInsertData(stu)){
+            //准备数据
+            data2=DBCon.queryVectorStudents("Select * from Student");
+            //再次文本框显示数据
+            row=0;
+            showTextData2(row);
+            //再次表中刷新数据
+            dtm.setDataVector(data2, title);          
+            //弹出对话框
+            JOptionPane.showMessageDialog(null,"调用存储过程添加数据成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            //弹出对话框
+            JOptionPane.showMessageDialog(null,"调用存储过程添加数据失败","系统提示",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnProceActionPerformed
     //表格点击事件处理方法
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {                                 
         //获得鼠标选中的行号（索引）
@@ -584,6 +666,8 @@ public class FrmStudent extends javax.swing.JFrame {
     private javax.swing.JButton btnLast;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPre;
+    private javax.swing.JButton btnPrep;
+    private javax.swing.JButton btnProce;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup btngrpSex;

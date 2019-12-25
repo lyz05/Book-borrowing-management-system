@@ -119,7 +119,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         lblBack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("读者信息");
+        setTitle("读者信息管理");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("筛选模式"));
 
@@ -266,6 +266,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                 "读者编号", "读者姓名", "性别", "身份证号", "工作单位", "总借书数量", "未归还数量"
             }
         ));
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(jTable1);
 
         Renovate.setText("刷新");
@@ -317,11 +318,11 @@ public class FrmReaderInformation extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(Renovate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Add)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Delete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Renovate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Alter, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -344,7 +345,8 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -428,10 +430,14 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         return (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
     }
     
+    /**
+     * 重置密码按钮被按下
+     */
     private void ResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetPasswordActionPerformed
         // TODO add your handling code here:
-        if (getreaderno()==null) return;
+        if (getreaderno()==null || !Util4Frm.confirmresetpwd()) return;
         String ReaderNO = getreaderno();
+        
         if (BookDBCon.updateData("update Reader set password='' from Reader where readerNo = '"+ReaderNO+"'")) {
             JOptionPane.showMessageDialog(null,"重置密码成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -496,8 +502,18 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
         if (getreaderno()==null || !Util4Frm.confirmdelete()) return;
-        String ReaderNO = getreaderno();
-        if (BookDBCon.updateData("delete from reader where readerNO = '"+ReaderNO+"'")) {
+        String ReaderNO = getreaderno(),sql;
+        sql = "select * from View_reader where 读者编号='"+ReaderNO+"' and 未归还数量=0";
+        if (BookDBCon.queryResult(sql) == null)
+        {
+            JOptionPane.showMessageDialog(null,"该读者还有未归还的图书，因此无法删除该读者","系统提示",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //先删除借阅表中该读者的历史记录再删除该读者
+        sql = "delete from Borrow where readerNO='"+ReaderNO+"' and returnDate is not null";
+        BookDBCon.updateData(sql);
+        sql = "delete from reader where readerNO='"+ReaderNO+"'";
+        if (BookDBCon.updateData(sql)) {
                 JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
                 JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);

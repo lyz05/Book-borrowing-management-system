@@ -33,6 +33,7 @@ public class FrmBookManager extends javax.swing.JFrame {
         jTableSelectionListener();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
+        //设置显示窗口的最小尺寸
         this.setMinimumSize(new Dimension(890,560));
         RefreshBookInformation("");
     }
@@ -50,7 +51,7 @@ public class FrmBookManager extends javax.swing.JFrame {
         });
     }
     /**
-     * 注册表头监听器
+     * 注册jTable表头监听器
      */
     private void jTableHeaderListen(){
         final JTableHeader header1 = jTable1.getTableHeader();
@@ -169,7 +170,7 @@ public class FrmBookManager extends javax.swing.JFrame {
         lblBack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("图书管理");
+        setTitle("图书信息管理");
 
         Delete.setText("删除");
         Delete.addActionListener(new java.awt.event.ActionListener() {
@@ -237,6 +238,7 @@ public class FrmBookManager extends javax.swing.JFrame {
                 "读者编号", "图书名称", "作者", "出版社", "价格", "出版日期", "入库数量", "在库数量"
             }
         ));
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -398,11 +400,11 @@ public class FrmBookManager extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(Refresh)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Add)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Delete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Refresh)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Alter)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -427,7 +429,6 @@ public class FrmBookManager extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Left)
                         .addComponent(Right)
                         .addComponent(Front)
@@ -436,7 +437,8 @@ public class FrmBookManager extends javax.swing.JFrame {
                         .addComponent(Add)
                         .addComponent(Delete)
                         .addComponent(Refresh)
-                        .addComponent(Alter)))
+                        .addComponent(Alter)
+                        .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -449,10 +451,27 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
+<<<<<<< HEAD
         if (getbookno()==null || !Util4Frm.confirmdelete()) 
             return;
         String BookNo = getbookno();
         if (BookDBCon.updateData("delete from Book where bookNO = '"+BookNo+"'")) {
+=======
+        //判断是否选中图书与二次确认是否删除图书
+        if (getbookno()==null || !Util4Frm.confirmdelete()) return;
+        String BookNo = getbookno(),sql;
+        sql = "select * from View_Book where 图书编号='"+BookNo+"' and 在库数量=入库数量";
+        if (BookDBCon.queryResult(sql) == null)
+        {
+            JOptionPane.showMessageDialog(null,"还有读者未归还此本图书，因此无法删除此书","系统提示",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //先删除借阅表中此书的历史记录再删除这本书
+        sql = "delete from Borrow where bookno='"+BookNo+"' and returnDate is not null";
+        BookDBCon.updateData(sql);
+        sql = "delete from Book where bookNO = '"+BookNo+"'";
+        if (BookDBCon.updateData(sql)) {
+>>>>>>> 9d66d4d7292100e87e8b5af80a14c6ce25687fe9
                 JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
                 JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);

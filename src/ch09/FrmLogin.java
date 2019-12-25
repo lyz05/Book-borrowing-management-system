@@ -5,15 +5,11 @@
  */
 
 package ch09;
-
-import java.sql.*;
 import java.util.*;
 import javax.swing.JOptionPane;
-
-
 /**
  *
- * @author sheldon
+ * @author abc
  */
 public class FrmLogin extends javax.swing.JFrame {
 
@@ -128,17 +124,11 @@ public class FrmLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-
-   
-    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_LoginActionPerformed
-
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-
+        // 清空
+        txtName.setText("");
+        pwd.setText("");
     }//GEN-LAST:event_btnResetActionPerformed
-
 
     /**
      * @param args the command line arguments
