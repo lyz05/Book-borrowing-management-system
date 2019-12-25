@@ -118,7 +118,6 @@ public class FrmBookManager extends javax.swing.JFrame {
      * 刷新图书信息
      * @param appendsql 追加的sql
      */
-
     private void RefreshBookInformation(String appendsql){
         Util4Frm.setFormdata("select * from View_Book_Admin where 图书编号 like '%"+InputBookNum.getText()+"%' and 图书名称 like '%"+InputBookName.getText()+"%' and 作者 like '%"+InputAuthor.getText() +"%' and 出版社 like '%"+InputPress.getText()+"%'"+appendsql,jTable1);
         //用resetBackText()封装    
@@ -451,12 +450,7 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
-<<<<<<< HEAD
-        if (getbookno()==null || !Util4Frm.confirmdelete()) 
-            return;
-        String BookNo = getbookno();
-        if (BookDBCon.updateData("delete from Book where bookNO = '"+BookNo+"'")) {
-=======
+
         //判断是否选中图书与二次确认是否删除图书
         if (getbookno()==null || !Util4Frm.confirmdelete()) return;
         String BookNo = getbookno(),sql;
@@ -471,7 +465,6 @@ public class FrmBookManager extends javax.swing.JFrame {
         BookDBCon.updateData(sql);
         sql = "delete from Book where bookNO = '"+BookNo+"'";
         if (BookDBCon.updateData(sql)) {
->>>>>>> 9d66d4d7292100e87e8b5af80a14c6ce25687fe9
                 JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
                 JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
@@ -561,8 +554,6 @@ public class FrmBookManager extends javax.swing.JFrame {
 //          String r = (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
 //        }
 //        
-        
-        
         if (Alter.getText().equals("修改")){
             if (getbookno()==null)
                 return;
