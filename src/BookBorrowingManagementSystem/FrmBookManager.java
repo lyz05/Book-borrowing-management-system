@@ -450,10 +450,19 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
+<<<<<<< HEAD
+        if (getbookno()==null || !Util4Frm.confirmdelete()) 
+            return;
+        String BookNo = getbookno();
+        if (BookDBCon.updateData("delete from Book where bookNO = '"+BookNo+"'")) {
+=======
+>>>>>>> a6713245bb9e7a81ec658aae5eb2d1c9d4d6648f
 
         //判断是否选中图书与二次确认是否删除图书
-        if (getbookno()==null || !Util4Frm.confirmdelete()) return;
-        String BookNo = getbookno(),sql;
+        if (getbookno()==null || !Util4Frm.confirmdelete()) 
+            return;
+        BookNo = getbookno();
+        String sql;
         sql = "select * from View_Book where 图书编号='"+BookNo+"' and 在库数量=入库数量";
         if (BookDBCon.queryResult(sql) == null)
         {
