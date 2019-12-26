@@ -214,11 +214,7 @@
         <Component class="javax.swing.JComboBox" name="ChooseSex">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="%"/>
-                <StringItem index="1" value="&#x7537;"/>
-                <StringItem index="2" value="&#x5973;"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AccessibilityProperties>

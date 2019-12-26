@@ -27,6 +27,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
      */
     public FrmReaderInformation() {
         initComponents();
+        ChooseSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "","男", "女",  }));
         //注册表头监听器
         jTableHeaderListen();
         jTableSelectionListener();
@@ -145,7 +146,6 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             }
         });
 
-        ChooseSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "%", "男", "女" }));
         ChooseSex.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ChooseSexActionPerformed(evt);
@@ -388,15 +388,22 @@ public class FrmReaderInformation extends javax.swing.JFrame {
      */
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
-         if (textFiledIsNull()){
-             JOptionPane.showMessageDialog(null,"请填写欲添加读者的所有信息","系统提示",JOptionPane.INFORMATION_MESSAGE);
-             return;
-         } else if (BookDBCon.updateData("insert Reader values('"+InputReaderNo.getText()+"','"+InputReaderName.getText()+"','"+ChooseSex.getSelectedItem()+"','"+InputIdNum.getText()+"','"+InputWorkUnit.getText()+"','')")) {
-                JOptionPane.showMessageDialog(null,"添加信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null,"添加信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        
+        if (textFiledIsNull()){
+            JOptionPane.showMessageDialog(null,"请填写欲添加读者的所有信息","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else if (ChooseSex.getSelectedItem().equals("")) {
+            JOptionPane.showMessageDialog(null,"请填写读者性别","系统提示",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else if (InputIdNum.getText().length()!=18) {
+            JOptionPane.showMessageDialog(null,"身份证位数不正确","系统提示",JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (BookDBCon.updateData("insert Reader values('"+InputReaderNo.getText()+"','"+InputReaderName.getText()+"','"+ChooseSex.getSelectedItem()+"','"+InputIdNum.getText()+"','"+InputWorkUnit.getText()+"','')")) {
+            JOptionPane.showMessageDialog(null,"添加信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,"添加信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
          resetTextfiled();
          RefreshReaderInformation("");
     }//GEN-LAST:event_AddActionPerformed
