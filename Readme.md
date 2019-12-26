@@ -18,3 +18,5 @@ Demo文件夹下有个Demo.exe和Demo.e的易语言文件，参考画Java Swing�
 # Demo截图
 ![管理员](/Demo/管理员.gif)
 ![普通用户](/Demo/普通用户.gif)
+# 数据库关系图
+![sql](/Demo/sql.jpg)

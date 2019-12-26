@@ -561,6 +561,7 @@ public class FrmBookManager extends javax.swing.JFrame {
             String ReaderNO = getbookno();
             getdatatotextfiled();//修改后的数据显示在表格中
             Util4Frm.locktextfiled(InputBookNum);//锁定书籍编号这一栏
+            Util4Frm.locktextfiled(InputShopNum);//锁定入库数量
             jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
             Alter.setText("保存");
             Reset.setEnabled(false);
