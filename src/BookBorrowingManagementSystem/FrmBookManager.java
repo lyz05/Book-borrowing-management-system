@@ -104,41 +104,16 @@ public class FrmBookManager extends javax.swing.JFrame {
     /**
      * 读记录到文本框
      */
-    private void getdatatotextfiled(){
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        InputBookNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-//        InputBookName.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
-//        InputAuthor.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2));
-//        InputPress.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
-//        InputPrice.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
-//        InputPublishdate.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 5));
-//        InputShopNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 6));
+//    获取jtable 中的值：
+//　　　　jtable1.getValueAt();
+    private void getdatatotextfiled(){       
+        InputBookNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        InputBookName.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
+        InputAuthor.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2));
+        InputPress.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
+        InputPrice.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
+        InputPublishdate.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 5));
+        InputShopNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 6));
     }
     
     /**
@@ -470,8 +445,8 @@ public class FrmBookManager extends javax.swing.JFrame {
                         .addComponent(Alter)
                         .addComponent(Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-                .addGap(1, 1, 1)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -485,8 +460,7 @@ public class FrmBookManager extends javax.swing.JFrame {
         if (getbookno()==null || !Util4Frm.confirmdelete()) 
             return;
         String BookNo = getbookno();
-        String sql;
-        sql = "select * from View_Book where 图书编号='"+BookNo+"' and 在库数量=入库数量";
+        String sql = "select * from View_Book where 图书编号='"+BookNo+"' and 在库数量=入库数量";
         if (BookDBCon.queryResult(sql) == null)
         {
             JOptionPane.showMessageDialog(null,"还有读者未归还此本图书，因此无法删除此书","系统提示",JOptionPane.ERROR_MESSAGE);
@@ -501,6 +475,7 @@ public class FrmBookManager extends javax.swing.JFrame {
         } else {
                 JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
         }
+        //重置一下信息
         RefreshBookInformation("");
     }//GEN-LAST:event_DeleteActionPerformed
 
@@ -557,20 +532,22 @@ public class FrmBookManager extends javax.swing.JFrame {
 
     private void LeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeftActionPerformed
         // 用函数封装好了      
-        int tem = jTable1.getSelectedRow()-1; //-1表示向上移动
-        if(tem<0)
-            JOptionPane.showMessageDialog(null,"已经是第一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
-        else jTable1.setRowSelectionInterval(tem, tem);
-      //  Util4Frm.moveFormRow(jTable1, -1);
+//        int tem = jTable1.getSelectedRow()-1; //-1表示向上移动
+//        if(tem<0)
+//            JOptionPane.showMessageDialog(null,"已经是第一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
+//        else 
+//            jTable1.setRowSelectionInterval(tem, tem);
+        Util4Frm.moveFormRow(jTable1, -1);
     }//GEN-LAST:event_LeftActionPerformed
 
     private void RightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RightActionPerformed
         // 继续用函数封装
-        int tem = jTable1.getSelectedRow()+1;  //1表示向下移动
-        if(tem>=jTable1.getRowCount())
-            JOptionPane.showMessageDialog(null,"已经是最后一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
-        else jTable1.setRowSelectionInterval(tem, tem);
-        //Util4Frm.moveFormRow(jTable1, 1); 
+//        int tem = jTable1.getSelectedRow()+1;  //1表示向下移动
+//        if(tem>=jTable1.getRowCount())
+//            JOptionPane.showMessageDialog(null,"已经是最后一条数据了","系统提示",JOptionPane.INFORMATION_MESSAGE);
+//        else 
+//            jTable1.setRowSelectionInterval(tem, tem);
+        Util4Frm.moveFormRow(jTable1, 1); 
     }//GEN-LAST:event_RightActionPerformed
 
     /**
@@ -585,12 +562,12 @@ public class FrmBookManager extends javax.swing.JFrame {
 //        }else{
 //          String r = (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0);
 //        }
-//        
+        
         if (Alter.getText().equals("修改")){
             if (getbookno()==null)
                 return;
-            String ReaderNO = getbookno();
-            getdatatotextfiled();//修改后的数据显示在表格中
+            //String ReaderNO = getbookno();
+            getdatatotextfiled();//修改后的数据显示在编辑框中
             Util4Frm.locktextfiled(InputBookNum);//锁定书籍编号这一栏
             Util4Frm.locktextfiled(InputShopNum);//锁定入库数量
             jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
@@ -602,7 +579,7 @@ public class FrmBookManager extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null,"修改信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
             }
-            resetTextfiled();//刷新
+            resetTextfiled();//重置一下编辑框
             Util4Frm.unlocktextfiled(InputBookNum);
             RefreshBookInformation("");
            //加入筛选模式
@@ -622,14 +599,15 @@ public class FrmBookManager extends javax.swing.JFrame {
 
 //        int tem = jTable1.getSelectedRow();
 //        tem = 0;
-//        jtable.setRowSelectionInterval(tmp, tmp);
+//        jtable.setRowSelectionInterval(tem, tem);
         Util4Frm.moveFormRowToTop(jTable1, 0);
     }//GEN-LAST:event_FrontActionPerformed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         //最终都调用封装的函数
 //        int tem = jTable1.getSelectedRowCount();
-//        jtable.setRowSelectionInterval(tmp, tmp);
+//        jtable.setRowSelectionInterval(tem, tem);
+
         Util4Frm.moveFormRowToTop(jTable1, 1);
     }//GEN-LAST:event_BackActionPerformed
 
