@@ -167,7 +167,7 @@ public class BookDBCon {
             JOptionPane.showMessageDialog(null,"数据库抛出异常:"+ex.toString(),"数据库提示",JOptionPane.ERROR_MESSAGE);
             System.out.println("更新数据失败");
             return false;
-        }
+        } 
     }
     
     /**

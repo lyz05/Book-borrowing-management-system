@@ -573,6 +573,8 @@ public class FrmBookManager extends javax.swing.JFrame {
             jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
             Alter.setText("保存");
             Reset.setEnabled(false);
+            Delete.setEnabled(false);
+            Add.setEnabled(false);
         } else {
             if (BookDBCon.updateData("update Book set bookName='"+InputBookName.getText()+"',authorName='"+InputAuthor.getText()+"',publishingName='"+InputPress.getText()+"',price="+InputPrice.getText()+",publishingDate='"+InputPublishdate.getText()+"',shopNum="+InputShopNum.getText()+" where bookNO='" + InputBookNum.getText()+"'")) {
                 JOptionPane.showMessageDialog(null,"修改信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
@@ -586,6 +588,8 @@ public class FrmBookManager extends javax.swing.JFrame {
             jPanel1.setBorder(BorderFactory.createTitledBorder("筛选模式(左栏信息可筛选)"));
             Alter.setText("修改");
             Reset.setEnabled(true);
+            Delete.setEnabled(true);
+            Add.setEnabled(true);
         }
     }//GEN-LAST:event_AlterActionPerformed
 
