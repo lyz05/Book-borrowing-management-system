@@ -49,9 +49,7 @@ CREATE TABLE Borrow
 	returnDate date
 )
 
-/* 修改基本表约束 */
-alter table Borrow add constraint CK_time check(borrowDate<=shouldDate)
-alter table View_Book add constraint CK_num check(在库数量>=0)
+
 
 /*添加管理员账户*/
 insert AdminUsers values('admin','');
@@ -151,6 +149,10 @@ left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
 group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum,price;
 go
 select * from View_Book_Admin;
+
+/* 修改基本表约束 */
+alter table Borrow add constraint CK_time check(borrowDate<=shouldDate)
+alter table View_Book add constraint CK_num check(在库数量>=0)
 
 /* 读者借阅窗口操作 */
 -- 名字显示

@@ -269,7 +269,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(jTable1);
 
-        Renovate.setText("刷新");
+        Renovate.setText("查询");
         Renovate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RenovateActionPerformed(evt);
