@@ -488,6 +488,8 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
             Alter.setText("保存");
             Reset.setEnabled(false);
+            Delete.setEnabled(false);
+            Add.setEnabled(false);
         } else {
             if (BookDBCon.updateData("update Reader set readerName='"+InputReaderName.getText()+"',sex='"+ChooseSex.getSelectedItem()+"',identitycard='"+InputIdNum.getText()+"',workUnit='"+InputWorkUnit.getText()+"' where readerNO='"+InputReaderNo.getText()+"'")) {
                 JOptionPane.showMessageDialog(null,"修改信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
@@ -500,6 +502,8 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             jPanel1.setBorder(BorderFactory.createTitledBorder("筛选模式"));
             Alter.setText("修改");
             Reset.setEnabled(true);
+            Delete.setEnabled(true);
+            Add.setEnabled(true);
         }
     }//GEN-LAST:event_AlterActionPerformed
     /**
