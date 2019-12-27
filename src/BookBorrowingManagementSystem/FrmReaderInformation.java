@@ -140,6 +140,12 @@ public class FrmReaderInformation extends javax.swing.JFrame {
 
         Sex.setText("性别：");
 
+        InputReaderNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputReaderNoActionPerformed(evt);
+            }
+        });
+
         InputReaderName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InputReaderNameActionPerformed(evt);
@@ -543,6 +549,10 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
         Util4Frm.moveFormRowToTop(jTable1, 1);
     }//GEN-LAST:event_BackActionPerformed
+
+    private void InputReaderNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputReaderNoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InputReaderNoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -105,17 +105,44 @@ public class FrmBookManager extends javax.swing.JFrame {
      * 读记录到文本框
      */
     private void getdatatotextfiled(){
-        InputBookNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-        InputBookName.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
-        InputAuthor.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2));
-        InputPress.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
-        InputPrice.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
-        InputPublishdate.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 5));
-        InputShopNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 6));
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        InputBookNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+//        InputBookName.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
+//        InputAuthor.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2));
+//        InputPress.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
+//        InputPrice.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
+//        InputPublishdate.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 5));
+//        InputShopNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 6));
     }
     
     /**
-     * 刷新图书信息
+     * 查询图书信息
      * @param appendsql 追加的sql
      */
     private void RefreshBookInformation(String appendsql){

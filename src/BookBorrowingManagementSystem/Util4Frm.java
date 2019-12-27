@@ -56,7 +56,7 @@ public class Util4Frm {
         Vector data=new Vector();
         Vector name = new Vector();
         BookDBCon. queryVector2(sql,data,name);
-        //用DefaultTableModel包装数据，以便JTable显示
+        //用DefaultTableModel包装数据，以便JTable显示,表格模式
         DefaultTableModel model = new DefaultTableModel(data, name) {
             //重写方法禁止编辑表格
             @Override
