@@ -266,8 +266,7 @@
         </Container>
         <Component class="javax.swing.JButton" name="Select">
           <Properties>
-            <Property name="actionCommand" type="java.lang.String" value=""/>
-            <Property name="label" type="java.lang.String" value="&#x5237;&#x65b0;"/>
+            <Property name="text" type="java.lang.String" value="&#x67e5;&#x8be2;"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SelectActionPerformed"/>

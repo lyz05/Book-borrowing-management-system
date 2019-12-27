@@ -337,7 +337,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="Renovate">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x5237;&#x65b0;"/>
+        <Property name="text" type="java.lang.String" value="&#x67e5;&#x8be2;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RenovateActionPerformed"/>
