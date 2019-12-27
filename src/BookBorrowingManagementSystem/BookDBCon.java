@@ -23,9 +23,9 @@ import javax.swing.JOptionPane;
  */
 public class BookDBCon {
     private static final String DBdriver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String DBURL="jdbc:sqlserver://10.0.78.30:1433;DatabaseName=BookDB"; 
-    private static final String DBUSER="BookDB"; 
-    private static final String DBPASS="bookdb"; 
+    private static final String DBURL="jdbc:sqlserver://localhost:1433;DatabaseName=BookDB"; 
+    private static final String DBUSER="sa"; 
+    private static final String DBPASS=""; 
     private BookDBCon() {} //禁止实例化
     
     /**
@@ -108,7 +108,7 @@ public class BookDBCon {
             int columnCount = metaData.getColumnCount(); //获取列的数量
             for (int i=1;i<=columnCount;i ++) 
                 name.add(metaData.getColumnName(i));        //获取字段名
-            Vector ret=new Vector();
+           // Vector ret=new Vector();
             //循环遍历
             while(rs.next()){
                 Vector line=new Vector();
@@ -116,6 +116,14 @@ public class BookDBCon {
                     String item = String.valueOf(rs.getString(i)).trim();
                     line.add(item);                       //添加一条数据并过滤首尾空格
                 }
+//                line.add(rs.getObject(0).toString());
+//                line.add(rs.getObject(1).toString());
+//                line.add(rs.getObject(2).toString());
+//                line.add(rs.getObject(3).toString());
+//                line.add(rs.getObject(4).toString());
+//                line.add(rs.getObject(5).toString());
+//                line.add(rs.getObject(6).toString());
+//                line.add(rs.getObject(7).toString());
                 data.add(line);   
             }
             //关闭
