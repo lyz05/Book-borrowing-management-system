@@ -27,7 +27,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
      */
     public FrmReaderInformation() {
         initComponents();
-        ChooseSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "","男", "女",  }));
+        ChooseSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "","男", "女" }));
         //注册表头监听器
         jTableHeaderListen();
         jTableSelectionListener();
@@ -470,7 +470,6 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     private void resetTextfiled(){
         InputReaderNo.setText("");
         InputReaderName.setText("");
-        ChooseSex.setSelectedIndex(0);
         InputIdNum.setText("");
         InputWorkUnit.setText("");
         ChooseSex.setSelectedIndex(0);
