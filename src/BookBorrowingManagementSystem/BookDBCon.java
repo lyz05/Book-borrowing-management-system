@@ -98,6 +98,8 @@ public class BookDBCon {
     */ 
     public static void queryVector2(String sql,Vector data,Vector name){
         System.out.println(sql);
+        data.clear();
+        name.clear();
         Connection conn=JdbcCon();
         Statement stmt; //会话对象
         ResultSet rs; //结果集

@@ -8,12 +8,17 @@ package BookBorrowingManagementSystem;
 
 import java.awt.Component;
 import java.util.Vector;
+import javax.swing.*;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import static javax.swing.JTable.AUTO_RESIZE_OFF;
+import static javax.swing.JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -44,6 +49,24 @@ public class Util4Frm {
     }
     
     /**
+     * 根据表格内容自动调整JTable列宽度
+     * @param table 修改的jtable
+     */
+    public static void resizeColumnWidth(JTable table) {
+        final TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 15; // Min width
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width +1 , width);
+            }
+            if(width > 300)
+                width=300;
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
+    }
+    /**
      * 将数据库中查询到的信息显示到jTable上
      * @param sql 查询的sql语句
      * @param jtable 显示到的jTable
@@ -52,8 +75,9 @@ public class Util4Frm {
         //data是表格中的数据，name是表头字段信息
         Vector data=new Vector();
         Vector name = new Vector();
-        BookDBCon. queryVector2(sql,data,name);
         //用DefaultTableModel包装数据，以便JTable显示,表格模式
+        //DefaultTableModel model = new DefaultTableModel(data,name);
+        BookDBCon.queryVector2(sql, data, name);
         DefaultTableModel model = new DefaultTableModel(data, name) {
             //重写方法禁止编辑表格
             @Override
@@ -61,7 +85,9 @@ public class Util4Frm {
                 return false;
             }
         };
+        //jtable.setPreferredSize(jtable.getSize());   
         jtable.setModel(model);
+        resizeColumnWidth(jtable);
     }
     
     /**

@@ -19,6 +19,8 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     public FrmLogin() {
         initComponents();
+        //预先建立连接，减少后续连接耗时
+        BookDBCon.JdbcCon();
         //默认界面丑拒，换成Windows默认界面
         Util4Frm.setUI(this);
         //固定窗口尺寸
@@ -148,6 +150,7 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
+        
         String username = InputReaderNum.getText();
         String pwd = new String(PasswordNum.getPassword());
         pwd = Util4Frm.encodeInp(pwd);
@@ -172,6 +175,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//关闭时，仅销毁窗口  
             }
         } else JOptionPane.showMessageDialog(null, "用户名或密码错误","系统提示",JOptionPane.ERROR_MESSAGE);
+
     }//GEN-LAST:event_LoginActionPerformed
 
     /**
