@@ -6,7 +6,6 @@
 
 package BookBorrowingManagementSystem;
 
-import ch09.Student;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -404,7 +403,8 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         } else if (InputIdNum.getText().length()!=18) {
             JOptionPane.showMessageDialog(null,"身份证位数不正确","系统提示",JOptionPane.ERROR_MESSAGE);
             return;
-        } else if (BookDBCon.updateData("insert Reader values('"+InputReaderNo.getText()+"','"+InputReaderName.getText()+"','"+ChooseSex.getSelectedItem()+"','"+InputIdNum.getText()+"','"+InputWorkUnit.getText()+"','')")) {
+            
+        } else if (BookDBCon.preparedupdateData("insert Reader values(?,?,?,?,?,'')",InputReaderNo.getText(),InputReaderName.getText(),String.valueOf(ChooseSex.getSelectedItem()),InputIdNum.getText(),InputWorkUnit.getText())) {
             JOptionPane.showMessageDialog(null,"添加信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null,"添加信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
@@ -451,7 +451,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         if (getreaderno()==null || !Util4Frm.confirmresetpwd()) return;
         String ReaderNO = getreaderno();
         
-        if (BookDBCon.updateData("update Reader set password='' from Reader where readerNo = '"+ReaderNO+"'")) {
+        if (BookDBCon.preparedupdateData("update Reader set password='' from Reader where readerNo=?",ReaderNO)) {
             JOptionPane.showMessageDialog(null,"重置密码成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null,"重置密码失败","系统提示",JOptionPane.ERROR_MESSAGE);
@@ -464,7 +464,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     private void getdatatotextfiled(){
         InputReaderNo.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
         InputReaderName.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
-        if ((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2)=="男") {
+        if (String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 2)).equals("男")) {
             ChooseSex.setSelectedIndex(1);
         } else ChooseSex.setSelectedIndex(2);
         InputIdNum.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 3));
@@ -497,7 +497,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             Delete.setEnabled(false);
             Add.setEnabled(false);
         } else {
-            if (BookDBCon.updateData("update Reader set readerName='"+InputReaderName.getText()+"',sex='"+ChooseSex.getSelectedItem()+"',identitycard='"+InputIdNum.getText()+"',workUnit='"+InputWorkUnit.getText()+"' where readerNO='"+InputReaderNo.getText()+"'")) {
+            if (BookDBCon.preparedupdateData("update Reader set readerName=?,sex=?,identitycard=?,workUnit=? where readerNO=?",InputReaderName.getText(),String.valueOf(ChooseSex.getSelectedItem()),InputIdNum.getText(),InputWorkUnit.getText(),InputReaderNo.getText())) {
                 JOptionPane.showMessageDialog(null,"修改信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null,"修改信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
@@ -519,17 +519,17 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (getreaderno()==null || !Util4Frm.confirmdelete()) return;
         String ReaderNO = getreaderno(),sql;
-        sql = "select * from View_reader where 读者编号='"+ReaderNO+"' and 未归还数量=0";
-        if (BookDBCon.queryResult(sql) == null)
+        sql = "select * from View_reader where 读者编号=? and 未归还数量=0";
+        if (BookDBCon.preparedqueryResult(sql,ReaderNO) == null)
         {
             JOptionPane.showMessageDialog(null,"该读者还有未归还的图书，因此无法删除该读者","系统提示",JOptionPane.ERROR_MESSAGE);
             return;
         }
         //先删除借阅表中该读者的历史记录再删除该读者
-        sql = "delete from Borrow where readerNO='"+ReaderNO+"' and returnDate is not null";
-        BookDBCon.updateData(sql);
-        sql = "delete from reader where readerNO='"+ReaderNO+"'";
-        if (BookDBCon.updateData(sql)) {
+        sql = "delete from Borrow where readerNO=? and returnDate is not null";
+        BookDBCon.preparedupdateData(sql,ReaderNO);
+        sql = "delete from reader where readerNO=?";
+        if (BookDBCon.preparedupdateData(sql,ReaderNO)) {
                 JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
                 JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);

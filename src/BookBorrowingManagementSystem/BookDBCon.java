@@ -23,9 +23,9 @@ import javax.swing.JOptionPane;
  */
 public class BookDBCon {
     private static final String DBdriver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String DBURL="jdbc:sqlserver://localhost:1433;DatabaseName=BookDB"; 
-    private static final String DBUSER="sa"; 
-    private static final String DBPASS=""; 
+    private static final String DBURL="jdbc:sqlserver://10.0.78.30:1433;DatabaseName=BookDB"; 
+    private static final String DBUSER="BookDB"; 
+    private static final String DBPASS="bookdb"; 
     private BookDBCon() {} //禁止实例化
     
     /**
@@ -59,6 +59,7 @@ public class BookDBCon {
     * @param sql 查询对应的sql语句 
     * @return 返回找到的结果，null表示没有结果 
     */ 
+    /*
     public static String queryResult(String sql){
         System.out.println(sql);
         Connection conn=JdbcCon();
@@ -86,7 +87,7 @@ public class BookDBCon {
             return null;
         }
     }
-    
+    */
 
     /** 
     * 查询数据库表的完整信息<br>
@@ -144,6 +145,7 @@ public class BookDBCon {
      * @param sql 查询对应的sql语句 
      * @return 是否成功执行sql语句
      */
+    /*
     public static boolean updateData(String sql){
         System.out.println(sql);
         Connection conn=JdbcCon(); //连接数据库
@@ -169,7 +171,7 @@ public class BookDBCon {
             return false;
         } 
     }
-    
+    */
     /**
      * 预编译查询数据的方法，查询数据库第一行第一个数据
      * @param presql 预编译sql语句

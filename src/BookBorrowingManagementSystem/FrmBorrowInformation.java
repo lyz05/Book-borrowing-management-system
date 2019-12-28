@@ -6,20 +6,14 @@
 
 package BookBorrowingManagementSystem;
 
-import ch09.DBCon;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.*;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -42,7 +36,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         jTableSelectionListener(jTable3,lblBack);
         this.setMinimumSize(new Dimension(890,560));
 
-        Hello.setText("您好，"+BookDBCon.queryResult("select readerName from Reader where readerNO='"+Util4Frm.readerNO + "'"));
+        Hello.setText("您好，"+BookDBCon.preparedqueryResult("select readerName from Reader where readerNO=?",Util4Frm.readerNO));
         refreshBorrowTable("");
     }
     /**
@@ -95,6 +89,8 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
     
     /**
      * 注册jTable选择行监听器
+     * @param jtable 待注册表格
+     * @param lblBack 底部标签
      */
     public void jTableSelectionListener(JTable jtable, JLabel lblBack){
         jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -126,19 +122,19 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         if (getbookno()==null) return;
         String BookNO = getbookno(),sql;
         if (btnBorrowReturn.getText().equals("还书")) {
-            sql = "update Borrow set returnDate=getdate() from borrow where readerNO = '"+Util4Frm.readerNO+"' and bookNO='"+BookNO+"' and returnDate is null";
+            sql = "update Borrow set returnDate=getdate() from borrow where readerNO=? and bookNO=? and returnDate is null";
         } else {
-            sql = "if exists(select * from View_Book where 图书编号='"+BookNO+"' and 在库数量>0) insert Borrow values('"+Util4Frm.readerNO+"','"+BookNO+"',getdate(),dateadd(mm,1,getdate()),null)";
-            if (Integer.parseInt(BookDBCon.queryResult("select 在库数量 from View_Book where 图书编号='"+BookNO+"'")) <= 0) {
+            sql = "insert Borrow values(?,?,getdate(),dateadd(mm,1,getdate()),null)";
+            if (Integer.parseInt(BookDBCon.preparedqueryResult("select 在库数量 from View_Book where 图书编号=?",BookNO)) <= 0) {
                 JOptionPane.showMessageDialog(null,"这本书已经被借光了","系统提示",JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (BookDBCon.queryResult("select readerNO from Borrow where readerNO = '"+Util4Frm.readerNO+"' and bookNO='"+BookNO+"' and returnDate is null") != null){
+            if (BookDBCon.preparedqueryResult("select readerNO from Borrow where readerNO=? and bookNO=? and returnDate is null",Util4Frm.readerNO,BookNO) != null){
                 JOptionPane.showMessageDialog(null,"这本书你已经借过了，归还后可再次借阅","系统提示",JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
-        if( BookDBCon.updateData(sql))
+        if( BookDBCon.preparedupdateData(sql,Util4Frm.readerNO,BookNO))
             JOptionPane.showMessageDialog(null,btnBorrowReturn.getText()+"成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         else
             JOptionPane.showMessageDialog(null,btnBorrowReturn.getText()+"失败","系统提示",JOptionPane.ERROR_MESSAGE);
@@ -146,7 +142,6 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
              refreshBorrowTable("");
         else 
             refreshBookTable("");
-       
     }
     
     /**
@@ -159,12 +154,11 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
             return;
         }
         String BookNo = (String) nowJTable.getValueAt(nowJTable.getSelectedRow(), 0);
-        if (BookDBCon.updateData("update Borrow set shouldDate=dateadd(mm,1,getdate()) from Borrow where readerNO = '"+Util4Frm.readerNO+"' and bookNO='"+BookNo+"' and returnDate is null")) {
+        if (BookDBCon.preparedupdateData("update Borrow set shouldDate=dateadd(mm,1,getdate()) from Borrow where readerNO=? and bookNO=? and returnDate is null",Util4Frm.readerNO,BookNo)) {
             JOptionPane.showMessageDialog(null,"续借成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null,"续借失败","系统提示",JOptionPane.ERROR_MESSAGE);
         }
-        
     }
     
     /**
@@ -297,6 +291,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addComponent(BookName)
@@ -309,7 +304,7 @@ public class FrmBorrowInformation extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(InputBookNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Author))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 303, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addComponent(Press)

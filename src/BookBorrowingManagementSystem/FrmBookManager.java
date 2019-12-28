@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package BookBorrowingManagementSystem;
 
-import static BookBorrowingManagementSystem.BookDBCon.JdbcCon;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -23,7 +19,6 @@ import javax.swing.table.JTableHeader;
  * @author 叶荣锋
  */
 public class FrmBookManager extends javax.swing.JFrame {
-
     /**
      * Creates new form FrmBookManager
      */
@@ -460,17 +455,17 @@ public class FrmBookManager extends javax.swing.JFrame {
         if (getbookno()==null || !Util4Frm.confirmdelete()) 
             return;
         String BookNo = getbookno();
-        String sql = "select * from View_Book where 图书编号='"+BookNo+"' and 在库数量=入库数量";
-        if (BookDBCon.queryResult(sql) == null)
+        String sql = "select * from View_Book where 图书编号=? and 在库数量=入库数量";
+        if (BookDBCon.preparedqueryResult(sql,BookNo) == null)
         {
             JOptionPane.showMessageDialog(null,"还有读者未归还此本图书，因此无法删除此书","系统提示",JOptionPane.ERROR_MESSAGE);
             return;
         }
         //先删除借阅表中此书的历史记录再删除这本书
-        sql = "delete from Borrow where bookno='"+BookNo+"' and returnDate is not null";
-        BookDBCon.updateData(sql);
-        sql = "delete from Book where bookNO = '"+BookNo+"'";
-        if (BookDBCon.updateData(sql)) {
+        sql = "delete from Borrow where bookno=? and returnDate is not null";
+        BookDBCon.preparedupdateData(sql,BookNo);
+        sql = "delete from Book where bookNO=?";
+        if (BookDBCon.preparedupdateData(sql,BookNo)) {
                 JOptionPane.showMessageDialog(null,"删除信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
         } else {
                 JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
@@ -520,7 +515,8 @@ public class FrmBookManager extends javax.swing.JFrame {
         if (textFiledIsNull()){
              JOptionPane.showMessageDialog(null,"请填写欲添加书籍的所有信息","系统提示",JOptionPane.INFORMATION_MESSAGE);
              return;
-         } else if (BookDBCon.updateData("INSERT INTO Book VALUES('"+InputBookNum.getText()+"','"+InputBookName.getText()+"','"+InputAuthor.getText()+"','"+InputPress.getText()+"',"+InputPrice.getText()+",'"+InputPublishdate.getText()+"',"+InputShopNum.getText()+")")) {
+             
+         } else if (BookDBCon.preparedupdateData("INSERT INTO Book VALUES(?,?,?,?,?,?,?)",InputBookNum.getText(),InputBookName.getText(),InputAuthor.getText(),InputPress.getText(),InputPrice.getText(),InputPublishdate.getText(),InputShopNum.getText())) {
             JOptionPane.showMessageDialog(null,"添加信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
          } else {
              JOptionPane.showMessageDialog(null,"添加信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
@@ -576,7 +572,8 @@ public class FrmBookManager extends javax.swing.JFrame {
             Delete.setEnabled(false);
             Add.setEnabled(false);
         } else {
-            if (BookDBCon.updateData("update Book set bookName='"+InputBookName.getText()+"',authorName='"+InputAuthor.getText()+"',publishingName='"+InputPress.getText()+"',price="+InputPrice.getText()+",publishingDate='"+InputPublishdate.getText()+"',shopNum="+InputShopNum.getText()+" where bookNO='" + InputBookNum.getText()+"'")) {
+            
+            if (BookDBCon.preparedupdateData("update Book set bookName=?,authorName=?,publishingName=?,price=?,publishingDate=?,shopNum=? where bookNO=?",InputBookName.getText(),InputAuthor.getText(),InputPress.getText(),InputPrice.getText(),InputPublishdate.getText(),InputShopNum.getText(),InputBookNum.getText())) {
                 JOptionPane.showMessageDialog(null,"修改信息成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null,"修改信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
