@@ -10,8 +10,8 @@ public class DBCon {
             //--2 加载数据库驱动程序
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //--3 创建连接
-            String url="jdbc:sqlserver://10.0.78.30:1433;databaseName=StudentDB";
-            Connection conn=DriverManager.getConnection(url,"sa","qazQAZ123!");
+            String url="jdbc:sqlserver://localhost:1433;databaseName=StudentDB";
+            Connection conn=DriverManager.getConnection(url,"sa","");
             System.out.println("数据库连接成功");
             return conn ;//返回创建的数据库连接对象
         }catch(ClassNotFoundException ex){//捕获驱动程序找不到异常
