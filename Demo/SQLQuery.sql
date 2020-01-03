@@ -1,15 +1,9 @@
 /*创建数据库（BookDB）*/
-CREATE DATABASE [BookDB]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = 'BookDB', FILENAME = 'D:\SQ\BookDB.mdf' , SIZE = 8192KB , MAXSIZE = 30720KB , FILEGROWTH = 1024KB )
- LOG ON 
-( NAME = 'BookLog', FILENAME = 'D:\SQ\BookLog.ldf' , SIZE = 5120KB , MAXSIZE = 20480KB , FILEGROWTH = 1024KB )
+CREATE DATABASE BookDB
 
 /*转到（BookDB）数据库*/
+go
 use BookDB;
-/*修正数据库无法显示中文的问题*/
-ALTER DATABASE [BookDB] COLLATE Chinese_PRC_CI_AS;
 
 /*创建表结构*/
 CREATE TABLE AdminUsers
@@ -49,7 +43,64 @@ CREATE TABLE Borrow
 	returnDate date
 )
 
+/* 为JDBC连接创建用户 */
+go
+exec sp_addlogin 'BookDB','bookdb'
+exec sp_adduser 'BookDB','BookDB'
+exec sp_addrolemember 'db_owner', 'BookDB'
 
+/* 修改基本表约束 */
+alter table Borrow add constraint CK_time check(borrowDate<=shouldDate)
+
+/* 创建视图 */
+--借阅未还视图
+go
+create view View_Borrow_Not_Return
+as
+select * from Borrow where returnDate is null
+go
+select * from View_Borrow_Not_Return;
+
+-- 读者借阅视图
+go
+create view View_Borrow
+as
+select Borrow.readerNO 读者编号,readerName 姓名,Borrow.bookNO 图书编号,bookName 图书名称,authorName 作者,publishingName 出版社,borrowDate 借书时间,shouldDate 应归还日期,returnDate 归还日期 from Borrow,Book,Reader where Borrow.bookNO=book.bookNO and Borrow.readerNO=Reader.readerNO
+go
+--select * from View_Borrow;
+
+--读者图书视图
+go
+create view View_Book
+as
+select Book.bookNO 图书编号,bookName 图书名称,authorName 作者,publishingName 出版社,publishingDate 出版日期,shopNum 入库数量,shopNum-count(View_Borrow_Not_Return.bookNO) 在库数量 from View_Borrow_Not_Return
+right join Book on View_Borrow_Not_Return.bookNO=Book.bookNO 
+left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
+group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum;
+go
+--select * from View_Book;
+
+--管理员读者视图
+go
+create view View_Reader 
+as
+select Reader.readerNO 读者编号,readerName 姓名,sex 性别,identitycard 身份证号,workUnit 工作单位,count(Borrow.readerNO) 总借书数量,count(Borrow.readerNO)-count(Borrow.returnDate) 未归还数量 from Borrow
+right join Reader on Borrow.readerNO=Reader.readerNO
+left join Book on Borrow.bookNO=Book.bookNO 
+group by Reader.readerNO,Borrow.readerNO,readerName,sex,identitycard,workUnit;
+go
+--select * from View_Reader;
+
+--管理员图书视图
+go
+create view View_Book_Admin
+as
+select Book.bookNO 图书编号,bookName 图书名称,authorName 作者,publishingName 出版社,price 价格,publishingDate 出版日期,shopNum 入库数量,shopNum-count(View_Borrow_Not_Return.bookNO) 在库数量 from View_Borrow_Not_Return
+right join Book on View_Borrow_Not_Return.bookNO=Book.bookNO 
+left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
+group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum,price;
+go
+--select * from View_Book_Admin;
 
 /*添加管理员账户*/
 insert AdminUsers values('admin','');
@@ -100,60 +151,14 @@ INSERT INTO Borrow VALUES('R2009002','B200201001','20110916','20111016','2011101
 INSERT INTO Borrow VALUES('R2007002','B200201002','20110917','20111017','20111014')
 INSERT INTO Borrow VALUES('R2007002','B200201003','20110917','20111017','20111014')
 
-/* 创建视图 */
---借阅未还视图
+/* 删除BookDB数据库及用户 */
 go
-create view View_Borrow_Not_Return
-as
-select * from Borrow where returnDate is null
-go
-select * from View_Borrow_Not_Return;
+use master
+EXEC sp_dropuser'BookDB'
+EXEC sp_droplogin 'BookDB'
+drop database BookDB
 
--- 读者借阅视图
-go
-create view View_Borrow
-as
-select Borrow.readerNO 读者编号,readerName 姓名,Borrow.bookNO 图书编号,bookName 图书名称,authorName 作者,publishingName 出版社,borrowDate 借书时间,shouldDate 应归还日期,returnDate 归还日期 from Borrow,Book,Reader where Borrow.bookNO=book.bookNO and Borrow.readerNO=Reader.readerNO
-go
-select * from View_Borrow;
-
---读者图书视图
-go
-create view View_Book
-as
-select Book.bookNO 图书编号,bookName 图书名称,authorName 作者,publishingName 出版社,publishingDate 出版日期,shopNum 入库数量,shopNum-count(View_Borrow_Not_Return.bookNO) 在库数量 from View_Borrow_Not_Return
-right join Book on View_Borrow_Not_Return.bookNO=Book.bookNO 
-left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
-group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum;
-go
-select * from View_Book;
-
---管理员读者视图
-go
-create view View_Reader 
-as
-select Reader.readerNO 读者编号,readerName 姓名,sex 性别,identitycard 身份证号,workUnit 工作单位,count(Borrow.readerNO) 总借书数量,count(Borrow.readerNO)-count(Borrow.returnDate) 未归还数量 from Borrow
-right join Reader on Borrow.readerNO=Reader.readerNO
-left join Book on Borrow.bookNO=Book.bookNO 
-group by Reader.readerNO,Borrow.readerNO,readerName,sex,identitycard,workUnit;
-go
-select * from View_Reader;
-
---管理员图书视图
-go
-create view View_Book_Admin
-as
-select Book.bookNO 图书编号,bookName 图书名称,authorName 作者,publishingName 出版社,price 价格,publishingDate 出版日期,shopNum 入库数量,shopNum-count(View_Borrow_Not_Return.bookNO) 在库数量 from View_Borrow_Not_Return
-right join Book on View_Borrow_Not_Return.bookNO=Book.bookNO 
-left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
-group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum,price;
-go
-select * from View_Book_Admin;
-
-/* 修改基本表约束 */
-alter table Borrow add constraint CK_time check(borrowDate<=shouldDate)
-alter table View_Book add constraint CK_num check(在库数量>=0)
-
+/* JAVA中的窗口操作*/
 /* 读者借阅窗口操作 */
 -- 名字显示
 select readerName from Reader where readerNO='R2005001'
@@ -222,3 +227,4 @@ select * from View_Reader
 
 /* MD5加密 */
 select substring(sys.fn_sqlvarbasetostr(HashBytes('MD5','123456')),3,32)
+
