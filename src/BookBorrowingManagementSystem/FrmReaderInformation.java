@@ -542,6 +542,14 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"该读者还有未归还的图书，因此无法删除该读者","系统提示",JOptionPane.ERROR_MESSAGE);
             return;
         }
+        //有历史借阅记录，二次确认是否删除
+        sql = "select * from Borrow where readerNO=?";
+        if (BookDBCon.preparedqueryResult(sql, ReaderNO) != null)
+        {
+            int ret = JOptionPane.showConfirmDialog(null,"警告：借阅表中存在该读者的历史借阅记录，删除该读者将连带删除历史借阅记录\n是否继续操作？","系统提示",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+            if (ret != JOptionPane.YES_OPTION)
+                return;
+        }
         //先删除借阅表中该读者的历史记录再删除该读者
         sql = "delete from Borrow where readerNO=? and returnDate is not null";
         BookDBCon.preparedupdateData(sql,ReaderNO);
