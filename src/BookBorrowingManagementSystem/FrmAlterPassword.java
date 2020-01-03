@@ -44,6 +44,8 @@ public class FrmAlterPassword extends javax.swing.JFrame {
         AlterPassword = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
         jPasswordField2 = new javax.swing.JPasswordField();
+        NewPassword1 = new javax.swing.JLabel();
+        jPasswordField3 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("修改密码");
@@ -80,27 +82,37 @@ public class FrmAlterPassword extends javax.swing.JFrame {
             }
         });
 
+        NewPassword1.setText("再次确认新密码：");
+        NewPassword1.setToolTipText("");
+
+        jPasswordField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(Password)
-                        .addComponent(NewPassword))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Password)
+                    .addComponent(NewPassword)
+                    .addComponent(NewPassword1)
                     .addComponent(ReaderNo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(InputReaderNo)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                    .addComponent(jPasswordField2))
+                    .addComponent(jPasswordField2)
+                    .addComponent(jPasswordField3))
                 .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(AlterPassword)
-                .addGap(99, 99, 99))
+                .addGap(115, 115, 115))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,9 +130,15 @@ public class FrmAlterPassword extends javax.swing.JFrame {
                     .addComponent(NewPassword)
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NewPassword1)
+                    .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(AlterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
+
+        NewPassword1.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,7 +146,7 @@ public class FrmAlterPassword extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
+                .addGap(0, 29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,9 +169,16 @@ public class FrmAlterPassword extends javax.swing.JFrame {
         String username = InputReaderNo.getText();
         String pwd = new String(jPasswordField1.getPassword());
         String newpwd = new String(jPasswordField2.getPassword());
+        String newpwd2 = new String(jPasswordField3.getPassword());
         pwd = Util4Frm.encodeInp(pwd);
         newpwd = Util4Frm.encodeInp(newpwd);
+        newpwd2 = Util4Frm.encodeInp(newpwd2);
         
+        if (!newpwd.equals(newpwd2))
+        {
+            JOptionPane.showMessageDialog(null,"两次输入的新密码不相符","系统提示",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (BookDBCon.preparedqueryResult("select readerNO from Reader where readerNo=? and password=?", username,pwd) != null) {
             if (BookDBCon.preparedupdateData("update Reader set password=? from Reader where readerNo=?",newpwd,username)) {
                 JOptionPane.showMessageDialog(null,"修改密码成功","系统提示",JOptionPane.INFORMATION_MESSAGE);
@@ -173,6 +198,10 @@ public class FrmAlterPassword extends javax.swing.JFrame {
     private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField2ActionPerformed
+
+    private void jPasswordField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,10 +242,12 @@ public class FrmAlterPassword extends javax.swing.JFrame {
     private javax.swing.JButton AlterPassword;
     private javax.swing.JTextField InputReaderNo;
     private javax.swing.JLabel NewPassword;
+    private javax.swing.JLabel NewPassword1;
     private javax.swing.JLabel Password;
     private javax.swing.JLabel ReaderNo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JPasswordField jPasswordField3;
     // End of variables declaration//GEN-END:variables
 }
