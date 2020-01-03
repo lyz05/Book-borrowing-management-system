@@ -17,7 +17,7 @@ import javax.swing.table.JTableHeader;
 
 /**
  *
- * @author 叶荣锋
+ * @author 马立健
  */
 public class FrmReaderInformation extends javax.swing.JFrame {
 
@@ -79,8 +79,11 @@ public class FrmReaderInformation extends javax.swing.JFrame {
      * 刷新读者信息
      * @param appendsql 追加的sql文本
      */
+    //刷新、查询读者信息
     private void RefreshReaderInformation(String appendsql) {
+        // 将数据库中查询到的信息显示到jTable上
         Util4Frm.setFormdata("select * from View_Reader where 读者编号 like '%"+InputReaderNo.getText()+"%' and 姓名 like '%"+InputReaderName.getText()+"%' and 性别 like '%"+ChooseSex.getSelectedItem()+"%' and 身份证号 like '%"+InputIdNum.getText()+"%' and 工作单位 like '%"+InputWorkUnit.getText()+"%'"+appendsql,jTable1);
+        //刷新底部状态栏的标签显示
         Util4Frm.resetBackText(jTable1, lblBack);
     }
     /**
@@ -389,11 +392,11 @@ public class FrmReaderInformation extends javax.swing.JFrame {
     }//GEN-LAST:event_InputReaderNameActionPerformed
 
     /**
-     * 插入记录
+     * 添加记录
      */
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
-        
+        //若编辑框是否为空，系统提示
         if (textFiledIsNull()){
             JOptionPane.showMessageDialog(null,"请填写欲添加读者的所有信息","系统提示",JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -410,13 +413,16 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"添加信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
             return;
         }
+        //重置所有文本框
          resetTextfiled();
+         //刷新、查询读者信息
          RefreshReaderInformation("");
     }//GEN-LAST:event_AddActionPerformed
 
     
     private void RenovateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RenovateActionPerformed
         // TODO add your handling code here:
+        //刷新、查询读者信息
         RefreshReaderInformation("");
     }//GEN-LAST:event_RenovateActionPerformed
 
@@ -471,7 +477,7 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         InputWorkUnit.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
     }
     /**
-     * 重置所有文本
+     * 重置所有文本框
      */
     private void resetTextfiled(){
         InputReaderNo.setText("");
@@ -489,10 +495,14 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         if (Alter.getText().equals("修改")){
             if (getreaderno()==null) return;
             String ReaderNO = getreaderno();
+            //读记录到编辑框
             getdatatotextfiled();
+            //锁主键（读者号的文本框）
             Util4Frm.locktextfiled(InputReaderNo);
             jPanel1.setBorder(BorderFactory.createTitledBorder("编辑模式"));
+            //把修改按钮改成保存按钮
             Alter.setText("保存");
+            //锁定部分按钮
             Reset.setEnabled(false);
             Delete.setEnabled(false);
             Add.setEnabled(false);
@@ -502,11 +512,16 @@ public class FrmReaderInformation extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null,"修改信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
             }
+            //重置所有文本框
             resetTextfiled();
+            //解锁主键（读者号的文本框）
             Util4Frm.unlocktextfiled(InputReaderNo);
+            //刷新读者信息
             RefreshReaderInformation("");
             jPanel1.setBorder(BorderFactory.createTitledBorder("筛选模式"));
+            //把保存按钮改回修改按钮
             Alter.setText("修改");
+            //解锁按钮
             Reset.setEnabled(true);
             Delete.setEnabled(true);
             Add.setEnabled(true);
@@ -517,9 +532,11 @@ public class FrmReaderInformation extends javax.swing.JFrame {
      */
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
+        //获取当前选中读者的ReaderNo，确认删除对话框
         if (getreaderno()==null || !Util4Frm.confirmdelete()) return;
         String ReaderNO = getreaderno(),sql;
         sql = "select * from View_reader where 读者编号=? and 未归还数量=0";
+        //判断读者是否还有未归还的图书
         if (BookDBCon.preparedqueryResult(sql,ReaderNO) == null)
         {
             JOptionPane.showMessageDialog(null,"该读者还有未归还的图书，因此无法删除该读者","系统提示",JOptionPane.ERROR_MESSAGE);
@@ -534,12 +551,15 @@ public class FrmReaderInformation extends javax.swing.JFrame {
         } else {
                 JOptionPane.showMessageDialog(null,"删除信息失败","系统提示",JOptionPane.ERROR_MESSAGE);
         }
+        //刷新、查询读者信息
         RefreshReaderInformation("");
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
         // TODO add your handling code here:
+       //重置所有文本框
         resetTextfiled();
+        //刷新、查询读者信息
         RefreshReaderInformation("");
     }//GEN-LAST:event_ResetActionPerformed
 
