@@ -1,0 +1,31 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <head>
+        <title>
+            BiliBili查询界面
+        </title>
+    </head>
+    <body>
+        <h1>BiliBili查询界面</h1>
+        <div id="app">
+            <p>获取此av号视频信息：</p>
+            <input type="text" v-model="avid">
+            <button v-on:click="submit">查询</button>
+        </div>
+
+    </body>
+    <script>
+        //http://www.bilibili.tv/widget/getPageList?aid={aid}
+        var app = new Vue({
+            el: '#app',
+            data: {
+                avid: 'hello'
+            },
+            methods: {
+                submit: function () {
+                    this.message = 
+                }
+            }
+        })
+    </script>
+</html>
