@@ -104,33 +104,31 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <Component id="ReaderNo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="InputReaderNo" min="-2" pref="161" max="-2" attributes="0"/>
+                          <EmptySpace pref="362" max="32767" attributes="0"/>
+                          <Component id="IdNum" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="InputIdNum" min="-2" pref="162" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="ReaderName" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="Sex" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="ReaderName" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="Sex" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="ChooseSex" min="-2" pref="58" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
+                              <Component id="ChooseSex" min="-2" pref="58" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
                                   <Component id="InputReaderName" min="-2" pref="161" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="362" max="-2" attributes="0"/>
                                   <Component id="WorkUnit" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="InputWorkUnit" min="-2" pref="162" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="ReaderNo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="InputReaderNo" min="-2" pref="161" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="IdNum" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="InputIdNum" min="-2" pref="162" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -143,8 +141,11 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="Sex" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="Sex" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="ChooseSex" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -162,9 +163,7 @@
                                   <Component id="InputWorkUnit" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="ChooseSex" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -196,7 +195,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="ReaderName">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x8bfb;&#x8005;&#x59d3;&#x540d;&#xff1a;"/>
+            <Property name="text" type="java.lang.String" value="&#x59d3;&#x540d;&#xff1a;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="Sex">
