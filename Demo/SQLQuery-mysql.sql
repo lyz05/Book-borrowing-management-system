@@ -1,11 +1,10 @@
-/*´´½¨Êı¾İ¿â£¨BookDB£©*/
+/*åˆ›å»ºæ•°æ®åº“ï¼ˆBookDBï¼‰*/
 CREATE DATABASE BookDB;
 
-/*×ªµ½£¨BookDB£©Êı¾İ¿â*/
-go
+/*è½¬åˆ°ï¼ˆBookDBï¼‰æ•°æ®åº“*/
 use BookDB;
 
-/*´´½¨±í½á¹¹*/
+/*åˆ›å»ºè¡¨ç»“æ„*/
 CREATE TABLE AdminUsers
 (
 	username char(8) primary key,
@@ -27,10 +26,9 @@ CREATE TABLE Reader
 (
 	readerNO char(8) primary key,
 	readerName char(8) not null,
-	sex char(2) not null check(sex='ÄĞ' or sex='Å®'),
+	sex char(2) not null check(sex='ç”·' or sex='å¥³'),
 	identitycard char(18) not null check(length(identitycard)=18),
 	workUnit char(50) not null,
---	borrowCount tinyint,
 	password char(255) not null
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -45,93 +43,74 @@ CREATE TABLE Borrow
 	foreign key(readerNO) references Reader(readerNO)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-/* ÎªJDBCÁ¬½Ó´´½¨ÓÃ»§ */
-go
-exec sp_addlogin 'BookDB','bookdb'
-exec sp_adduser 'BookDB','BookDB'
-exec sp_addrolemember 'db_owner', 'BookDB'
+/* ä¸ºJDBCè¿æ¥åˆ›å»ºç”¨æˆ· */
 
-/* ĞŞ¸Ä»ù±¾±íÔ¼Êø */
+/* ä¿®æ”¹åŸºæœ¬è¡¨çº¦æŸ */
 alter table Borrow add constraint CK_time check(borrowDate<=shouldDate);
 
-/* ´´½¨ÊÓÍ¼ */
---½èÔÄÎ´»¹ÊÓÍ¼
-go
+/* åˆ›å»ºè§†å›¾ */
+-- å€Ÿé˜…æœªè¿˜è§†å›¾
 create view View_Borrow_Not_Return
 as
-select * from Borrow where returnDate is null
-go
-select * from View_Borrow_Not_Return;
+select * from Borrow where returnDate is null;
 
--- ¶ÁÕß½èÔÄÊÓÍ¼
-go
+-- è¯»è€…å€Ÿé˜…è§†å›¾
 create view View_Borrow
 as
-select Borrow.readerNO ¶ÁÕß±àºÅ,readerName ĞÕÃû,Borrow.bookNO Í¼Êé±àºÅ,bookName Í¼ÊéÃû³Æ,authorName ×÷Õß,publishingName ³ö°æÉç,borrowDate ½èÊéÊ±¼ä,shouldDate Ó¦¹é»¹ÈÕÆÚ,returnDate ¹é»¹ÈÕÆÚ from Borrow,Book,Reader where Borrow.bookNO=Book.bookNO and Borrow.readerNO=Reader.readerNO
-go
---select * from View_Borrow;
+select Borrow.readerNO è¯»è€…ç¼–å·,readerName å§“å,Borrow.bookNO å›¾ä¹¦ç¼–å·,bookName å›¾ä¹¦åç§°,authorName ä½œè€…,publishingName å‡ºç‰ˆç¤¾,borrowDate å€Ÿä¹¦æ—¶é—´,shouldDate åº”å½’è¿˜æ—¥æœŸ,returnDate å½’è¿˜æ—¥æœŸ from Borrow,Book,Reader where Borrow.bookNO=Book.bookNO and Borrow.readerNO=Reader.readerNO;
 
---¶ÁÕßÍ¼ÊéÊÓÍ¼
-go
+-- è¯»è€…å›¾ä¹¦è§†å›¾
 create view View_Book
 as
-select Book.bookNO Í¼Êé±àºÅ,bookName Í¼ÊéÃû³Æ,authorName ×÷Õß,publishingName ³ö°æÉç,publishingDate ³ö°æÈÕÆÚ,shopNum Èë¿âÊıÁ¿,shopNum-count(View_Borrow_Not_Return.bookNO) ÔÚ¿âÊıÁ¿ from View_Borrow_Not_Return
+select Book.bookNO å›¾ä¹¦ç¼–å·,bookName å›¾ä¹¦åç§°,authorName ä½œè€…,publishingName å‡ºç‰ˆç¤¾,publishingDate å‡ºç‰ˆæ—¥æœŸ,shopNum å…¥åº“æ•°é‡,shopNum-count(View_Borrow_Not_Return.bookNO) åœ¨åº“æ•°é‡ from View_Borrow_Not_Return
 right join Book on View_Borrow_Not_Return.bookNO=Book.bookNO 
 left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
 group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum;
-go
---select * from View_Book;
 
---¹ÜÀíÔ±¶ÁÕßÊÓÍ¼
-go
+-- ç®¡ç†å‘˜è¯»è€…è§†å›¾
 create view View_Reader 
 as
-select Reader.readerNO ¶ÁÕß±àºÅ,readerName ĞÕÃû,sex ĞÔ±ğ,identitycard Éí·İÖ¤ºÅ,workUnit ¹¤×÷µ¥Î»,count(Borrow.readerNO) ×Ü½èÊéÊıÁ¿,count(Borrow.readerNO)-count(Borrow.returnDate) Î´¹é»¹ÊıÁ¿ from Borrow
+select Reader.readerNO è¯»è€…ç¼–å·,readerName å§“å,sex æ€§åˆ«,identitycard èº«ä»½è¯å·,workUnit å·¥ä½œå•ä½,count(Borrow.readerNO) æ€»å€Ÿä¹¦æ•°é‡,count(Borrow.readerNO)-count(Borrow.returnDate) æœªå½’è¿˜æ•°é‡ from Borrow
 right join Reader on Borrow.readerNO=Reader.readerNO
 left join Book on Borrow.bookNO=Book.bookNO 
 group by Reader.readerNO,Borrow.readerNO,readerName,sex,identitycard,workUnit;
-go
---select * from View_Reader;
 
---¹ÜÀíÔ±Í¼ÊéÊÓÍ¼
-go
+-- ç®¡ç†å‘˜å›¾ä¹¦è§†å›¾
 create view View_Book_Admin
 as
-select Book.bookNO Í¼Êé±àºÅ,bookName Í¼ÊéÃû³Æ,authorName ×÷Õß,publishingName ³ö°æÉç,price ¼Û¸ñ,publishingDate ³ö°æÈÕÆÚ,shopNum Èë¿âÊıÁ¿,shopNum-count(View_Borrow_Not_Return.bookNO) ÔÚ¿âÊıÁ¿ from View_Borrow_Not_Return
+select Book.bookNO å›¾ä¹¦ç¼–å·,bookName å›¾ä¹¦åç§°,authorName ä½œè€…,publishingName å‡ºç‰ˆç¤¾,price ä»·æ ¼,publishingDate å‡ºç‰ˆæ—¥æœŸ,shopNum å…¥åº“æ•°é‡,shopNum-count(View_Borrow_Not_Return.bookNO) åœ¨åº“æ•°é‡ from View_Borrow_Not_Return
 right join Book on View_Borrow_Not_Return.bookNO=Book.bookNO 
 left join Reader on View_Borrow_Not_Return.readerNO=Reader.readerNO
 group by Book.bookNO,bookName,authorName,publishingName,publishingDate,shopNum,price;
-go
---select * from View_Book_Admin;
 
-/*Ìí¼Ó¹ÜÀíÔ±ÕË»§*/
+/*æ·»åŠ ç®¡ç†å‘˜è´¦æˆ·*/
 insert AdminUsers values('admin','');
 
-/*¶ÁÕß±í£¨Reader£©Êı¾İ£º*/
-INSERT INTO Reader VALUES('R2005001','ÕÅĞ¡¾ê','Å®','412723199001014321','Í³Ò»¹É·İÓĞÏŞ¹«Ë¾','');
-INSERT INTO Reader VALUES('R2006001','Áõ·ï','Å®','412723199003014321','ÁªºÏ¹É·İÓĞÏŞ¹«Ë¾','');
-INSERT INTO Reader VALUES('R2007001','¸ß´úÅô','ÄĞ','412723199005014321','ºé¶¼¹É·İÓĞÏŞ¹«Ë¾','');
-INSERT INTO Reader VALUES('R2008001','³Â»Ô','ÄĞ','412723199111014321','ÄÏ²ıÊĞµçÄÔÑĞÖÆ¹«Ë¾','');
-INSERT INTO Reader VALUES('R2009001','Àîºç±ù','Å®','412723199208014321','¸»Ê¿¿µ¿Æ¼¼¼¯ÍÅ','');
-INSERT INTO Reader VALUES('R2005002','ÕÅÂ¶','Å®','412723199002014321','ĞËÂ¡¹É·İÓĞÏŞ¹«Ë¾','');
-INSERT INTO Reader VALUES('R2006002','Ó÷×ÔÇ¿','ÄĞ','412723199004014321','ÍòÊÂ´ï¹É·İÓĞÏŞ¹«Ë¾','');
-INSERT INTO Reader VALUES('R2007002','ÕÅÏşÃ·','Å®','412723199112014321','ÊÀ½ç¼¼Êõ¿ª·¢¹«Ë¾','');
-INSERT INTO Reader VALUES('R2008002','ÕÅÁ¼','ÄĞ','412723199110014321','ÉÏº£ÉúÎïÑĞ¾¿ÊÒ','');
-INSERT INTO Reader VALUES('R2009002','º«¸£Æ½','ÄĞ','412723199209014321','ºÏÉúÔªÓĞÏŞ¹«Ë¾','');
+/*è¯»è€…è¡¨ï¼ˆReaderï¼‰æ•°æ®ï¼š*/
+INSERT INTO Reader VALUES('R2005001','å¼ å°å¨Ÿ','å¥³','412723199001014321','ç»Ÿä¸€è‚¡ä»½æœ‰é™å…¬å¸','');
+INSERT INTO Reader VALUES('R2006001','åˆ˜å‡¤','å¥³','412723199003014321','è”åˆè‚¡ä»½æœ‰é™å…¬å¸','');
+INSERT INTO Reader VALUES('R2007001','é«˜ä»£é¹','ç”·','412723199005014321','æ´ªéƒ½è‚¡ä»½æœ‰é™å…¬å¸','');
+INSERT INTO Reader VALUES('R2008001','é™ˆè¾‰','ç”·','412723199111014321','å—æ˜Œå¸‚ç”µè„‘ç ”åˆ¶å…¬å¸','');
+INSERT INTO Reader VALUES('R2009001','æè™¹å†°','å¥³','412723199208014321','å¯Œå£«åº·ç§‘æŠ€é›†å›¢','');
+INSERT INTO Reader VALUES('R2005002','å¼ éœ²','å¥³','412723199002014321','å…´éš†è‚¡ä»½æœ‰é™å…¬å¸','');
+INSERT INTO Reader VALUES('R2006002','å–»è‡ªå¼º','ç”·','412723199004014321','ä¸‡äº‹è¾¾è‚¡ä»½æœ‰é™å…¬å¸','');
+INSERT INTO Reader VALUES('R2007002','å¼ æ™“æ¢…','å¥³','412723199112014321','ä¸–ç•ŒæŠ€æœ¯å¼€å‘å…¬å¸','');
+INSERT INTO Reader VALUES('R2008002','å¼ è‰¯','ç”·','412723199110014321','ä¸Šæµ·ç”Ÿç‰©ç ”ç©¶å®¤','');
+INSERT INTO Reader VALUES('R2009002','éŸ©ç¦å¹³','ç”·','412723199209014321','åˆç”Ÿå…ƒæœ‰é™å…¬å¸','');
 
-/*Í¼Êé±í(Book)Êı¾İ£º*/
-INSERT INTO Book VALUES('B200101001','ÕşÖÎ¾­¼ÃÑ§','ËÎÌÎ','ÖĞ¹úÈËÃñ´óÑ§³ö°æÉç',31.80,'19910101',5);
-INSERT INTO Book VALUES('B200201001','´óÑ§Ó¢Óï','Ö£Ê÷ÌÄ','ÍâÓï½ÌÑ§ÓëÑĞ¾¿³ö°æÉç',35.20,'19920101',3);
-INSERT INTO Book VALUES('B200301001','Êı¾İ¿âÏµÍ³Ô­Àí','Îâ¾©»Û','Çå»ª´óÑ§³ö°æÉç',58.20,'19930101',3);
-INSERT INTO Book VALUES('B200101002','Î¢¹Û¾­¼ÃÑ§','ÕÅÈï','¸ßµÈ½ÌÓı³ö°æÉç',41.80,'19910102',2);
-INSERT INTO Book VALUES('B200101003','ºê¹Û¾­¼ÃÑ§','Ô¬Ã÷Ê¥','ÖĞ¹ú²Æ¾­¾­¼Ã³ö°æÉç',51.80,'19910103',2);
-INSERT INTO Book VALUES('B200201002','ÉÌÎñÓ¢Óï','ÂíÉıìÇ','ÉÏº£ÍâÓïÑ§Ôº³ö°æÉç',45.20,'19920102',5);
-INSERT INTO Book VALUES('B200201003','ÉÌÎñÓ¢Óï2','½­Óî¼Ñ','Î÷°²½»Í¨´óÑ§³ö°æÉç',55.20,'19920103',3);
-INSERT INTO Book VALUES('B200301002','×éÍø¼¼Êõ','ÍòÕ÷','Õã½­´óÑ§³ö°æÉç',38.20,'19930102',1);
-INSERT INTO Book VALUES('B200301003','ÈË¹¤ÖÇÄÜ','·ÑÏèÁÖ','µç×Ó¹¤Òµ³ö°æÉç',43.20,'19930103',5);
-INSERT INTO Book VALUES('B200301004','Ëã·¨Éè¼ÆÓë·ÖÎö','³Â»ÛÄÏ','¿ÆÑ§³ö°æÉç',58.20,'19930104',10);
+/*å›¾ä¹¦è¡¨(Book)æ•°æ®ï¼š*/
+INSERT INTO Book VALUES('B200101001','æ”¿æ²»ç»æµå­¦','å®‹æ¶›','ä¸­å›½äººæ°‘å¤§å­¦å‡ºç‰ˆç¤¾',31.80,'19910101',5);
+INSERT INTO Book VALUES('B200201001','å¤§å­¦è‹±è¯­','éƒ‘æ ‘æ£ ','å¤–è¯­æ•™å­¦ä¸ç ”ç©¶å‡ºç‰ˆç¤¾',35.20,'19920101',3);
+INSERT INTO Book VALUES('B200301001','æ•°æ®åº“ç³»ç»ŸåŸç†','å´äº¬æ…§','æ¸…åå¤§å­¦å‡ºç‰ˆç¤¾',58.20,'19930101',3);
+INSERT INTO Book VALUES('B200101002','å¾®è§‚ç»æµå­¦','å¼ è•Š','é«˜ç­‰æ•™è‚²å‡ºç‰ˆç¤¾',41.80,'19910102',2);
+INSERT INTO Book VALUES('B200101003','å®è§‚ç»æµå­¦','è¢æ˜åœ£','ä¸­å›½è´¢ç»ç»æµå‡ºç‰ˆç¤¾',51.80,'19910103',2);
+INSERT INTO Book VALUES('B200201002','å•†åŠ¡è‹±è¯­','é©¬å‡çƒ¨','ä¸Šæµ·å¤–è¯­å­¦é™¢å‡ºç‰ˆç¤¾',45.20,'19920102',5);
+INSERT INTO Book VALUES('B200201003','å•†åŠ¡è‹±è¯­2','æ±Ÿå®‡ä½³','è¥¿å®‰äº¤é€šå¤§å­¦å‡ºç‰ˆç¤¾',55.20,'19920103',3);
+INSERT INTO Book VALUES('B200301002','ç»„ç½‘æŠ€æœ¯','ä¸‡å¾','æµ™æ±Ÿå¤§å­¦å‡ºç‰ˆç¤¾',38.20,'19930102',1);
+INSERT INTO Book VALUES('B200301003','äººå·¥æ™ºèƒ½','è´¹ç¿”æ—','ç”µå­å·¥ä¸šå‡ºç‰ˆç¤¾',43.20,'19930103',5);
+INSERT INTO Book VALUES('B200301004','ç®—æ³•è®¾è®¡ä¸åˆ†æ','é™ˆæ…§å—','ç§‘å­¦å‡ºç‰ˆç¤¾',58.20,'19930104',10);
 
-/*½èÔÄ±í£¨Borrow£©Êı¾İ£º*/
+/*å€Ÿé˜…è¡¨ï¼ˆBorrowï¼‰æ•°æ®ï¼š*/
 INSERT INTO Borrow VALUES('R2005001','B200101001','20110901','20111001',null);
 INSERT INTO Borrow VALUES('R2006001','B200101001','20110907','20111007','20111005');
 INSERT INTO Borrow VALUES('R2007001','B200201001','20110913','20111013','20111010');
@@ -153,70 +132,67 @@ INSERT INTO Borrow VALUES('R2009002','B200201001','20110916','20111016','2011101
 INSERT INTO Borrow VALUES('R2007002','B200201002','20110917','20111017','20111014');
 INSERT INTO Borrow VALUES('R2007002','B200201003','20110917','20111017','20111014');
 
-/* É¾³ıBookDBÊı¾İ¿â¼°ÓÃ»§ */
-go
-use master
-EXEC sp_dropuser'BookDB'
-EXEC sp_droplogin 'BookDB'
-drop database BookDB
+/* åˆ é™¤BookDBæ•°æ®åº“åŠç”¨æˆ· */
+use mysql;
+drop database BookDB;
 
-/* JAVAÖĞµÄ´°¿Ú²Ù×÷*/
-/* ¶ÁÕß½èÔÄ´°¿Ú²Ù×÷ */
--- Ãû×ÖÏÔÊ¾
+/* JAVAä¸­çš„çª—å£æ“ä½œ*/
+/* è¯»è€…å€Ÿé˜…çª—å£æ“ä½œ */
+-- åå­—æ˜¾ç¤º
 select readerName from Reader where readerNO='R2005001'
--- µ±Ç°½èÔÄĞÅÏ¢ÏÔÊ¾
-select * from View_Borrow where ¶ÁÕß±àºÅ='R2005002' and ¹é»¹ÈÕÆÚ is null
--- ÀúÊ·½èÔÄĞÅÏ¢ÏÔÊ¾
-select * from View_Borrow where ¶ÁÕß±àºÅ='R2005002' and ¹é»¹ÈÕÆÚ is not null
--- Í¼ÊéĞÅÏ¢ÏÔÊ¾
-select * from View_Book where Í¼Êé±àºÅ like '%2001%' and Í¼ÊéÃû³Æ like '%¾­¼Ã%' and ×÷Õß like '%ËÎ%' and ³ö°æÉç like '%ÖĞ¹ú%' and ³ö°æÈÕÆÚ between '1990-01-01' and '2010-02-02' and ÔÚ¿âÊıÁ¿>0 and Í¼Êé±àºÅ not in (select Í¼Êé±àºÅ from View_Borrow where ¶ÁÕß±àºÅ='R2005002' and ¹é»¹ÈÕÆÚ is null)
--- ½èÊé
+-- å½“å‰å€Ÿé˜…ä¿¡æ¯æ˜¾ç¤º
+select * from View_Borrow where è¯»è€…ç¼–å·='R2005002' and å½’è¿˜æ—¥æœŸ is null
+-- å†å²å€Ÿé˜…ä¿¡æ¯æ˜¾ç¤º
+select * from View_Borrow where è¯»è€…ç¼–å·='R2005002' and å½’è¿˜æ—¥æœŸ is not null
+-- å›¾ä¹¦ä¿¡æ¯æ˜¾ç¤º
+select * from View_Book where å›¾ä¹¦ç¼–å· like '%2001%' and å›¾ä¹¦åç§° like '%ç»æµ%' and ä½œè€… like '%å®‹%' and å‡ºç‰ˆç¤¾ like '%ä¸­å›½%' and å‡ºç‰ˆæ—¥æœŸ between '1990-01-01' and '2010-02-02' and åœ¨åº“æ•°é‡>0 and å›¾ä¹¦ç¼–å· not in (select å›¾ä¹¦ç¼–å· from View_Borrow where è¯»è€…ç¼–å·='R2005002' and å½’è¿˜æ—¥æœŸ is null)
+-- å€Ÿä¹¦
 select * from Borrow where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
-if exists(select * from View_Book where Í¼Êé±àºÅ='B200201003' and ÔÚ¿âÊıÁ¿>0)
+if exists(select * from View_Book where å›¾ä¹¦ç¼–å·='B200201003' and åœ¨åº“æ•°é‡>0)
 insert Borrow values('R2006002','B200201003',now() ,date_add(NOW(), interval 1 MONTH) ,null)
--- »¹Êé
+-- è¿˜ä¹¦
 update Borrow set returnDate=now() where readerNO='R2006001' and bookNO='B200101003' and returnDate is null;
--- Ğø½è
+-- ç»­å€Ÿ
 update Borrow set shouldDate=date_add(NOW(), interval 1 MONTH)
 where readerNO = 'R2009001' and bookNO='B200201003' and returnDate is null
 
-/* ¹ÜÀíÔ±¶ÁÕßĞÅÏ¢´°¿Ú²Ù×÷ */
--- ÖØÖÃÃÜÂë
+/* ç®¡ç†å‘˜è¯»è€…ä¿¡æ¯çª—å£æ“ä½œ */
+-- é‡ç½®å¯†ç 
 update Reader set password=''
 where readerNo = 'R2009001'
--- Ìí¼Ó
-insert Reader values('R2010001','ÀîÀ×','ÄĞ','442000199001014321','±±¾©Àí¹¤´óÑ§Öéº£Ñ§Ôº','')
--- É¾³ı
-select * from View_reader where ¶ÁÕß±àºÅ='R2005002' and Î´¹é»¹ÊıÁ¿=0
+-- æ·»åŠ 
+insert Reader values('R2010001','æé›·','ç”·','442000199001014321','åŒ—äº¬ç†å·¥å¤§å­¦ç æµ·å­¦é™¢','')
+-- åˆ é™¤
+select * from View_reader where è¯»è€…ç¼–å·='R2005002' and æœªå½’è¿˜æ•°é‡=0
 delete from Borrow where readerNO='R2005002' and returnDate is not null
 delete from reader where readerNO='R2005002'
--- ĞŞ¸Ä
-update Reader set readerName='º«Ã·Ã·',sex='Å®',identitycard='442000199501014321',workUnit='±±¾©Àí¹¤´óÑ§Öéº£Ñ§Ôº' where readerNO='R2010001'
--- ²éÑ¯¶ÁÕß
-select * from View_Reader where ¶ÁÕß±àºÅ like '%2006%' and ĞÕÃû like '%Áõ%' and ĞÔ±ğ like '%%' and Éí·İÖ¤ºÅ like '%1990%' and ¹¤×÷µ¥Î» like '%¹«Ë¾%'
--- ÅÅĞò
-select * from View_Reader where ¶ÁÕß±àºÅ like '%%' and ĞÕÃû like '%%' and ĞÔ±ğ like '%%' and Éí·İÖ¤ºÅ like '%%' and ¹¤×÷µ¥Î» like '%%' order by ¶ÁÕß±àºÅ
+-- ä¿®æ”¹
+update Reader set readerName='éŸ©æ¢…æ¢…',sex='å¥³',identitycard='442000199501014321',workUnit='åŒ—äº¬ç†å·¥å¤§å­¦ç æµ·å­¦é™¢' where readerNO='R2010001'
+-- æŸ¥è¯¢è¯»è€…
+select * from View_Reader where è¯»è€…ç¼–å· like '%2006%' and å§“å like '%åˆ˜%' and æ€§åˆ« like '%%' and èº«ä»½è¯å· like '%1990%' and å·¥ä½œå•ä½ like '%å…¬å¸%'
+-- æ’åº
+select * from View_Reader where è¯»è€…ç¼–å· like '%%' and å§“å like '%%' and æ€§åˆ« like '%%' and èº«ä»½è¯å· like '%%' and å·¥ä½œå•ä½ like '%%' order by è¯»è€…ç¼–å·
 
-/* ¹ÜÀíÔ±Í¼Êé¹ÜÀí´°¿Ú²Ù×÷ */
--- Ìí¼Ó
-INSERT INTO Book VALUES('B200301101','Java³ÌĞòÉè¼Æ','ÕÔ×¿¾ı','±±¾©½»Í¨´óÑ§³ö°æÉç',41.00,'20110520',3);
--- É¾³ı
-select * from View_Book where Í¼Êé±àºÅ='B200201003' and ÔÚ¿âÊıÁ¿=Èë¿âÊıÁ¿
+/* ç®¡ç†å‘˜å›¾ä¹¦ç®¡ç†çª—å£æ“ä½œ */
+-- æ·»åŠ 
+INSERT INTO Book VALUES('B200301101','Javaç¨‹åºè®¾è®¡','èµµå“å›','åŒ—äº¬äº¤é€šå¤§å­¦å‡ºç‰ˆç¤¾',41.00,'20110520',3);
+-- åˆ é™¤
+select * from View_Book where å›¾ä¹¦ç¼–å·='B200201003' and åœ¨åº“æ•°é‡=å…¥åº“æ•°é‡
 delete from Borrow where bookno='B200201003' and returnDate is not null
 delete from Book where bookNO = 'B200201003'
--- ĞŞ¸Ä
-update Book set bookName='Êı¾İ¿âÏµÍ³Ô­ÀíÓëÉè¼Æ',authorName='Íò³£Ñ¡',publishingName='Çå»ª´óÑ§³ö°æÉç',price=59.90,publishingDate='20090902',shopNum=6 where bookNO='B200301101'
--- ²éÑ¯Í¼Êé
-select * from View_Book_Admin where Í¼Êé±àºÅ like '%2001%' and Í¼ÊéÃû³Æ like '%¾­¼Ã%' and ×÷Õß like '%ËÎ%' and ³ö°æÉç like '%ÖĞ¹ú%'
+-- ä¿®æ”¹
+update Book set bookName='æ•°æ®åº“ç³»ç»ŸåŸç†ä¸è®¾è®¡',authorName='ä¸‡å¸¸é€‰',publishingName='æ¸…åå¤§å­¦å‡ºç‰ˆç¤¾',price=59.90,publishingDate='20090902',shopNum=6 where bookNO='B200301101'
+-- æŸ¥è¯¢å›¾ä¹¦
+select * from View_Book_Admin where å›¾ä¹¦ç¼–å· like '%2001%' and å›¾ä¹¦åç§° like '%ç»æµ%' and ä½œè€… like '%å®‹%' and å‡ºç‰ˆç¤¾ like '%ä¸­å›½%'
 
-/* µÇÂ¼´°¿Ú */
+/* ç™»å½•çª—å£ */
 select readerNO from Reader where readerNo='R2005001' and password=''
 
-/* ĞŞ¸ÄÃÜÂë´°¿Ú */
+/* ä¿®æ”¹å¯†ç çª—å£ */
 select readerNO from Reader where readerNo='R2005001' and password=''
 update Reader set password=encodeInp(pwd) where readerNo = ''
 
-/* ²âÊÔÓÃ */
+/* æµ‹è¯•ç”¨ */
 delete from Borrow where bookNO='B200301002'
 select bookNO from book where shopNum=1;
 select * from AdminUsers
@@ -226,6 +202,5 @@ select * from book;
 select * from View_Book;
 select * from View_Reader
 
-/* MD5¼ÓÃÜ */
+/* MD5åŠ å¯† */
 select substring(sys.fn_sqlvarbasetostr(HashBytes('MD5','123456')),3,32)
-
