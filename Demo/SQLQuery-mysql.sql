@@ -195,12 +195,12 @@ update Reader set password=encodeInp(pwd) where readerNo = ''
 /* 测试用 */
 delete from Borrow where bookNO='B200301002'
 select bookNO from book where shopNum=1;
-select * from AdminUsers
+select * from AdminUsers;
 select * from Reader;
 select * from Borrow;
-select * from book;
+select * from Book;
 select * from View_Book;
-select * from View_Reader
+select * from View_Reader;
 
 /* MD5加密 */
 select substring(sys.fn_sqlvarbasetostr(HashBytes('MD5','123456')),3,32)
